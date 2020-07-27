@@ -8,6 +8,7 @@ public class SbsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SbsApplication.class, args);
+        System.out.println("111");
     }
 
 }
