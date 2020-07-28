@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * @Program: sbs
- * @Description: TODO
+ * @Description: TODO 学生pojo类
  * @Author: 贾小翠
  * @Date: 2020/7/27 15:50
  **/
@@ -22,7 +22,7 @@ public class Student {
     //所属班级
     private String stuClass;
     //出生日期
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date stuBirth;
     //籍贯
     private String stuAddress;

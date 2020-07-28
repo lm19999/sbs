@@ -2,11 +2,9 @@ package com.systop.sbs.pojo;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @Program: sbs
- * @Description: TODO
+ * @Description: TODO 家长pojo类
  * @Author: 贾小翠
  * @Date: 2020/7/27 16:01
  **/
