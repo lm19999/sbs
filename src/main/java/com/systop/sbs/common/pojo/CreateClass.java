@@ -1,4 +1,4 @@
-package com.systop.sbs.pojo;
+package com.systop.sbs.common.pojo;
 
 import lombok.Data;
 

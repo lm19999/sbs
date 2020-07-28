@@ -1,4 +1,4 @@
-package com.systop.sbs.pojo;
+package com.systop.sbs.common.pojo;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,18 +7,18 @@ import java.util.Date;
 
 /**
  * @Program: sbs
- * @Description: TODO 校园动态评论pojo类
+ * @Description: TODO 成长记录评论pojo类
  * @Author: 贾小翠
- * @Date: 2020/7/28 11:03
+ * @Date: 2020/7/28 10:42
  **/
 @Data
-public class CampusDynamicComment {
-    //校园动态评论id
-    private Integer campusCommentId;
-    //校园动态id
-    private CampusDynamic campusDynamic;
+public class GrowthRecordComment {
+    //成长记录评论id
+    private Integer growthCommentId;
+    //成长记录id
+    private GrowthRecord growthRecord;
     //被回复的评论的id，默认为0，有则为其id
-    private Integer rid;
+    private Integer growthCommentRid;
     //家长id
     private Parents parents;
     //老师id

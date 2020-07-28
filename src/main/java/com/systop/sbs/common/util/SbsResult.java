@@ -1,4 +1,4 @@
-package com.systop.sbs.util;
+package com.systop.sbs.common.util;
 
 /**
  * @Package:

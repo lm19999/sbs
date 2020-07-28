@@ -1,6 +1,6 @@
 package com.systop.sbs.service;
 
-import com.systop.sbs.pojo.Banner;
+import com.systop.sbs.common.pojo.Banner;
 
 public interface BannerService {
 //    查询所有的banner信息

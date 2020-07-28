@@ -1,7 +1,7 @@
 package com.systop.sbs.service.impl;
 
 import com.systop.sbs.mapper.BannerMapper;
-import com.systop.sbs.pojo.Banner;
+import com.systop.sbs.common.pojo.Banner;
 import com.systop.sbs.service.BannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

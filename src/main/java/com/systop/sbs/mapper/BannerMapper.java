@@ -1,6 +1,6 @@
 package com.systop.sbs.mapper;
 
-import com.systop.sbs.pojo.Banner;
+import com.systop.sbs.common.pojo.Banner;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

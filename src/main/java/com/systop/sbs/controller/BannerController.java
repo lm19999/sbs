@@ -1,12 +1,10 @@
 package com.systop.sbs.controller;
 
 import com.systop.sbs.service.BannerService;
-import com.systop.sbs.util.SbsResult;
+import com.systop.sbs.common.util.SbsResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/banner")
