@@ -6,6 +6,8 @@ import com.systop.sbs.service.BannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BannerServiceImpl implements BannerService {
 
@@ -13,7 +15,7 @@ public class BannerServiceImpl implements BannerService {
     BannerMapper bannerMapper;
 
     @Override
-    public Banner selectAllBanner() {
+    public List<Banner> selectAllBanner() {
         return bannerMapper.selectAllBanner();
     }
 
@@ -25,5 +27,10 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public Integer insertBanner(Banner banner) {
         return bannerMapper.insertBanner(banner);
+    }
+
+    @Override
+    public Integer updateBanner(Integer bannerId, Integer bannerStatus) {
+        return bannerMapper.updateBanner(bannerId,bannerStatus);
     }
 }
