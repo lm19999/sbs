@@ -13,7 +13,7 @@ public class CampusDynamic {
     //校园动态id
     private Integer campusDynamicId;
     //动态类型id
-    private Integer campusDynamicTypeId;
+    private CampusDynamicType campusDynamicType;
     //标题
     private String campusDynamicName;
     //图片（视频）地址

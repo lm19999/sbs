@@ -18,6 +18,8 @@ public class Parents {
     private String parPwd;
     //家长电话
     private String parPhone;
+    //家长头像
+    private String parPortrait;
     //学生学号
     private Student student;
     //家长在线状态：0在线 1离线

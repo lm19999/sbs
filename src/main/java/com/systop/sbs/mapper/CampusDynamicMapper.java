@@ -2,6 +2,7 @@ package com.systop.sbs.mapper;
 
 import com.systop.sbs.common.pojo.CampusDynamic;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
@@ -18,7 +19,21 @@ public interface CampusDynamicMapper {
      * 查询所有校园动态信息
      * @return list
      */
-    @Select("select * from campus_dynamic")
+    @Select("select cd.*,cdt.* from campus_dynamic cd " +
+            "INNER JOIN campus_dynamic_type cdt ON cd.campus_dynamic_type_id=cdt.campus_dynamic_type_id " +
+            "ORDER BY cd.campus_dynamic_id desc")
+    @Results(id = "campusDynamicMap",value = {
+            @Result(id = true,column = "campus_dynamic_id",property = "campusDynamicId"),
+            @Result(column = "campus_dynamic_name",property = "campusDynamicName"),
+            @Result(column = "campus_dynamic_url",property = "campusDynamicUrl"),
+            @Result(column = "campus_dynamic_describe",property = "campusDynamicDescribe"),
+            @Result(column = "campus_dynamic_views",property = "campusDynamicViews"),
+            @Result(column = "campus_dynamic_status",property = "campusDynamicStatus"),
+            @Result(column = "remark",property = "remark"),
+            @Result(property = "campusDynamicType",column = "campus_dynamic_type_id",
+                    one = @One(select = "com.systop.sbs.mapper.CampusDynamicTypeMapper.searchCampusDynamicTypeById",
+                            fetchType = FetchType.LAZY)),
+    })
     List<CampusDynamic> searchCampusDynamicList();
 
     /**
@@ -26,7 +41,7 @@ public interface CampusDynamicMapper {
      * @param campusDynamicId 校园动态Id
      * @return
      */
-    @Delete("delete from campus_dynamic_type where campus_dynamic_type_id=#{campusDynamicTypeId}")
+    @Delete("delete from campus_dynamic where campus_dynamic_id=#{campusDynamicId}")
     Integer deleteCampusDynamic(@Param("campusDynamicId") Integer campusDynamicId);
 
     /**
@@ -34,8 +49,10 @@ public interface CampusDynamicMapper {
      * @param campusDynamic 校园动态
      * @return
      */
-    @Insert("insert into campus_dynamic (campus_dynamic_type_name,remark) " +
-            "values (#{campusDynamicTypeName},#{remark})")
+    @Insert("insert into campus_dynamic (campus_dynamic_type_id,campus_dynamic_name,campus_dynamic_url," +
+            "campus_dynamic_describe,campus_dynamic_views,campus_dynamic_status,remark) " +
+            "values (#{campusDynamicType.campusDynamicTypeId},#{campusDynamicName},#{campusDynamicUrl}," +
+            "#{campusDynamicDescribe},#{campusDynamicViews},#{campusDynamicStatus},#{remark})")
     Integer addCampusDynamic(CampusDynamic campusDynamic);
 
     /**
@@ -43,8 +60,10 @@ public interface CampusDynamicMapper {
      * @param campusDynamic 校园动态
      * @return
      */
-    @Update("update campus_dynamic_type set campus_dynamic_type_name=#{campusDynamicTypeName},remark=#{remark} " +
-            "WHERE campus_dynamic_type_id=#{campusDynamicTypeId}")
+    @Update("update campus_dynamic set campus_dynamic_type_id=#{campusDynamicType.campusDynamicTypeId}," +
+            "campus_dynamic_name=#{campusDynamicName},campus_dynamic_url=#{campusDynamicUrl}," +
+            "campus_dynamic_describe=#{campusDynamicDescribe},campus_dynamic_views=#{campusDynamicViews},remark=#{remark} " +
+            "WHERE campus_dynamic_id=#{campusDynamicId}")
     Integer updateCampusDynamic(CampusDynamic campusDynamic);
 
 
