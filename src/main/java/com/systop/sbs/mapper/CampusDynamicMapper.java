@@ -84,15 +84,21 @@ public interface CampusDynamicMapper {
      */
     @Update("update campus_dynamic set campus_dynamic_type_id=#{campusDynamicType.campusDynamicTypeId}," +
             "campus_dynamic_name=#{campusDynamicName},campus_dynamic_url=#{campusDynamicUrl}," +
-            "campus_dynamic_describe=#{campusDynamicDescribe},campus_dynamic_views=#{campusDynamicViews},remark=#{remark} " +
+            "campus_dynamic_describe=#{campusDynamicDescribe},campus_dynamic_views=#{campusDynamicViews}," +
+            "campus_dynamic_status=#{campusDynamicStatus},remark=#{remark} " +
             "WHERE campus_dynamic_id=#{campusDynamicId}")
     Integer updateCampusDynamic(CampusDynamic campusDynamic);
 
-    @Update("update campus_dynamic set campus_dynamic_type_id=#{campusDynamicType.campusDynamicTypeId}," +
-            "campus_dynamic_name=#{campusDynamicName},campus_dynamic_url=#{campusDynamicUrl}," +
-            "campus_dynamic_describe=#{campusDynamicDescribe},campus_dynamic_views=#{campusDynamicViews},remark=#{remark} " +
+    /**
+     * 修改校园动态的发布状态
+     * @param campusDynamicId   校园动态Id
+     * @param campusDynamicStatus 校园动态状态
+     * @return
+     */
+    @Update("update campus_dynamic set campus_dynamic_status=#{campusDynamicStatus} " +
             "WHERE campus_dynamic_id=#{campusDynamicId}")
-    Integer updateStatus(CampusDynamic campusDynamic);
+    Integer updateStatus(@Param("campusDynamicId") Integer campusDynamicId,@Param("campusDynamicStatus") Integer campusDynamicStatus);
+
     /**
      * 根据id查询校园动态信息
      * @param campusDynamicId 校园动态Id

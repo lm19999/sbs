@@ -51,6 +51,11 @@ public class CampusDynamicServiceImpl implements CampusDynamicService {
     }
 
     @Override
+    public Integer updateStatus(Integer campusDynamicId, Integer campusDynamicStatus) {
+        return campusDynamicMapper.updateStatus(campusDynamicId,campusDynamicStatus);
+    }
+
+    @Override
     public CampusDynamic searchCampusDynamicById(Integer campusDynamicId) {
         return campusDynamicMapper.searchCampusDynamicById(campusDynamicId);
     }

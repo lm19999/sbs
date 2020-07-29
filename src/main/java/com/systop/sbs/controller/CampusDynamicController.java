@@ -3,9 +3,7 @@ package com.systop.sbs.controller;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.service.CampusDynamicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Program: sbs
@@ -45,5 +43,17 @@ public class CampusDynamicController {
     @GetMapping("/activityList")
     public SbsResult activityList(){
         return SbsResult.success(campusDynamicService.activityList());
+    }
+
+    /**
+     * 修改校园动态的发布状态
+     * @param campusDynamicId   校园动态Id
+     * @param campusDynamicStatus 校园动态状态
+     * @return
+     */
+    @PostMapping("/updateStatus")
+    public SbsResult updateStatus(@RequestParam("campusDynamicId") Integer campusDynamicId,
+                                  @RequestParam("campusDynamicStatus") Integer campusDynamicStatus){
+        return SbsResult.success(campusDynamicService.updateStatus(campusDynamicId,campusDynamicStatus));
     }
 }

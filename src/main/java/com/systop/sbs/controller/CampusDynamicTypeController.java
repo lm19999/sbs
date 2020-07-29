@@ -4,9 +4,7 @@ import com.systop.sbs.common.pojo.CampusDynamicType;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.service.CampusDynamicTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Program: sbs
@@ -25,7 +23,7 @@ public class CampusDynamicTypeController {
      * 查询所有校园动态类型信息
      * @return SbsResult
      */
-    @RequestMapping("/campusDynamicTypeList")
+    @GetMapping("/campusDynamicTypeList")
     public SbsResult searchCampusDynamicTypeList(){
         return SbsResult.success(campusDynamicTypeService.searchCampusDynamicTypeList());
     }
@@ -35,7 +33,7 @@ public class CampusDynamicTypeController {
      * @param campusDynamicTypeId 校园动态类型Id
      * @return SbsResult
      */
-    @RequestMapping("/delCampusDynamicType")
+    @PostMapping("/delCampusDynamicType")
     public SbsResult deleteCampusDynamicType(@RequestParam("campusDynamicTypeId") Integer campusDynamicTypeId){
         return SbsResult.success(campusDynamicTypeService.deleteCampusDynamicType(campusDynamicTypeId));
     }
@@ -46,7 +44,7 @@ public class CampusDynamicTypeController {
      * @param remark  备注
      * @return SbsResult
      */
-    @RequestMapping("/addCampusDynamicType")
+    @PostMapping("/addCampusDynamicType")
     public SbsResult addCampusDynamicType(@RequestParam("campusDynamicTypeName") String campusDynamicTypeName,@RequestParam("remark") String remark){
         CampusDynamicType campusDynamicType = new CampusDynamicType();
         campusDynamicType.setCampusDynamicTypeName(campusDynamicTypeName);
@@ -59,7 +57,7 @@ public class CampusDynamicTypeController {
      * @param campusDynamicTypeId 校园动态类型Id
      * @return SbsResult
      */
-    @RequestMapping("/searchCampusDynamicTypeById")
+    @PostMapping("/searchCampusDynamicTypeById")
     public SbsResult searchCampusDynamicTypeById(@RequestParam("campusDynamicTypeId") Integer campusDynamicTypeId){
         return SbsResult.success(campusDynamicTypeService.searchCampusDynamicTypeById(campusDynamicTypeId));
     }
@@ -71,7 +69,7 @@ public class CampusDynamicTypeController {
      * @param campusDynamicTypeId 校园动态类型Id
      * @return SbsResult
      */
-    @RequestMapping("/updateCampusDynamicType")
+    @PostMapping("/updateCampusDynamicType")
     public SbsResult updateCampusDynamicType(@RequestParam("campusDynamicTypeName") String campusDynamicTypeName,@RequestParam("remark") String remark,
                                              @RequestParam("campusDynamicTypeId") Integer campusDynamicTypeId){
         CampusDynamicType campusDynamicType = new CampusDynamicType();

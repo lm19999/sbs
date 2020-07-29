@@ -52,6 +52,13 @@ public interface CampusDynamicService {
      */
     Integer updateCampusDynamic(CampusDynamic campusDynamic);
 
+    /**
+     * 修改校园动态的发布状态
+     * @param campusDynamicId   校园动态Id
+     * @param campusDynamicStatus 校园动态状态
+     * @return
+     */
+    Integer updateStatus(@Param("campusDynamicId") Integer campusDynamicId,@Param("campusDynamicStatus") Integer campusDynamicStatus);
 
     /**
      * 根据id查询校园动态信息
