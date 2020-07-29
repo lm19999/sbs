@@ -12,11 +12,24 @@ import java.util.List;
  * @Date: 2020/7/29 11:50
  **/
 public interface CampusDynamicService {
+
     /**
      * 查询所有校园动态信息
      * @return list
      */
     List<CampusDynamic> searchCampusDynamicList();
+
+    /**
+     * 查询官方新闻
+     * @return list
+     */
+    List<CampusDynamic> officialNewsList();
+
+    /**
+     * 查询活动动态
+     * @return list
+     */
+    List<CampusDynamic> activityList();
 
     /**
      * 删除校园动态信息

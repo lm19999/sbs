@@ -37,6 +37,28 @@ public interface CampusDynamicMapper {
     List<CampusDynamic> searchCampusDynamicList();
 
     /**
+     * 查询官方新闻
+     * @return list
+     */
+    @Select("select cd.*,cdt.* from campus_dynamic cd " +
+            "INNER JOIN campus_dynamic_type cdt ON cd.campus_dynamic_type_id=cdt.campus_dynamic_type_id " +
+            "WHERE cd.campus_dynamic_type_id = 1 " +
+            "ORDER BY cd.campus_dynamic_id desc")
+    @ResultMap("campusDynamicMap")
+    List<CampusDynamic> officialNewsList();
+
+    /**
+     * 查询活动动态
+     * @return list
+     */
+    @Select("select cd.*,cdt.* from campus_dynamic cd " +
+            "INNER JOIN campus_dynamic_type cdt ON cd.campus_dynamic_type_id=cdt.campus_dynamic_type_id " +
+            "WHERE cd.campus_dynamic_type_id = 2 " +
+            "ORDER BY cd.campus_dynamic_id desc")
+    @ResultMap("campusDynamicMap")
+    List<CampusDynamic> activityList();
+
+    /**
      * 删除校园动态信息
      * @param campusDynamicId 校园动态Id
      * @return
@@ -66,12 +88,17 @@ public interface CampusDynamicMapper {
             "WHERE campus_dynamic_id=#{campusDynamicId}")
     Integer updateCampusDynamic(CampusDynamic campusDynamic);
 
-
+    @Update("update campus_dynamic set campus_dynamic_type_id=#{campusDynamicType.campusDynamicTypeId}," +
+            "campus_dynamic_name=#{campusDynamicName},campus_dynamic_url=#{campusDynamicUrl}," +
+            "campus_dynamic_describe=#{campusDynamicDescribe},campus_dynamic_views=#{campusDynamicViews},remark=#{remark} " +
+            "WHERE campus_dynamic_id=#{campusDynamicId}")
+    Integer updateStatus(CampusDynamic campusDynamic);
     /**
      * 根据id查询校园动态信息
      * @param campusDynamicId 校园动态Id
      * @return
      */
     @Select("select * from campus_dynamic where campus_dynamic_id = #{campusDynamicId}")
+    @ResultMap("campusDynamicMap")
     CampusDynamic searchCampusDynamicById(@Param("campusDynamicId") Integer campusDynamicId);
 }
