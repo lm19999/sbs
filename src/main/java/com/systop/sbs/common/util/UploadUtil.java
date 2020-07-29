@@ -1,3 +1,4 @@
+/*
 package com.systop.sbs.common.util;
 
 import net.coobird.thumbnailator.Thumbnails;
@@ -9,12 +10,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+*/
 /**
  * @Program: sbs
  * @Description: TODO
  * @Author: liumiao
  * @Date: 2020/7/28 10:24
- **/
+ **//*
+
 public class UploadUtil {
     //图片的上传路径
     public final static String UPLOAD_FILE = System.getProperty("user.home") + "/upload/";
@@ -63,14 +66,16 @@ public class UploadUtil {
             return gPicture;
         }
 
-        /**
+        */
+/**
          * 判断文件大小
          *
          * @param len  文件长度
          * @param size 限制大小
          * @param unit 限制单位（B,K,M,G）
          * @return
-         */
+         *//*
+
         public static boolean checkFileSize(Long len, int size, String unit) {
 //        long len = file.length();
             double fileSize = 0;
@@ -89,9 +94,11 @@ public class UploadUtil {
             return true;
         }
 
-        /**
+        */
+/**
          * @return 带年月日的前缀
-         */
+         *//*
+
         public static String getTimeString() {
             String substring = UUID.randomUUID().toString().replace("-", "").substring(4, 14);
             SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssS");
@@ -99,3 +106,4 @@ public class UploadUtil {
             return df.format(calendar.getTime())+substring;
         }
 }
+*/

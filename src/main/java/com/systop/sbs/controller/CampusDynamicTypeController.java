@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Program: sbs
- * @Description: TODO
+ * @Description: TODO 校园动态类型controller
  * @Author: 贾小翠
  * @Date: 2020/7/28 15:09
  **/

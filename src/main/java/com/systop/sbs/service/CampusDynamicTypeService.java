@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @Program: sbs
- * @Description: TODO
+ * @Description: TODO 校园动态类型service
  * @Author: 贾小翠
  * @Date: 2020/7/28 15:03
  **/
