@@ -14,6 +14,6 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface AdminMapper {
 //    管理员登录
-    @Select("select * from teacher where tea_no=#{username} and tea_pwd=#{password} and tea_type=0")
+    @Select("select * from teacher where tea_no=#{0} and tea_pwd=#{1} and tea_type=0")
     Teacher adminlogin(String username,String password);
 }
