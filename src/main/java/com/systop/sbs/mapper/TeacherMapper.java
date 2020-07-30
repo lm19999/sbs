@@ -18,7 +18,7 @@ public interface TeacherMapper {
      * 查询所有教师信息
      * @return list
      */
-    @Select("select * from teacher")
+    @Select("select * from teacher WHERE tea_type=1")
     List<Teacher> searchTeacherList();
 
     /**
