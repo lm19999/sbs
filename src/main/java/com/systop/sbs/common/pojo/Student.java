@@ -1,5 +1,6 @@
 package com.systop.sbs.common.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,6 +24,7 @@ public class Student {
     private String stuClass;
     //出生日期
     @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date stuBirth;
     //籍贯
     private String stuAddress;
