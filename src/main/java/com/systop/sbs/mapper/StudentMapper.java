@@ -19,7 +19,7 @@ public interface StudentMapper {
 
     //根据学号查找学生
     @Select("select * from student where stu_no=#{stuNo}")
-    Student stuBySno(String sno);
+    Student stuBySno(String stuNo);
 
     //添加学生
     @Insert("insert into student(stu_no,stu_name,stu_sex,stu_class,stu_birth,stu_address,remark) values" +
