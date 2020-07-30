@@ -111,10 +111,7 @@
                                         <td>${item.stuAddress}</td>
                                         <td>${item.remark}</td>
                                         <td class="td-manage">
-                                        <a onclick="member_stop(this,${item.stuNo})" href="javascript:;" title="${status}">
-                                          <i class="layui-icon">&#xe601;</i>
-                                        </a>
-                                        <a title="编辑" onclick="student_edit(this,${item.stuNo})"  href="javascript:;"> <!--onclick="xadmin.open('编辑','student-edit.html')"-->
+                                        <a title="编辑" onclick="xadmin.open('编辑','student-edit.html?stuNo=${item.stuNo}')"  href="javascript:;">
                                           <i class="layui-icon">&#xe642;</i>
                                         </a>
                                         <a title="删除" onclick="student_del(this,${item.stuNo})" href="javascript:;">
@@ -126,7 +123,6 @@
                     });
                     $('.tableList').append(html)
                     // console.log(arr)
-
                 }
 
             });
@@ -144,15 +140,6 @@
         });
     });
 
-    function student_edit(obj,id) {
-        console.log(id);
-        index = layer.open({
-            type:0,
-            title:"修改学生信息",
-            content:'/student/stuBySno?stuNo='+id
-        });
-        layer.full(index);
-    }
 
     /*删除学生信息*/
     function student_del(obj,id){

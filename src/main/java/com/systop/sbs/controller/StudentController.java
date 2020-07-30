@@ -92,9 +92,10 @@ public class StudentController {
     @RequestMapping("/updateStu")
     public SbsResult updateStu(@RequestParam("stuNo") String stuNo, @RequestParam("stuName") String stuName,
                                @RequestParam("stuSex") String stuSex, @RequestParam("stuClass") String stuClass,
-                               @RequestParam("stuBirth") Date stuBirth, @RequestParam("stuAddress") String stuAddress,
+                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("stuBirth") Date stuBirth,
+                               @RequestParam("stuAddress") String stuAddress,
                                @RequestParam("remark") String remark){
-        Student student = studentService.stuBySno(stuNo);
+        Student student = new Student();
         student.setStuNo(stuNo);
         student.setStuName(stuName);
         student.setStuSex(stuSex);
