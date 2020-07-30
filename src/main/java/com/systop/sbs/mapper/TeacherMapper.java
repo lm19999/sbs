@@ -35,7 +35,7 @@ public interface TeacherMapper {
      * @return
      */
     @Insert("insert into teacher (tea_no,tea_name,tea_pwd,tea_portrait,tea_online_status,tea_type,remark) " +
-            "values (#{teaNo},#{teaName},#{teaPwd},#{teaPortrait},#{teaOnlineStatus},#{teaType},#{remark})")
+            "values (#{teaNo},#{teaName},#{teaPwd},#{teaPortrait},0,#{teaType},#{remark})")
     Integer addTeacher(Teacher teacher);
 
     /**
@@ -44,7 +44,7 @@ public interface TeacherMapper {
      * @return
      */
     @Update("update teacher set tea_name=#{teaName},tea_pwd=#{teaPwd},tea_portrait=#{teaPortrait}," +
-            "tea_online_status=#{teaOnlineStatus},tea_type=#{teaType},remark=#{remark} WHERE tea_no=#{teaNo}")
+            "tea_online_status=0,tea_type=#{teaType},remark=#{remark} WHERE tea_no=#{teaNo}")
     Integer updateTeacher(Teacher teacher);
 
 

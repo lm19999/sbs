@@ -6,9 +6,7 @@ import com.systop.sbs.common.util.UploadImage;
 import com.systop.sbs.service.TeacherService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -29,7 +27,7 @@ public class TeacherController {
      * 查询所有教师信息
      * @return list
      */
-    @RequestMapping("/teacherList")
+    @GetMapping("/teacherList")
     public SbsResult searchTeacherList(){
         return SbsResult.success(teacherService.searchTeacherList());
     }
@@ -39,7 +37,7 @@ public class TeacherController {
      * @param teaNo 教师工号
      * @return  0,删除失败;1,删除成功
      */
-    @RequestMapping("/delTeacher")
+    @PostMapping("/delTeacher")
     public SbsResult deleteTeacher(@RequestParam("teaNo") String teaNo){
         return SbsResult.success(teacherService.deleteTeacher(teaNo));
     }
@@ -50,23 +48,20 @@ public class TeacherController {
      * @param teaName 教师姓名
      * @param teaPwd 密码
      * @param teaPortrait 头像
-     * @param teaOnlineStatus 在线状态
      * @param teaType 类型
      * @param remark 备注
      * @return  0,添加失败;1,添加成功
      */
-    @RequestMapping("/addTeacher")
+    @PostMapping("/addTeacher")
     public SbsResult addTeacher(@RequestParam("teaNo") String teaNo, @RequestParam("teaName") String teaName,
                                 @RequestParam("teaPwd") String teaPwd, @RequestParam("teaPortrait") MultipartFile teaPortrait,
-                                @RequestParam("teaOnlineStatus") Integer teaOnlineStatus, @RequestParam("teaType") Integer teaType,
-                                @RequestParam("remark") String remark){
+                                 @RequestParam("teaType") Integer teaType,@RequestParam("remark") String remark){
         UploadImage uploadImage = new UploadImage();
         Teacher teacher = new Teacher();
         teacher.setTeaNo(teaNo);
         teacher.setTeaName(teaName);
         teacher.setTeaPwd(teaPwd);
         teacher.setTeaPortrait(uploadImage.uploadImage(teaPortrait,null,null));
-        teacher.setTeaOnlineStatus(teaOnlineStatus);
         teacher.setTeaType(teaType);
         teacher.setRemark(remark);
         System.out.println(uploadImage.uploadImage(teaPortrait,null,null));
@@ -78,7 +73,7 @@ public class TeacherController {
      * @param teaNo 教师工号
      * @return  teacher
      */
-    @RequestMapping("/searchTeacherByTno")
+    @PostMapping("/searchTeacherByTno")
     public SbsResult searchTeacherByTno(@RequestParam("teaNo") String teaNo){
         return SbsResult.success(teacherService.searchTeacherByTno(teaNo));
     }
@@ -89,23 +84,20 @@ public class TeacherController {
      * @param teaName 教师姓名
      * @param teaPwd 密码
      * @param teaPortrait 头像
-     * @param teaOnlineStatus 在线状态
      * @param teaType 类型
      * @param remark 备注
      * @return 0,修改失败;1,修改成功
      */
-    @RequestMapping("/updateTeacher")
+    @PostMapping("/updateTeacher")
     public SbsResult updateTeacher(@RequestParam("teaNo") String teaNo, @RequestParam("teaName") String teaName,
                                    @RequestParam("teaPwd") String teaPwd, @RequestParam("teaPortrait") MultipartFile teaPortrait,
-                                   @RequestParam("teaOnlineStatus") Integer teaOnlineStatus, @RequestParam("teaType") Integer teaType,
-                                   @RequestParam("remark") String remark){
+                                   @RequestParam("teaType") Integer teaType,@RequestParam("remark") String remark){
         UploadImage uploadImage = new UploadImage();
         Teacher teacher = new Teacher();
         teacher.setTeaNo(teaNo);
         teacher.setTeaName(teaName);
         teacher.setTeaPwd(teaPwd);
         teacher.setTeaPortrait(uploadImage.uploadImage(teaPortrait,null,null));
-        teacher.setTeaOnlineStatus(teaOnlineStatus);
         teacher.setTeaType(teaType);
         teacher.setRemark(remark);
         System.out.println(uploadImage.uploadImage(teaPortrait,null,null));

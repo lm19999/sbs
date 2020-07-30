@@ -14,6 +14,7 @@ import java.util.List;
  **/
 @Mapper
 public interface GrowthRecordMapper {
+
     /**
      * 查询所有成长记录信息
      * @return list
@@ -45,14 +46,14 @@ public interface GrowthRecordMapper {
 
     /**
      * 添加成长记录信息
-     * @param campusDynamic 成长记录
+     * @param growthRecord 成长记录
      * @return
      */
     @Insert("insert into growth_record (growth_record_par_id,growth_record_position,growth_record_url," +
             "growth_record_describe,growth_record_views,remark) " +
             "values (#{parents.parId},#{growthRecordPosition},#{growthRecordUrl}," +
             "#{growthRecordDescribe},#{growthRecordViews},#{remark})")
-    Integer addGrowthRecord(GrowthRecord campusDynamic);
+    Integer addGrowthRecord(GrowthRecord growthRecord);
 
     /**
      * 修改成长记录信息
