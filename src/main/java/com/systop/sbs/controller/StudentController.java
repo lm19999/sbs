@@ -4,11 +4,18 @@ import com.systop.sbs.common.pojo.Student;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -57,7 +64,8 @@ public class StudentController {
     @RequestMapping("/addStudent")
     public SbsResult addStudent(@RequestParam("stuNo") String stuNo, @RequestParam("stuName") String stuName,
                                 @RequestParam("stuSex") String stuSex, @RequestParam("stuClass") String stuClass,
-                                @RequestParam("stuBirth") Date stuBirth, @RequestParam("stuAddress") String stuAddress,
+                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("stuBirth") Date stuBirth,
+                                @RequestParam("stuAddress") String stuAddress,
                                 @RequestParam("remark") String remark){
         Student student = new Student();
         student.setStuNo(stuNo);
@@ -118,4 +126,6 @@ public class StudentController {
         int count = studentService.batchImport(file);
         return SbsResult.success(count);
     }
+
+
 }
