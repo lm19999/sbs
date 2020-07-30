@@ -21,9 +21,9 @@
 <div class="x-nav">
           <span class="layui-breadcrumb">
             <a href="">首页</a>
-            <a href="">banner管理</a>
+            <a href="">启蒙管理</a>
             <a>
-              <cite>banner</cite></a>
+              <cite>启蒙列表</cite></a>
           </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
@@ -35,13 +35,18 @@
 
                 <div class="layui-card-header">
                     <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
-                    <button class="layui-btn" onclick="xadmin.open('添加启蒙类型','./initiationType-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+                    <button class="layui-btn" onclick="xadmin.open('添加启蒙类型','./initiation-add.html',600,400)"><i class="layui-icon"></i>添加</button>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
                         <thead>
                         <tr>
                             <th>启蒙类型</th>
+                            <th>启蒙读物标题</th>
+                            <th>启蒙读物名称</th>
+                            <th>启蒙读物链接</th>
+                            <th>启蒙读物描述</th>
+                            <th>启蒙读物状态</th>
                             <th>备注</th>
                             <th>操作</th>
                         </thead>
@@ -64,16 +69,16 @@
 
         $.ajax({
             type: 'POST',
-            url: '/initiationType/selectAllInitiationType',
+            url: '/initiation/selectAllInitiation',
             data: {},
             async:false,
             dataType: "json",
             success: function (data) {
-                initiationTypeList=data.data;
+                initiationList=data.data;
             }
         })
 
-        console.log(initiationTypeList)
+        console.log(initiationList)
 
         //分页
         layui.use(['laypage', 'layer'], function(){
@@ -83,39 +88,41 @@
             //完整功能
             laypage.render({
                 elem: 'demo6'
-                ,count: initiationTypeList.length
+                ,count: initiationList.length
                 ,limit:5
                 ,limits:[5,10,15,20]
                 ,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
                 ,jump: function(obj){
                     $('.tableList').html("")
-                    var arr = []
-                        ,thisData = initiationTypeList.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                        ,thisData = initiationList.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
                     var html = ""
                     layui.each(thisData, function(index, item){
-                        arr[index] = item
+                        if (item.initiationStatus == 0) {
+                            status="未发布"
+                        }else{
+                            status="已发布"
+                        }
                         html+=`
-                                    <tr>
-                                        <td>${item.initiationTypeName}</td>
-                                        <td>${item.remark}</td>
-                                        <td class="td-manage">
-                                        <a title="编辑"  onclick="xadmin.open('编辑','initiationType-update.html?initiationTypeId=${item.initiationTypeId}')" href="javascript:;">
-                                          <i class="layui-icon">&#xe642;</i>
-                                        </a>
-                                        <a title="删除" onclick="member_del(this,${item.initiationTypeId})" href="javascript:;">
-                                          <i class="layui-icon">&#xe640;</i>
-                                        </a>
-                                      </td>
-                                    </tr>
-                                    `
-
-
+                            <tr>
+                                <td>${item.initiationType.initiationTypeName}</td>
+                                <td>${item.initiationTitle}</td>
+                                <td>${item.initiationName}</td>
+                                <td>${item.initiationUrl}</td>
+                                <td>${item.initiationDescribe}</td>
+                                <td>${status}</td>
+                                <td>${item.remark}</td>
+                                <td class="td-manage">
+                                <!--<a title="编辑"  onclick="xadmin.open('编辑','')" href="javascript:;">-->
+                                  <!--<i class="layui-icon">&#xe642;</i>-->
+                                <!--</a>-->
+                                <a title="删除" onclick="member_del(this,${item.initiationId})" href="javascript:;">
+                                  <i class="layui-icon">&#xe640;</i>
+                                </a>
+                              </td>
+                            </tr>
+                            `
                     });
-                    console.log(html)
                     $('.tableList').append(html)
-                    console.log(arr)
-
-
                 }
 
             });
@@ -140,9 +147,9 @@
             //发异步删除数据
             $.ajax({
                 type: 'POST',
-                url: '/initiationType/deleteInitiationType',
+                url: '/initiation/deleteInitiation',
                 data: {
-                    initiationTypeId:id
+                    initiationId:id
                 },
                 dataType: "json",
                 success: function (data) {
