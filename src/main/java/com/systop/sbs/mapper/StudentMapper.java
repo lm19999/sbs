@@ -24,17 +24,17 @@ public interface StudentMapper {
     //添加学生
     @Insert("insert into student(stu_no,stu_name,stu_sex,stu_class,stu_birth,stu_address,remark) values" +
             "(#{stuNo},#{stuName},#{stuSex},#{stuClass},#{stuBirth},#{stuAddress},#{remark})")
-    int addStu(Student student);
+    Integer addStu(Student student);
 
     //修改学生
     @Update("update student set " +
             "stu_no=#{stuNo},stu_name=#{stuName},stu_sex=#{stuSex},stu_class=#{stuClass}," +
             "stu_birth=#{stuBirth},stu_address=#{stuAddress},remark=#{remark}" +
             " where stu_no=#{stuNo}")
-    int updateStu(Student student);
+    Integer updateStu(Student student);
 
     //删除学生
     @Delete("delete from student where stu_no=#{stuNo}")
-    int delStu(String stuNo);
+    Integer delStu(String stuNo);
 
 }

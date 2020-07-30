@@ -2,6 +2,7 @@ package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.Student;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface StudentService {
     Integer updateStu(Student student);
 
     Integer delStu(String stuNo);
+
+    Integer batchImport(MultipartFile file) throws Exception;
 }

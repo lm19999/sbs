@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -104,5 +105,17 @@ public class StudentController {
     @RequestMapping("/delStu")
     public SbsResult delStu(@RequestParam("stuNo") String stuNo){
         return SbsResult.success(studentService.delStu(stuNo));
+    }
+
+    /**
+     * 批量上传学生信息
+     * @param file 文件
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/batchImport")
+    public SbsResult batchImport(MultipartFile file) throws Exception{
+        int count = studentService.batchImport(file);
+        return SbsResult.success(count);
     }
 }
