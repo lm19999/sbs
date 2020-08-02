@@ -34,9 +34,9 @@
             <div class="layui-card">
 
                 <div class="layui-card-header">
-                    <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
                     <button class="layui-btn" onclick="xadmin.open('添加学生','./student-add.html',600,400)"><i class="layui-icon"></i>单独添加</button>
                     <button class="layui-btn" onclick="xadmin.open('导入excel','./student-batchImport.html',600,400)"><i class="layui-icon"></i>批量添加</button>
+                    <button class="layui-btn" type="button" id="exportExport"><i class="layui-icon layui-icon-export"></i>导出</button>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -65,6 +65,7 @@
     layui.use(['laydate','form'], function(){
         var laydate = layui.laydate;
         var form = layui.form;
+
 
         $.ajax({
             type: 'POST',
@@ -124,9 +125,7 @@
                     $('.tableList').append(html)
                     // console.log(arr)
                 }
-
             });
-
         });
 
         //执行一个laydate实例
@@ -140,6 +139,10 @@
         });
     });
 
+    /*导出excel*/
+    $('#exportExport').click(function () {
+        window.location.href = "/student/export";
+    })
 
     /*删除学生信息*/
     function student_del(obj,id){
@@ -168,7 +171,6 @@
 
         });
     }
-
 
 
     function delAll (argument) {
