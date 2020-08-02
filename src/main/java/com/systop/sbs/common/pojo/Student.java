@@ -1,6 +1,7 @@
 package com.systop.sbs.common.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +14,7 @@ import java.util.Date;
  * @Date: 2020/7/27 15:50
  **/
 @Data
+@JsonIgnoreProperties(value = {"handler"})
 public class Student {
     //学生学号
     private String stuNo;

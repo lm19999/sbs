@@ -1,5 +1,6 @@
 package com.systop.sbs.common.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * @Date: 2020/7/28 10:16
  **/
 @Data
+@JsonIgnoreProperties(value = {"handler"})
 public class GrowthRecord {
     //成长记录id
     private Integer growthRecordId;

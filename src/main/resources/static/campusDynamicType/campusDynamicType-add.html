@@ -52,17 +52,18 @@
             //监听提交
             form.on('submit(add)',
                 function(data) {
-                    let formdate = new FormData();
+                    /*let formdate = new FormData();
                     formdate.append("campusDynamicTypeName",data.field.campusDynamicTypeName);
-                    formdate.append("remark",data.field.remark);
+                    formdate.append("remark",data.field.remark);*/
 
                     $.ajax({
                         type:'post',
                         url:'/campusDynamicType/addCampusDynamicType',
-                        data:formdate,
+                        data:{
+                            "campusDynamicTypeName":data.field.campusDynamicTypeName,
+                            "remark":data.field.remark
+                        },
                         dataType:'json',
-                        processData : false,
-                        contentType : false,
                         success:function (data) {
                             console.log(data);
                             if (data != 0){

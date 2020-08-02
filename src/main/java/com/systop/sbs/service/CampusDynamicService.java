@@ -40,7 +40,7 @@ public interface CampusDynamicService {
 
     /**
      * 添加校园动态信息
-     * @param campusDynamic 校园动态
+     * @param campusDynamic
      * @return
      */
     Integer addCampusDynamic(CampusDynamic campusDynamic);

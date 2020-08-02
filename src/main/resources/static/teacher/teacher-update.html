@@ -155,17 +155,19 @@
                     let img_file=document.getElementById("upload");//文件
                     console.log(img_file);
                     let fileObj = img_file.files[0];
+                    let formdate = new FormData();
+                    formdate.append("teaNo",data.field.teaNo);
+                    formdate.append("teaName",data.field.teaName);
+                    formdate.append("teaPwd",data.field.teaPwd);
+                    formdate.append("teaPortrait",fileObj);
+                    formdate.append("teaType",data.field.teaType);
+                    formdate.append("remark",data.field.remark);
                     $.ajax({
                         type: 'post',
                         url: '/teacher/updateTeacher',
-                        data: {
-                            teaNo: data.field.teaNo,
-                            teaName: data.field.teaName,
-                            teaPwd: data.field.teaPwd,
-                            teaPortrait: fileObj,
-                            teaType: data.field.teaType,
-                            remark: data.field.remark,
-                        },
+                        data: formdate,
+                        processData: false,
+                        contentType: false,
                         dataType: 'json',
                         success:function (data) {
                             console.log(data);
