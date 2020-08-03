@@ -18,8 +18,8 @@ public class CampusDynamic {
     private CampusDynamicType campusDynamicType;
     //标题
     private String campusDynamicName;
-    //图片（视频）地址
-    private String campusDynamicUrl;
+    //内容
+    private String campusDynamicUrl="";
     //文字描述
     private String campusDynamicDescribe;
     //浏览量

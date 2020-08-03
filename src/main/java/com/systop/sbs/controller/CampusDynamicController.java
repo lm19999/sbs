@@ -7,6 +7,7 @@ import com.systop.sbs.service.CampusDynamicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 /**
  * @Program: sbs
  * @Description: TODO 校园动态的controller
@@ -85,8 +86,6 @@ public class CampusDynamicController {
      * 添加校园动态信息
      * @param campusDynamicTypeId
      * @param campusDynamicName
-//     * @param campusDynamicUrl
-//     * @param campusDynamicDescribe
      * @param campusDynamicStatus
      * @param remark
      * @return
@@ -94,8 +93,6 @@ public class CampusDynamicController {
     @PostMapping("/addCampusDynamic")
     public SbsResult addCampusDynamic(@RequestParam("campusDynamicTypeId") Integer campusDynamicTypeId,
                                       @RequestParam("campusDynamicName") String campusDynamicName,
-//                                      @RequestParam("campusDynamicUrl") String campusDynamicUrl,
-//                                      @RequestParam("campusDynamicDescribe") String campusDynamicDescribe,
                                       @RequestParam("campusDynamicStatus") Integer campusDynamicStatus,
                                       @RequestParam("remark") String remark){
         CampusDynamic campusDynamic = new CampusDynamic();
@@ -121,11 +118,37 @@ public class CampusDynamicController {
     }
 
     /**
+     * 编辑校园动态内容
+     * @param campusDynamicUrl
+     * @param campusDynamicDescribe
+     * @param campusDynamicId
+     * @return
+     */
+    @RequestMapping("/editCampusDynamic")
+    public SbsResult editCampusDynamic(@RequestParam("campusDynamicUrl") String campusDynamicUrl,
+                                       @RequestParam("campusDynamicDescribe") String campusDynamicDescribe,
+                                       @RequestParam("campusDynamicId") Integer campusDynamicId) {
+
+        return SbsResult.success(campusDynamicService.editCampusDynamic(campusDynamicUrl,campusDynamicDescribe,campusDynamicId));
+    }
+
+    /**
+     * 预览
+     * @param campusDynamicId
+     * @return
+     */
+    @PostMapping("/preview")
+    public SbsResult preview(@RequestParam("campusDynamicId") Integer campusDynamicId) {
+        CampusDynamic editor = campusDynamicService.searchCampusDynamicById(campusDynamicId);
+        return SbsResult.success(editor);
+    }
+
+    /**
      * 修改校园动态信息
      * @param
      * @return
      */
-    @PostMapping("/updateCampusDynamic")
+    /*@PostMapping("/updateCampusDynamic")
     public SbsResult updateCampusDynamic(@RequestParam("campusDynamicTypeId") Integer campusDynamicTypeId,
                                          @RequestParam("campusDynamicName") String campusDynamicName,
                                          @RequestParam("campusDynamicUrl") String campusDynamicUrl,
@@ -146,5 +169,5 @@ public class CampusDynamicController {
         campusDynamic.setCampusDynamicStatus(campusDynamicStatus);
         campusDynamic.setRemark(remark);
         return SbsResult.success(campusDynamicService.updateCampusDynamic(campusDynamic));
-    }
+    }*/
 }

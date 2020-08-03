@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8"/>
+    <title>编辑校园动态</title>
+    <link rel="stylesheet" href="/editor/css/style.css"/>
+    <link rel="stylesheet" href="/editor/css/editormd.css"/>
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon"/>
+</head>
+<body>
+    <div id="layout">
+        <div id="test-editormd" style="width: 100%;height: 1000px;">
+            <textarea style="display:none;" id="textContent" name="textContent">
+            </textarea>
+            <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+            <textarea id="text" class="editormd-html-textarea" name="text"></textarea>
+        </div>
+    </div>
+    <div id="btn">
+
+    </div>
+<script src="/editor/jquery.min.js"></script>
+<script src="/editor/editormd.min.js"></script>
+<script type="text/javascript">
+    let testEditor;
+
+    //获取url中"?"符后的字串
+    function GetRequest() {
+        let url = location.search; //获取url中"?"符后的字串
+        let theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            let str = url.substr(1);
+            strs = str.split("&");
+            for (let i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    let Request = new Object();
+    Request = GetRequest();
+    let id = Request['campusDynamicId'];
+    console.log(id);
+
+    $(function () {
+        testEditor = editormd("test-editormd", {
+            width: "100%",
+            height: 1000,
+            syncScrolling: "single",
+            path: "/editor/lib/",
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "/file",
+            //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+            saveHTMLToTextarea: true
+            // previewTheme : "dark"
+        });
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/campusDynamic/searchCampusDynamicById',
+            data: {
+                campusDynamicId: id
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $("#btn").append(
+                    `
+                        <button onclick="saveHtml()">保存</button>
+                    `
+                );
+                if (data.data.campusDynamicUrl == "") {
+                    $("#textContent").append(
+                        `
+                            [TOC]
+
+                            #### Disabled options
+
+                            - TeX (Based on KaTeX);
+                            - Emoji;
+                            - Task lists;
+                            - HTML tags decode;
+                            - Flowchart and Sequence Diagram;
+
+                            #### Editor.md directory
+
+                                editor.md/
+                                        lib/
+                                        css/
+                                        scss/
+                                        tests/
+                                        fonts/
+                                        images/
+                                        plugins/
+                                        examples/
+                                        languages/
+                                        editormd.js
+                                        ...
+
+                            \`\`\`html
+                            &lt;!-- English --&gt;
+                            &lt;script src="../dist/js/languages/en.js"&gt;&lt;/script&gt;
+
+                            &lt;!-- 繁體中文 --&gt;
+                            &lt;script src="../dist/js/languages/zh-tw.js"&gt;&lt;/script&gt;
+                            \`\`\`
+                            <p>请在这里输入内容！！！</p>
+                        `
+                    )
+                } else {
+                    $("#textContent").append(`${data.data.campusDynamicUrl}`);
+                }
+            }
+        });
+    });
+
+    function saveHtml() {
+        console.log($("#textContent").text());
+        console.log($("#text").text());
+        console.log(id);
+        $.ajax({
+            url: "/campusDynamic/editCampusDynamic",
+            type: "POST",
+            data: {
+                campusDynamicUrl: $("#textContent").text(),
+                campusDynamicDescribe: $("#text").text(),
+                campusDynamicId: id
+            },
+            dataType: "json",
+            success: function (data) {
+                alert(data.msg);
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>
+</body>
+</html>

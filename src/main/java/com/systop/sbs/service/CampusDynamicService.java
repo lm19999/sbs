@@ -46,6 +46,18 @@ public interface CampusDynamicService {
     Integer addCampusDynamic(CampusDynamic campusDynamic);
 
     /**
+     * 编辑校园动态内容
+     * @param campusDynamicUrl 校园动态内容
+     * @param campusDynamicDescribe 描述
+     * @param campusDynamicId id
+     * @return
+     */
+    @Update("update campus_dynamic set campus_dynamic_url=#{campusDynamicUrl}," +
+            "campus_dynamic_describe=#{campusDynamicDescribe} " +
+            "WHERE campus_dynamic_id=#{campusDynamicId}")
+    Integer editCampusDynamic(String campusDynamicUrl,String campusDynamicDescribe,Integer campusDynamicId);
+
+    /**
      * 修改校园动态信息
      * @param campusDynamic 校园动态
      * @return
