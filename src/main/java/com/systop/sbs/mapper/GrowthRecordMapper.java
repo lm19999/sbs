@@ -27,6 +27,7 @@ public interface GrowthRecordMapper {
             @Result(column = "growth_record_position",property = "growthRecordPosition"),
             @Result(column = "growth_record_url",property = "growthRecordUrl"),
             @Result(column = "growth_record_describe",property = "growthRecordDescribe"),
+            @Result(column = "growth_record_collects",property = "growthRecordCollects"),
             @Result(column = "growth_record_views",property = "growthRecordViews"),
             @Result(column = "remark",property = "remark"),
             @Result(property = "parents",column = "growth_record_par_id",
@@ -50,9 +51,9 @@ public interface GrowthRecordMapper {
      * @return
      */
     @Insert("insert into growth_record (growth_record_par_id,growth_record_position,growth_record_url," +
-            "growth_record_describe,growth_record_views,remark) " +
+            "growth_record_describe,growth_record_collects,growth_record_views,remark) " +
             "values (#{parents.parId},#{growthRecordPosition},#{growthRecordUrl}," +
-            "#{growthRecordDescribe},#{growthRecordViews},#{remark})")
+            "#{growthRecordDescribe},0,0,#{null})")
     Integer addGrowthRecord(GrowthRecord growthRecord);
 
     /**

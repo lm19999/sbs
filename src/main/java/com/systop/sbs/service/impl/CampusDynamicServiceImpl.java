@@ -66,4 +66,14 @@ public class CampusDynamicServiceImpl implements CampusDynamicService {
     public CampusDynamic searchCampusDynamicById(Integer campusDynamicId) {
         return campusDynamicMapper.searchCampusDynamicById(campusDynamicId);
     }
+
+    @Override
+    public Integer addCollects(Integer campusDynamicId, Integer campusDynamicCollects) {
+        return campusDynamicMapper.addCollects(campusDynamicId,campusDynamicCollects);
+    }
+
+    @Override
+    public Integer cutCollects(Integer campusDynamicId, Integer campusDynamicCollects) {
+        return campusDynamicMapper.cutCollects(campusDynamicId,campusDynamicCollects);
+    }
 }

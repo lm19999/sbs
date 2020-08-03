@@ -18,6 +18,8 @@ public class CampusDynamicCollect {
     private Teacher teacher;
     //校园动态id
     private CampusDynamic campusDynamic;
+    //点赞状态（0：未点赞，1：点赞）
+    private Integer collectState;
     //备注
     private String remark;
 }

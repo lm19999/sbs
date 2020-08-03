@@ -18,6 +18,8 @@ public class GrowthRecordCollect {
     private Teacher teacher;
     //成长记录id
     private GrowthRecord growthRecord;
+    //点赞状态（0：未点赞，1：点赞）
+    private Integer collectState;
     //备注
     private String remark;
 }

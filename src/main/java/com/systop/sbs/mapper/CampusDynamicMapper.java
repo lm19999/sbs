@@ -28,6 +28,7 @@ public interface CampusDynamicMapper {
                 @Result(column = "campus_dynamic_name", property = "campusDynamicName"),
                 @Result(column = "campus_dynamic_url", property = "campusDynamicUrl"),
                 @Result(column = "campus_dynamic_describe", property = "campusDynamicDescribe"),
+                @Result(column = "campus_dynamic_collects", property = "campusDynamicCollects"),
                 @Result(column = "campus_dynamic_views", property = "campusDynamicViews"),
                 @Result(column = "campus_dynamic_status", property = "campusDynamicStatus"),
                 @Result(column = "remark", property = "remark"),
@@ -36,11 +37,6 @@ public interface CampusDynamicMapper {
                                 fetchType = FetchType.LAZY))
             }
     )
-    /*@Results(
-        @Result(property = "campusDynamicType", column = "campus_dynamic_type_id",
-                one = @One(select = "com.systop.sbs.mapper.CampusDynamicTypeMapper.searchCampusDynamicTypeById",
-                        fetchType = FetchType.LAZY))
-    )*/
     List<CampusDynamic> searchCampusDynamicList();
 
     /**
@@ -79,9 +75,9 @@ public interface CampusDynamicMapper {
      * @return
      */
     @Insert("insert into campus_dynamic (campus_dynamic_type_id,campus_dynamic_name,campus_dynamic_url," +
-            "campus_dynamic_describe,campus_dynamic_views,campus_dynamic_status,remark) " +
+            "campus_dynamic_describe,campus_dynamic_collects,campus_dynamic_views,campus_dynamic_status,remark) " +
             "values (#{campusDynamicType.campusDynamicTypeId},#{campusDynamicName},null,null," +
-            "0,#{campusDynamicStatus},#{remark})")
+            "0,0,#{campusDynamicStatus},#{remark})")
     Integer addCampusDynamic(CampusDynamic campusDynamic);
 
     /**
@@ -129,4 +125,26 @@ public interface CampusDynamicMapper {
     @Select("select * from campus_dynamic where campus_dynamic_id = #{campusDynamicId}")
     @ResultMap("campusDynamicMap")
     CampusDynamic searchCampusDynamicById(@Param("campusDynamicId") Integer campusDynamicId);
+
+    /**
+     * 增加点赞数
+     * @param campusDynamicId 校园动态Id
+     * @param campusDynamicCollects 点赞数
+     * @return
+     */
+    @Update("update campus_dynamic set campus_dynamic_collects=#{campusDynamicCollects+1} " +
+            "WHERE campus_dynamic_id=#{campusDynamicId}")
+    Integer addCollects(@Param("campusDynamicId") Integer campusDynamicId,
+                           @Param("campusDynamicCollects") Integer campusDynamicCollects);
+
+    /**
+     * 减少点赞数
+     * @param campusDynamicId 校园动态Id
+     * @param campusDynamicCollects 点赞数
+     * @return
+     */
+    @Update("update campus_dynamic set campus_dynamic_collects=#{campusDynamicCollects+1} " +
+            "WHERE campus_dynamic_id=#{campusDynamicId}")
+    Integer cutCollects(@Param("campusDynamicId") Integer campusDynamicId,
+                        @Param("campusDynamicCollects") Integer campusDynamicCollects);
 }

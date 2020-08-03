@@ -22,6 +22,8 @@ public class CampusDynamic {
     private String campusDynamicUrl="";
     //文字描述
     private String campusDynamicDescribe;
+    //点赞数
+    private Integer campusDynamicCollects;
     //浏览量
     private Integer campusDynamicViews;
     //发布状态：0未发布 1已发布

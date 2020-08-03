@@ -78,4 +78,22 @@ public interface CampusDynamicService {
      * @return
      */
     CampusDynamic searchCampusDynamicById(@Param("campusDynamicId") Integer campusDynamicId);
+
+    /**
+     * 增加点赞数
+     * @param campusDynamicId 校园动态Id
+     * @param campusDynamicCollects 点赞数
+     * @return
+     */
+    Integer addCollects(@Param("campusDynamicId") Integer campusDynamicId,
+                        @Param("campusDynamicCollects") Integer campusDynamicCollects);
+
+    /**
+     * 减少点赞数
+     * @param campusDynamicId 校园动态Id
+     * @param campusDynamicCollects 点赞数
+     * @return
+     */
+    Integer cutCollects(@Param("campusDynamicId") Integer campusDynamicId,
+                        @Param("campusDynamicCollects") Integer campusDynamicCollects);
 }

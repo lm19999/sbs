@@ -22,6 +22,8 @@ public class GrowthRecord {
     private String growthRecordUrl;
     //文字描述
     private String growthRecordDescribe;
+    //点赞量，默认为0
+    private Integer growthRecordCollects;
     //浏览量，默认为0
     private Integer growthRecordViews;
     //备注
