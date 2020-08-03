@@ -23,7 +23,7 @@ public interface CampusDynamicMapper {
     @Select("select cd.*,cdt.* from campus_dynamic cd " +
             "INNER JOIN campus_dynamic_type cdt ON cd.campus_dynamic_type_id=cdt.campus_dynamic_type_id " +
             "ORDER BY cd.campus_dynamic_id desc")
-    /*@Results(id = "campusDynamicMap",value = {
+    @Results(id = "campusDynamicMap",value = {
                 @Result(id = true, column = "campus_dynamic_id", property = "campusDynamicId"),
                 @Result(column = "campus_dynamic_name", property = "campusDynamicName"),
                 @Result(column = "campus_dynamic_url", property = "campusDynamicUrl"),
@@ -35,12 +35,12 @@ public interface CampusDynamicMapper {
                         one = @One(select = "com.systop.sbs.mapper.CampusDynamicTypeMapper.searchCampusDynamicTypeById",
                                 fetchType = FetchType.LAZY))
             }
-    )*/
-    @Results(
+    )
+    /*@Results(
         @Result(property = "campusDynamicType", column = "campus_dynamic_type_id",
                 one = @One(select = "com.systop.sbs.mapper.CampusDynamicTypeMapper.searchCampusDynamicTypeById",
                         fetchType = FetchType.LAZY))
-    )
+    )*/
     List<CampusDynamic> searchCampusDynamicList();
 
     /**
@@ -51,7 +51,7 @@ public interface CampusDynamicMapper {
             "INNER JOIN campus_dynamic_type cdt ON cd.campus_dynamic_type_id=cdt.campus_dynamic_type_id " +
             "WHERE cd.campus_dynamic_type_id = 1 " +
             "ORDER BY cd.campus_dynamic_id desc")
-//    @ResultMap("campusDynamicMap")
+    @ResultMap("campusDynamicMap")
     List<CampusDynamic> officialNewsList();
 
     /**
@@ -62,7 +62,7 @@ public interface CampusDynamicMapper {
             "INNER JOIN campus_dynamic_type cdt ON cd.campus_dynamic_type_id=cdt.campus_dynamic_type_id " +
             "WHERE cd.campus_dynamic_type_id = 2 " +
             "ORDER BY cd.campus_dynamic_id desc")
-//    @ResultMap("campusDynamicMap")
+    @ResultMap("campusDynamicMap")
     List<CampusDynamic> activityList();
 
     /**
@@ -118,7 +118,8 @@ public interface CampusDynamicMapper {
      */
     @Update("update campus_dynamic set campus_dynamic_status=#{campusDynamicStatus} " +
             "WHERE campus_dynamic_id=#{campusDynamicId}")
-    Integer updateStatus(@Param("campusDynamicId") Integer campusDynamicId,@Param("campusDynamicStatus") Integer campusDynamicStatus);
+    Integer updateStatus(@Param("campusDynamicId") Integer campusDynamicId,
+                         @Param("campusDynamicStatus") Integer campusDynamicStatus);
 
     /**
      * 根据id查询校园动态信息
@@ -126,6 +127,6 @@ public interface CampusDynamicMapper {
      * @return
      */
     @Select("select * from campus_dynamic where campus_dynamic_id = #{campusDynamicId}")
-//    @ResultMap("campusDynamicMap")
+    @ResultMap("campusDynamicMap")
     CampusDynamic searchCampusDynamicById(@Param("campusDynamicId") Integer campusDynamicId);
 }

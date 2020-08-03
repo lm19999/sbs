@@ -4,7 +4,6 @@ import com.systop.sbs.common.pojo.CampusDynamic;
 import com.systop.sbs.common.pojo.CampusDynamicType;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.service.CampusDynamicService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
