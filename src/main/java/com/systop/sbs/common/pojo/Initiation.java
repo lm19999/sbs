@@ -14,14 +14,10 @@ public class Initiation {
     private Integer initiationId;
     //启蒙类型id
     private InitiationType initiationType;
-    //读物标题
-    private String initiationTitle;
-    //读物名称
-    private String initiationName;
-    //读物连接
-    private String initiationUrl;
-    //读物描述
-    private String initiationDescribe;
+    //读物图片
+    private String initiationImg;
+    //读物链接id
+    private InitiationUrl initiationUrl;
     //发布状态：0未发布,1已发布
     private Integer initiationStatus;
     //备注

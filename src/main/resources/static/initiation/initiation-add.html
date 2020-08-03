@@ -23,7 +23,7 @@
         <form class="layui-form">
             <div class="layui-form-item">
                 <label for="upload" class="layui-form-label">
-                    <span class="x-red">*</span>启蒙链接</label>
+                    <span class="x-red">*</span>启蒙图片</label>
                 <div class="layui-input-inline">
                     <input type="file" class="input w50" id="upload" name="file" type="file"/></div>
             </div>
@@ -36,22 +36,12 @@
                     </select></div>
             </div>
             <div class="layui-form-item">
-                <label for="initiationTitle" class="layui-form-label">
-                    <span class="x-red">*</span>启蒙标题</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="initiationTitle" name="initiationTitle" autocomplete="off" class="layui-input"></div>
-            </div>
-            <div class="layui-form-item">
-                <label for="initiationName" class="layui-form-label">
+                <label for="initiationUrlId" class="layui-form-label">
                     <span class="x-red">*</span>启蒙名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="initiationName" name="initiationName" autocomplete="off" class="layui-input"></div>
-            </div>
-            <div class="layui-form-item">
-                <label for="initiationDescribe" class="layui-form-label">
-                    <span class="x-red">*</span>启蒙描述</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="initiationDescribe" name="initiationDescribe" autocomplete="off" class="layui-input"></div>
+                    <select id="initiationUrlId" name="initiationUrlId" lay-filter="initiationUrlName">
+
+                    </select></div>
             </div>
             <div class="layui-form-item">
                 <label for="initiationStatus" class="layui-form-label">
@@ -81,6 +71,7 @@
             var form = layui.form,
                 layer = layui.layer;
 
+            //查询所有的启蒙类型
             $.ajax({
                 type:'post',
                 url:'/initiationType/selectAllInitiationType',
@@ -96,6 +87,26 @@
                     })
                     console.log(html);
                     $('#initiationTypeId').append(html);
+                    form.render();
+                }
+            })
+
+            //查询已有的启蒙的名称
+            $.ajax({
+                type:'post',
+                url:'/initiationUrl/selectAllInitiationUrl',
+                data:{},
+                dataType:'json',
+                success:function (data) {
+                    var html='<option value="-1">请选择启蒙类型</option>';
+                    layui.each(data.data, function(index, item){
+                        console.log(item);
+                        html+=`
+                            <option value="${item.initiationUrlId}">${item.initiationUrlName}</option>
+                        `
+                    })
+                    console.log(html);
+                    $('#initiationUrlId').append(html);
                     form.render();
                 }
             })
@@ -120,9 +131,7 @@
                     var fileObj = img_file.files[0];
                     formdate.append("file",fileObj);
                     formdate.append("initiationTypeId",data.field.initiationTypeId);
-                    formdate.append("initiationTitle",data.field.initiationTitle);
-                    formdate.append("initiationName",data.field.initiationName);
-                    formdate.append("initiationDescribe",data.field.initiationDescribe);
+                    formdate.append("initiationUrlId",data.field.initiationUrlId);
                     formdate.append("initiationStatus",data.field.initiationStatus);
                     formdate.append("remark",data.field.remark);
 
@@ -135,30 +144,30 @@
                         contentType : false,
                         success:function (data) {
                             console.log(data);
-                            // if (data != 0){
-                            //     layer.alert("增加成功", {
-                            //             icon: 6
-                            //         },
-                            //         function() {
-                            //             //关闭当前frame
-                            //             xadmin.close();
-                            //
-                            //             // 可以对父窗口进行刷新
-                            //             xadmin.father_reload();
-                            //         });
-                            // } else {
-                            //     alert("添加失败")
-                            //     layer.alert("增加失败", {
-                            //             icon: 5
-                            //         },
-                            //         function() {
-                            //             //关闭当前frame
-                            //             xadmin.close();
-                            //
-                            //             // 可以对父窗口进行刷新
-                            //             xadmin.father_reload();
-                            //         });
-                            // }
+                            if (data.data != 0){
+                                layer.alert("增加成功", {
+                                        icon: 6
+                                    },
+                                    function() {
+                                        //关闭当前frame
+                                        xadmin.close();
+
+                                        // 可以对父窗口进行刷新
+                                        xadmin.father_reload();
+                                    });
+                            } else {
+                                alert("添加失败")
+                                layer.alert("增加失败", {
+                                        icon: 5
+                                    },
+                                    function() {
+                                        //关闭当前frame
+                                        xadmin.close();
+
+                                        // 可以对父窗口进行刷新
+                                        xadmin.father_reload();
+                                    });
+                            }
 
                         },
                         error:function (res) {
