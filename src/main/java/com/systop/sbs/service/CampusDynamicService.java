@@ -20,6 +20,12 @@ public interface CampusDynamicService {
     List<CampusDynamic> searchCampusDynamicList();
 
     /**
+     * 根据类型查询校园动态信息
+     * @return list
+     */
+    List<CampusDynamic> campusDynamicListByType(@Param("campusDynamicTypeId") Integer campusDynamicTypeId);
+
+    /**
      * 查询官方新闻
      * @return list
      */

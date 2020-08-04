@@ -28,6 +28,11 @@ public class CampusDynamicServiceImpl implements CampusDynamicService {
     }
 
     @Override
+    public List<CampusDynamic> campusDynamicListByType(Integer campusDynamicTypeId) {
+        return campusDynamicMapper.campusDynamicListByType(campusDynamicTypeId);
+    }
+
+    @Override
     public List<CampusDynamic> officialNewsList() {
         return campusDynamicMapper.officialNewsList();
     }
