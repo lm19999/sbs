@@ -8,6 +8,9 @@ public interface BannerService {
 //    查询所有的banner信息
     List<Banner> selectAllBanner();
 
+//    查询所有已经发布的banner信息
+    List<Banner> selectAllBannerByStatus();
+
 //    删除banner信息
     Integer deleteBanner(Integer bannerId);
 

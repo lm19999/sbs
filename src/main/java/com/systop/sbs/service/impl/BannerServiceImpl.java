@@ -20,6 +20,11 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    public List<Banner> selectAllBannerByStatus() {
+        return bannerMapper.selectAllBannerByStatus();
+    }
+
+    @Override
     public Integer deleteBanner(Integer bannerId) {
         return bannerMapper.deleteBanner(bannerId);
     }
