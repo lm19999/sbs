@@ -106,4 +106,28 @@ public interface ParentsMapper {
      */
     @Select("select * from parents where par_id = #{parId}")
     Parents searchParentsById(@Param("parId") Integer parId);
+
+    /**
+     * 家长修改名称
+     * @param parents
+     * @return
+     */
+    @Update("update parents set par_name=#{parName} WHERE par_id=#{parId}")
+    Integer parentsChangeName(Parents parents);
+
+    /**
+     * 家长修改电话
+     * @param parents
+     * @return
+     */
+    @Update("update parents set par_phone=#{parPhone} WHERE par_id=#{parId}")
+    Integer parentsChangePhone(Parents parents);
+
+    /**
+     * 家长修改头像
+     * @param parents
+     * @return
+     */
+    @Update("update parents set par_portrait=#{parPortrait} WHERE par_id=#{parId}")
+    Integer parentsChangeTx(Parents parents);
 }

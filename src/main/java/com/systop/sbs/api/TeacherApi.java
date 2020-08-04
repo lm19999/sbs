@@ -1,16 +1,19 @@
 package com.systop.sbs.api;
 
-import com.systop.sbs.common.pojo.Parents;
 import com.systop.sbs.common.pojo.Teacher;
 import com.systop.sbs.common.util.SbsResult;
+import com.systop.sbs.common.util.UploadImage;
 import com.systop.sbs.service.TeacherService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * @Program: com.systop.sbs.api
@@ -74,5 +77,37 @@ public class TeacherApi {
     public SbsResult showTeacherById(HttpSession session){
         Teacher teacher =(Teacher) session.getAttribute("teacherSession");
         return SbsResult.success(teacherService.searchTeacherByTno(teacher.getTeaNo()));
+    }
+
+    /**
+     * 教师修改姓名
+     * @param session
+     * @param teaName 教师姓名
+     * @return
+     */
+    @RequestMapping("/teacherChangeName")
+    public SbsResult teacherChangeName(HttpSession session,@Param("teaName") String teaName){
+        Teacher teacher =(Teacher) session.getAttribute("teacherSession");
+        Teacher teacher1 = teacherService.searchTeacherByTno(teacher.getTeaNo());
+        if (teacher1 != null){
+            teacher1.setTeaName(teaName);
+            return SbsResult.success(teacherService.teacherChangeName(teacher1));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
+    }
+
+    @RequestMapping("/teacherChangeTx")
+    public SbsResult teacherChangeTx(@Param("teacherTx") MultipartFile teacherTx,
+                                     HttpSession session, HttpServletRequest request)throws IOException {
+        UploadImage uploadImage = new UploadImage();
+        Teacher teacher =(Teacher) session.getAttribute("teacherSession");
+        Teacher teacher1 = teacherService.searchTeacherByTno(teacher.getTeaNo());
+        if (teacher1 != null){
+            teacher1.setTeaPortrait(uploadImage.uploadImage(teacherTx,null,null));
+            return SbsResult.success(teacherService.teacherChangeTx(teacher1));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
     }
 }

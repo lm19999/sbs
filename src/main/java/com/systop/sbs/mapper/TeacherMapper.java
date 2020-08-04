@@ -72,4 +72,21 @@ public interface TeacherMapper {
      */
     @Select("select * from teacher where tea_no = #{teaNo}")
     Teacher searchTeacherByTno(@Param("teaNo") String teaNo);
+
+    /**
+     * 教师修改姓名
+     * @param teacher
+     * @return
+     */
+    @Update("update teacher set tea_name=#{teaName} WHERE tea_no=#{teaNo}")
+    Integer teacherChangeName(Teacher teacher);
+
+
+    /**
+     * 教师修改头像
+     * @param teacher
+     * @return
+     */
+    @Update("update teacher set tea_portrait=#{teaPortrait} WHERE tea_no=#{teaNo}")
+    Integer teacherChangeTx(Teacher teacher);
 }
