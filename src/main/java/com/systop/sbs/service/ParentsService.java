@@ -9,10 +9,40 @@ import java.util.List;
 /**
  * @Program: sbs
  * @Description: TODO   parents的service
- * @Author: 贾小翠
+ * @Author: 贾小翠 张莉
  * @Date: 2020/7/29 14:34
  **/
 public interface ParentsService {
+
+    /**
+     * 家长注册
+     * @param parents 家长
+     * @return
+     */
+    Integer registerParents(Parents parents);
+
+    /**
+     * 家长登录
+     * @param parPhone 家长电话
+     * @param parPwd  家长密码
+     * @return
+     */
+    Parents parentsLogin(@Param("parPhone") String parPhone,@Param("parPwd") String parPwd);
+
+    /**
+     * 忘记密码
+     * @param parPwd
+     * @param parPhone
+     * @return
+     */
+    Integer forgetParentsPwd(@Param("parPwd") String parPwd,@Param("parPhone") String parPhone);
+
+    /**
+     * 退出登录
+     * @param parents
+     * @return
+     */
+    Integer parentsLogout(Parents parents);
 
     /**
      * 查询所有家长信息

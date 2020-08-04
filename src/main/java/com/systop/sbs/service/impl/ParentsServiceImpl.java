@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @Program: sbs
  * @Description: TODO   parents的ServiceImpl
- * @Author: 贾小翠
+ * @Author: 贾小翠  张莉
  * @Date: 2020/7/29 14:35
  **/
 @Service
@@ -19,6 +19,26 @@ public class ParentsServiceImpl implements ParentsService {
 
     @Autowired
     private ParentsMapper parentsMapper;
+
+    @Override
+    public Integer registerParents(Parents parents) {
+        return parentsMapper.registerParents(parents);
+    }
+
+    @Override
+    public Parents parentsLogin(String parPhone, String parPwd) {
+        return parentsMapper.parentsLogin(parPhone, parPwd);
+    }
+
+    @Override
+    public Integer forgetParentsPwd(String parPwd, String parPhone) {
+        return parentsMapper.forgetParentsPwd(parPwd, parPhone);
+    }
+
+    @Override
+    public Integer parentsLogout(Parents parents) {
+        return parentsMapper.parentsLogout(parents);
+    }
 
     @Override
     public List<Parents> searchParentsList() {

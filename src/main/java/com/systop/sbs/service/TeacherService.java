@@ -8,10 +8,25 @@ import java.util.List;
 /**
  * @Program: sbs
  * @Description: TODO teacher的Service
- * @Author: 贾小翠
+ * @Author: 贾小翠 张莉
  * @Date: 2020/7/29 14:50
  **/
 public interface TeacherService {
+
+    /**
+     * 教师登录
+     * @param teaNo 教师工号
+     * @param teaPwd 教师密码
+     * @return
+     */
+    Teacher teaLogin(@Param("teaNo") String teaNo,@Param("teaPwd") String teaPwd);
+
+    /**
+     * 教师退出登录
+     * @param teacher
+     * @return
+     */
+    Integer teacherLogout(Teacher teacher);
 
     /**
      * 查询所有教师信息
