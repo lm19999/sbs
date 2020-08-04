@@ -47,4 +47,14 @@ public class CampusDynamicApi {
             return SbsResult.success(campusDynamicService.campusDynamicListByType(campusDynamicTypeId));
         }
     }
+
+    /**
+     * 单条数据查询
+     * @param campusDynamicId 校园动态id
+     * @return
+     */
+    @PostMapping("/findCampusDynamicById")
+    public SbsResult findCampusDynamicById(@RequestParam("campusDynamicId") Integer campusDynamicId){
+        return SbsResult.success(campusDynamicService.searchCampusDynamicById(campusDynamicId));
+    }
 }

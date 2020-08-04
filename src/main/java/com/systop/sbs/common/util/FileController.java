@@ -33,7 +33,7 @@ public class FileController {
         /*String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
         String newFileName = new Date().getTime() + "." + suffix;*/
 
-        String realPath = request.getSession().getServletContext().getRealPath("/uploadFile/");
+        String realPath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
         System.out.println(realPath);
         File dir = new File(realPath);
         if (!dir.isDirectory()) {//文件目录不存在，就创建一个
@@ -46,7 +46,7 @@ public class FileController {
         String filePath = request.getScheme() + "://"
             + request.getServerName() + ":"
             + request.getServerPort()
-            + "/uploadFile/" + fileName;
+            + "/upload/" + fileName;
         return new FileInfo(1, "上传成功",filePath);
     }
 
