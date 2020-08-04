@@ -13,6 +13,8 @@ import java.util.List;
 public interface InitiationService {
 //    查询所有的启蒙数据
     List<Initiation> selectAllInitiation();
+//    按启蒙类型查询数据
+    List<Initiation> selectAllInitiationByType(Integer initiationTypeId);
 //    添加启蒙数据
     Integer insertInitiation(Initiation initiation);
 //    删除启蒙数据

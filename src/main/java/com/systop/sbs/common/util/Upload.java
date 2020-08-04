@@ -19,7 +19,7 @@ public class Upload {
         /private/var/folders/8x/4zvnbqmj1w33cqmzrpygzbth0000gn/T/tomcat-docbase.5206733816001100271.8080/uploadFile
          */
 
-        String realPath = request.getSession().getServletContext().getRealPath("/uploadFile/");
+        String realPath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
         System.out.println(realPath);
         File dir = new File(realPath);
         if (!dir.isDirectory()) {//文件目录不存在，就创建一个
@@ -36,13 +36,13 @@ public class Upload {
             String filePath = request.getScheme() + "://" +
                     request.getServerName() + ":"
                     + request.getServerPort()
-                    + "/uploadFile/" + filename;
+                    + "/upload/" + filename;
             //3，返回可供访问的网络路径
-//            return filePath;
+            return filePath;
 
 //            暂时返回本地存储的绝对路径
 //            部署之后返回项目的网络路径！！！！！
-            return fileServer.getAbsolutePath();
+//            return fileServer.getAbsolutePath();
 
         } catch (IOException e) {
             e.printStackTrace();
