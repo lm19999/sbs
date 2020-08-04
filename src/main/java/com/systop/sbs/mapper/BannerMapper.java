@@ -11,6 +11,10 @@ public interface BannerMapper {
     @Select("select * from banner")
     List<Banner> selectAllBanner();
 
+//    查询所有已经发布的banner信息
+    @Select("select * from banner where banner_status = 1")
+    List<Banner> selectAllBannerByStatus();
+
 //    删除banner
     @Delete("delete from banner where banner_id=#{bannerId}")
     Integer deleteBanner(Integer bannerId);
