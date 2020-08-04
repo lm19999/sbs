@@ -21,6 +21,16 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherMapper teacherMapper;
 
     @Override
+    public Teacher teaLogin(String teaNo, String teaPwd) {
+        return teacherMapper.teaLogin(teaNo, teaPwd);
+    }
+
+    @Override
+    public Integer teacherLogout(Teacher teacher) {
+        return teacherMapper.teacherLogout(teacher);
+    }
+
+    @Override
     public List<Teacher> searchTeacherList() {
         return teacherMapper.searchTeacherList();
     }

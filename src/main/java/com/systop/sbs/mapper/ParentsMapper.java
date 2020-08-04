@@ -1,6 +1,5 @@
 package com.systop.sbs.mapper;
 
-import com.systop.sbs.common.pojo.CampusDynamic;
 import com.systop.sbs.common.pojo.Parents;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
@@ -10,11 +9,47 @@ import java.util.List;
 /**
  * @Program: sbs
  * @Description: TODO   parents的mapper
- * @Author: 贾小翠
+ * @Author: 贾小翠 张莉
  * @Date: 2020/7/29 14:15
  **/
 @Mapper
 public interface ParentsMapper {
+
+    /**
+     * 家长注册
+     * @param parents 家长
+     * @return
+     */
+    @Insert("insert into parents (par_name,par_pwd,par_phone,par_portrait,stu_no,par_online_status,remark) " +
+            "values (#{parName},#{parPwd},#{parPhone},#{parPortrait},#{student.stuNo},#{parOnlineStatus},#{remark})")
+    Integer registerParents(Parents parents);
+
+    /**
+     * 家长登录
+     * @param parPhone 家长电话
+     * @param parPwd 家长密码
+     * @return
+     */
+    @Select("select * from parents where par_phone=#{parPhone} and par_pwd=#{parPwd}")
+    Parents parentsLogin(@Param("parPhone") String parPhone,@Param("parPwd") String parPwd);
+
+    /**
+     * 忘记密码
+     * @param parPwd 密码
+     * @param parPhone 电话
+     * @return
+     */
+    @Update("update parents set par_pwd=#{parPwd} WHERE par_phone=#{parPhone}")
+    Integer forgetParentsPwd(@Param("parPwd") String parPwd,@Param("parPhone") String parPhone);
+
+    /**
+     * 退出登录
+     * @param parents
+     * @return
+     */
+    @Update("update parents set par_online_status=1 WHERE par_phone=#{parPhone}")
+    Integer parentsLogout(Parents parents);
+
     /**
      * 查询所有家长信息
      * @return list
@@ -59,7 +94,7 @@ public interface ParentsMapper {
      * @return
      */
     @Update("update parents set par_name=#{parName},par_pwd=#{parPwd},par_phone=#{parPhone},par_portrait=#{parPortrait}," +
-            "stu_no=#{student.stuNo},par_online_status=#{parOnlineStatus},remark=#{remark} " +
+            "stu_no=#{student.stuNo},par_online_status=0,remark=#{remark} " +
             "WHERE par_id=#{parId}")
     Integer updateParents(Parents parents);
 
