@@ -1,5 +1,6 @@
 package com.systop.sbs.api;
 
+import com.systop.sbs.common.pojo.Parents;
 import com.systop.sbs.common.pojo.Teacher;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.service.TeacherService;
@@ -64,4 +65,14 @@ public class TeacherApi {
         }
     }
 
+    /**
+     * session获取登录的用户并展示相应信息
+     * @param session
+     * @return
+     */
+    @RequestMapping("/showTeacherById")
+    public SbsResult showTeacherById(HttpSession session){
+        Teacher teacher =(Teacher) session.getAttribute("teacherSession");
+        return SbsResult.success(teacherService.searchTeacherByTno(teacher.getTeaNo()));
+    }
 }
