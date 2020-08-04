@@ -36,6 +36,17 @@ public interface GrowthRecordMapper {
     })
     List<GrowthRecord> searchGrowthRecordList();
 
+    /**
+     * 根据家长查询成长记录
+     * @return list
+     */
+    @Select("select gr.*,par.* from growth_record gr " +
+            "INNER JOIN parents par ON gr.growth_record_par_id=par.par_id " +
+            "WHERE gr.par_id=#{parId} " +
+            "ORDER BY cd.growth_record_id desc")
+    @ResultMap("growthRecordMap")
+    List<GrowthRecord> growthRecordListByPar(@Param("parId") Integer parId);
+
 
     /**
      * 删除成长记录信息
