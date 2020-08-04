@@ -63,7 +63,8 @@ public interface GrowthRecordMapper {
      */
     @Update("update campus_dynamic set growth_record_par_id=#{parents.parId}," +
             "growth_record_position=#{growthRecordPosition},growth_record_url=#{growthRecordUrl}," +
-            "growth_record_describe=#{growthRecordDescribe},growth_record_views=#{growthRecordViews},remark=#{remark} " +
+            "growth_record_describe=#{growthRecordDescribe},growth_record_collects=#{growthRecordCollects}," +
+            "growth_record_views=#{growthRecordViews},remark=#{remark} " +
             "WHERE growth_record_id=#{growthRecordId}")
     Integer updateGrowthRecord(GrowthRecord growthRecord);
 

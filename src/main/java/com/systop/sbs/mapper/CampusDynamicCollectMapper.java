@@ -75,7 +75,7 @@ public interface CampusDynamicCollectMapper {
      * @return
      */
     @Select("select * from campus_dynamic_collect " +
-            "where tea_no=#{teaNo}")
+            "where par_id=#{parId}")
     List<CampusDynamicCollect> parCollectList(@Param("parId") Integer parId);
 
 }
