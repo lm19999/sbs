@@ -64,4 +64,19 @@ public class ParentsServiceImpl implements ParentsService {
     public Parents searchParentsById(Integer parId) {
         return parentsMapper.searchParentsById(parId);
     }
+
+    @Override
+    public Integer parentsChangeName(Parents parents) {
+        return parentsMapper.parentsChangeName(parents);
+    }
+
+    @Override
+    public Integer parentsChangePhone(Parents parents) {
+        return parentsMapper.parentsChangePhone(parents);
+    }
+
+    @Override
+    public Integer parentsChangeTx(Parents parents) {
+        return parentsMapper.parentsChangeTx(parents);
+    }
 }

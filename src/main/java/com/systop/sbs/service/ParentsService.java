@@ -78,4 +78,25 @@ public interface ParentsService {
      * @return
      */
     Parents searchParentsById(@Param("parId") Integer parId);
+
+    /**
+     * 家长修改名称
+     * @param parents
+     * @return
+     */
+    Integer parentsChangeName(Parents parents);
+
+    /**
+     * 家长修改电话
+     * @param parents
+     * @return
+     */
+    Integer parentsChangePhone(Parents parents);
+
+    /**
+     * 家长修改头像
+     * @param parents
+     * @return
+     */
+    Integer parentsChangeTx(Parents parents);
 }

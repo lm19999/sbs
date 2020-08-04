@@ -62,4 +62,19 @@ public interface TeacherService {
      * @return  teacher
      */
     Teacher searchTeacherByTno(@Param("teaNo") String teaNo);
+
+    /**
+     * 教师修改姓名
+     * @param teacher
+     * @return
+     */
+    Integer teacherChangeName(Teacher teacher);
+
+
+    /**
+     * 教师修改头像
+     * @param teacher
+     * @return
+     */
+    Integer teacherChangeTx(Teacher teacher);
 }

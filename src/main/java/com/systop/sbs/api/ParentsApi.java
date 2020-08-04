@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.systop.sbs.common.pojo.Parents;
 import com.systop.sbs.common.util.ComFunctionUtils;
 import com.systop.sbs.common.util.SbsResult;
+import com.systop.sbs.common.util.UploadImage;
 import com.systop.sbs.common.util.WebClientUtils;
 import com.systop.sbs.service.ParentsService;
 import org.apache.ibatis.annotations.Param;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -136,6 +139,7 @@ public class ParentsApi {
             parents.setParOnlineStatus(0);
             parentsService.updateParents(parents);
             session.setAttribute("parentSession",parents);
+            System.out.println(parents);
             return SbsResult.success(parents);
         }else {
             return SbsResult.fail("500","没有数据");
@@ -194,13 +198,74 @@ public class ParentsApi {
 
     /**
      * session获取登录的用户并展示相应信息
-     * @param session
      * @return
      */
     @RequestMapping("/showParentById")
-    public SbsResult showParentById(HttpSession session){
+    public SbsResult showParentById( HttpSession session){
         Parents parents =(Parents) session.getAttribute("parentSession");
-        return SbsResult.success(parentsService.searchParentsById(parents.getParId()));
+        System.out.println("========="+parents);
+        if (parents != null){
+            return SbsResult.success(parentsService.searchParentsById(parents.getParId()));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
     }
 
+    /**
+     * 修改名称
+     * @param session
+     * @param parName 家长名称
+     * @return
+     */
+    @RequestMapping("/parentsChangeName")
+    public SbsResult parentsChangeName(HttpSession session,@Param("parName") String parName){
+        Parents parents =(Parents) session.getAttribute("parentSession");
+        Parents parent =parentsService.searchParentsById(parents.getParId());
+        if (parent != null){
+            parent.setParName(parName);
+            return SbsResult.success(parentsService.parentsChangeName(parent));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
+    }
+
+    /**
+     * 修改电话
+     * @param session
+     * @param parPhone 家长电话
+     * @return
+     */
+    @RequestMapping("/parentsChangePhone")
+    public SbsResult parentsChangePhone(HttpSession session,@Param("parPhone") String parPhone){
+        Parents parents =(Parents) session.getAttribute("parentSession");
+        Parents parent =parentsService.searchParentsById(parents.getParId());
+        if (parent != null){
+            parent.setParPhone(parPhone);
+            return SbsResult.success(parentsService.parentsChangeName(parent));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
+    }
+
+    /**
+     * 家长修改头像
+     * @param parentsTx 头像图片
+     * @param session
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/parentsChangeTx")
+    public SbsResult parentsChangeTx(@Param("parentsTx") MultipartFile parentsTx,
+                                     HttpSession session, HttpServletRequest request)throws IOException {
+        UploadImage uploadImage = new UploadImage();
+        Parents parents =(Parents) session.getAttribute("parentSession");
+        Parents parent =parentsService.searchParentsById(parents.getParId());
+        if (parent != null){
+            parent.setParPortrait(uploadImage.uploadImage(parentsTx,null,null));
+            return  SbsResult.success(parentsService.parentsChangeTx(parent));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
+    }
 }

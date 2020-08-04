@@ -54,4 +54,15 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher searchTeacherByTno(String teaNo) {
         return teacherMapper.searchTeacherByTno(teaNo);
     }
+
+    @Override
+    public Integer teacherChangeName(Teacher teacher) {
+        return teacherMapper.teacherChangeName(teacher);
+    }
+
+    @Override
+    public Integer teacherChangeTx(Teacher teacher) {
+        return teacherMapper.teacherChangeTx(teacher);
+    }
+
 }
