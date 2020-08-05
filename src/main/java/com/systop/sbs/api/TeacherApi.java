@@ -97,6 +97,14 @@ public class TeacherApi {
         }
     }
 
+    /**
+     * 教师修改头像
+     * @param teacherTx 头像
+     * @param session
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/teacherChangeTx")
     public SbsResult teacherChangeTx(@Param("teacherTx") MultipartFile teacherTx,
                                      HttpSession session, HttpServletRequest request)throws IOException {
