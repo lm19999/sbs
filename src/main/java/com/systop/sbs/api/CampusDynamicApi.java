@@ -6,6 +6,11 @@ import com.systop.sbs.service.CampusDynamicTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @Program: sbs
  * @Description: TODO
@@ -56,5 +61,30 @@ public class CampusDynamicApi {
     @PostMapping("/findCampusDynamicById")
     public SbsResult findCampusDynamicById(@RequestParam("campusDynamicId") Integer campusDynamicId){
         return SbsResult.success(campusDynamicService.searchCampusDynamicById(campusDynamicId));
+    }
+
+    /**
+     * @Title: getPictureUrl
+     * @Description: 从校园动态详情中获取移动端校园动态列表所显示的图片url
+     * @param context 单位详情html代码
+     * @return 第一张图片的url
+     */
+    @PostMapping("/getPictureUrl")
+    public SbsResult getPictureUrl(@RequestParam("campusDynamicDescribe") String context){
+        //取出context中的img标签
+        Matcher matcher = Pattern.compile("<img.*src=(.*?)[^>]*?>").matcher(context);
+        List<String> imageList = new ArrayList<String>();
+        while(matcher.find()){
+            imageList.add(matcher.group());
+        }
+        //对每个img标签匹配图片地址
+        for(String url : imageList){
+            Matcher pictureUrl = Pattern.compile("http:\"?(.*?)(\"|>|\\s+)").matcher(url);
+            while(pictureUrl.find()){
+                //这里因为业务需求，返回了第一个，可以根据自身需要返回List<String>
+                return SbsResult.success(pictureUrl.group().substring(0, pictureUrl.group().length() - 1));
+            }
+        }
+        return SbsResult.success();
     }
 }
