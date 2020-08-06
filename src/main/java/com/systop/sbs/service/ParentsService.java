@@ -99,4 +99,18 @@ public interface ParentsService {
      * @return
      */
     Integer parentsChangeTx(Parents parents);
+
+    /**
+     * 家长登录后，为在线状态
+     * @param parents 家长
+     * @return
+     */
+    Integer parentsLoginStatus(Parents parents);
+
+    /**
+     * 家长退出登录后，为离线状态
+     * @param parents 家长
+     * @return
+     */
+    Integer parentsLogoutStatus(Parents parents);
 }

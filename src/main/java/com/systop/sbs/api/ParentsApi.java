@@ -131,23 +131,38 @@ public class ParentsApi {
      * @param parPwd  密码
      * @return
      */
-    @RequestMapping("/parentsLogin")
+    /*@RequestMapping("/parentsLogin")
     public SbsResult parentsLogin(@Param("parPhone") String parPhone, @Param("parPwd") String parPwd,
                                   HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
 
         Parents parents = parentsService.parentsLogin(parPhone, parPwd);
         if (parents != null){
-            parents.setParOnlineStatus(0);
-            parentsService.updateParents(parents);
+//            parentsService.updateParentsStatus(parents);
             session.setAttribute("parentSession",parents);
             System.out.println(parents+"+++++++++++++"+session.getId());
             return SbsResult.success(parents);
         }else {
             return SbsResult.fail("500","没有数据");
         }
+    }*/
+
+    @RequestMapping("/parentsLogin")
+    public SbsResult parentsLogin(@Param("parPhone") String parPhone, @Param("parPwd") String parPwd){
+        return SbsResult.success(parentsService.parentsLogin(parPhone, parPwd));
     }
 
+    /**
+     * 修改登录状态
+     * @param parId
+     * @return
+     */
+    @RequestMapping("/updateParentsStatus")
+    public SbsResult updateParentsStatus(@Param("parId") Integer parId){
+        Parents parents = parentsService.searchParentsById(parId);
+        System.out.println(parents);
+        return SbsResult.success(parentsService.parentsLoginStatus(parents));
+    }
 
     /**
      * 忘记密码
@@ -182,10 +197,9 @@ public class ParentsApi {
 
     /**
      * 退出登录
-     * @param session
      * @return
      */
-    @RequestMapping("/parentsLogout")
+    /*@RequestMapping("/parentsLogout")
     public SbsResult parentsLogout(HttpSession session){
         Parents parents =(Parents) session.getAttribute("parentSession");
         Parents parent = parentsService.searchParentsById(parents.getParId());
@@ -194,6 +208,16 @@ public class ParentsApi {
             parentsService.parentsLogout(parent);
             session.removeAttribute("parentSession");
             return SbsResult.success(200,"成功");
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
+    }*/
+
+    @RequestMapping("/parentsLogout")
+    public SbsResult parentsLogout(@Param("parId") Integer parId){
+        Parents parent = parentsService.searchParentsById(parId);
+        if (parent != null){
+            return SbsResult.success(parentsService.parentsLogoutStatus(parent));
         }else {
             return SbsResult.fail("500","没有数据");
         }
@@ -266,7 +290,7 @@ public class ParentsApi {
         Parents parent = parentsService.searchParentsById(parId);
         if (parent != null){
             parent.setParPhone(parPhone);
-            return SbsResult.success(parentsService.parentsChangeName(parent));
+            return SbsResult.success(parentsService.parentsChangePhone(parent));
         }else {
             return SbsResult.fail("500","没有数据");
         }
@@ -275,12 +299,10 @@ public class ParentsApi {
     /**
      * 家长修改头像
      * @param parentsTx 头像图片
-     * @param session
-     * @param request
      * @return
      * @throws IOException
      */
-    @RequestMapping("/parentsChangeTx")
+    /*@RequestMapping("/parentsChangeTx")
     public SbsResult parentsChangeTx(@Param("parentsTx") MultipartFile parentsTx,
                                      HttpSession session, HttpServletRequest request)throws IOException {
         UploadImage uploadImage = new UploadImage();
@@ -292,5 +314,18 @@ public class ParentsApi {
         }else {
             return SbsResult.fail("500","没有数据");
         }
+    }*/
+
+    @RequestMapping("/parentsChangeTx")
+    public SbsResult parentsChangeTx(@Param("parId") Integer parId,@Param("parentsTx") MultipartFile parentsTx)throws IOException {
+        UploadImage uploadImage = new UploadImage();
+        Parents parent = parentsService.searchParentsById(parId);
+        if (parent != null){
+            parent.setParPortrait(uploadImage.uploadImage(parentsTx,null,null));
+            return  SbsResult.success(parentsService.parentsChangeTx(parent));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
     }
+
 }

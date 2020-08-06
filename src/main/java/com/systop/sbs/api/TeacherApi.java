@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -22,7 +21,7 @@ import java.io.IOException;
  * @Date: 2020/8/3 18:59
  **/
 @RestController
-@CrossOrigin
+@CrossOrigin(allowCredentials ="true",allowedHeaders = "*")
 @RequestMapping("/teacherApi")
 public class TeacherApi {
 
@@ -51,10 +50,9 @@ public class TeacherApi {
 
     /**
      * 教师退出登录
-     * @param session
      * @return
      */
-    @RequestMapping("/teacherLogout")
+    /*@RequestMapping("/teacherLogout")
     public SbsResult teacherLogout(HttpSession session){
         Teacher teacher =(Teacher) session.getAttribute("teacherSession");
         Teacher teacher1 = teacherService.searchTeacherByTno(teacher.getTeaNo());
@@ -63,6 +61,15 @@ public class TeacherApi {
             teacherService.teacherLogout(teacher1);
             session.removeAttribute("teacherSession");
             return SbsResult.success(200,"成功");
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
+    }*/
+    @RequestMapping("/teacherLogout")
+    public SbsResult teacherLogout(@Param("teaNo") String teaNo){
+        Teacher teacher1 = teacherService.searchTeacherByTno(teaNo);
+        if (teacher1 != null){
+            return SbsResult.success(teacherService.teacherLogout(teacher1));
         }else {
             return SbsResult.fail("500","没有数据");
         }
@@ -76,19 +83,33 @@ public class TeacherApi {
     @RequestMapping("/showTeacherById")
     public SbsResult showTeacherById(HttpSession session){
         Teacher teacher =(Teacher) session.getAttribute("teacherSession");
-        return SbsResult.success(teacherService.searchTeacherByTno(teacher.getTeaNo()));
+        if(teacher != null){
+            return SbsResult.success(teacherService.searchTeacherByTno(teacher.getTeaNo()));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
     }
 
     /**
      * 教师修改姓名
-     * @param session
      * @param teaName 教师姓名
      * @return
      */
-    @RequestMapping("/teacherChangeName")
+    /*@RequestMapping("/teacherChangeName")
     public SbsResult teacherChangeName(HttpSession session,@Param("teaName") String teaName){
         Teacher teacher =(Teacher) session.getAttribute("teacherSession");
         Teacher teacher1 = teacherService.searchTeacherByTno(teacher.getTeaNo());
+        if (teacher1 != null){
+            teacher1.setTeaName(teaName);
+            return SbsResult.success(teacherService.teacherChangeName(teacher1));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
+    }*/
+
+    @RequestMapping("/teacherChangeName")
+    public SbsResult teacherChangeName(@Param("teaNo") String teaNo,@Param("teaName") String teaName){
+        Teacher teacher1 = teacherService.searchTeacherByTno(teaNo);
         if (teacher1 != null){
             teacher1.setTeaName(teaName);
             return SbsResult.success(teacherService.teacherChangeName(teacher1));
@@ -100,17 +121,13 @@ public class TeacherApi {
     /**
      * 教师修改头像
      * @param teacherTx 头像
-     * @param session
-     * @param request
      * @return
      * @throws IOException
      */
     @RequestMapping("/teacherChangeTx")
-    public SbsResult teacherChangeTx(@Param("teacherTx") MultipartFile teacherTx,
-                                     HttpSession session, HttpServletRequest request)throws IOException {
+    public SbsResult teacherChangeTx(@Param("teaNo") String teaNo,@Param("teacherTx") MultipartFile teacherTx)throws IOException {
         UploadImage uploadImage = new UploadImage();
-        Teacher teacher =(Teacher) session.getAttribute("teacherSession");
-        Teacher teacher1 = teacherService.searchTeacherByTno(teacher.getTeaNo());
+        Teacher teacher1 = teacherService.searchTeacherByTno(teaNo);
         if (teacher1 != null){
             teacher1.setTeaPortrait(uploadImage.uploadImage(teacherTx,null,null));
             return SbsResult.success(teacherService.teacherChangeTx(teacher1));
