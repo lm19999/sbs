@@ -1,5 +1,6 @@
 package com.systop.sbs.common.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,6 +13,7 @@ import java.util.Date;
  * @Date: 2020/7/28 10:42
  **/
 @Data
+@JsonIgnoreProperties(value = {"handler"})
 public class GrowthRecordComment {
     //成长记录评论id
     private Integer growthCommentId;

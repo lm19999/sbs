@@ -20,6 +20,12 @@ public interface CampusDynamicService {
     List<CampusDynamic> searchCampusDynamicList();
 
     /**
+     * 查询前三条动态
+     * @return
+     */
+    List<CampusDynamic> campusDynamicTop();
+
+    /**
      * 根据类型查询校园动态信息
      * @return list
      */

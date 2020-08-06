@@ -1,5 +1,6 @@
 package com.systop.sbs.common.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * @Date: 2020/7/28 10:55
  **/
 @Data
+@JsonIgnoreProperties(value = {"handler"})
 public class CampusDynamicCollect {
     //校园动态点赞id
     private Integer campus_dynamic_collect_id;

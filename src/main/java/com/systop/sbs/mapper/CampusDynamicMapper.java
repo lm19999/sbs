@@ -40,6 +40,17 @@ public interface CampusDynamicMapper {
     List<CampusDynamic> searchCampusDynamicList();
 
     /**
+     * 查询前三条动态
+     * @return
+     */
+    @Select("select cd.*,cdt.* from campus_dynamic cd " +
+            "INNER JOIN campus_dynamic_type cdt ON cd.campus_dynamic_type_id=cdt.campus_dynamic_type_id " +
+            "ORDER BY cd.campus_dynamic_id desc " +
+            "LIMIT 0,3")
+    @ResultMap("campusDynamicMap")
+    List<CampusDynamic> campusDynamicTop();
+
+    /**
      * 根据类型查询校园动态信息
      * @return list
      */

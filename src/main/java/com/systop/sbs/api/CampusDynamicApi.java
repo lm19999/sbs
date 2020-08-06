@@ -33,9 +33,22 @@ public class CampusDynamicApi {
     @GetMapping("/campusDynamicTypeList")
     public SbsResult campusDynamicTypeList(){
         if (campusDynamicTypeService.searchCampusDynamicTypeList().size() == 0){
-            return SbsResult.fail("300","暂无数据");
+            return SbsResult.fail("500","暂无数据");
         } else {
             return SbsResult.success(campusDynamicTypeService.searchCampusDynamicTypeList());
+        }
+    }
+
+    /**
+     * 查询所有校园动态类型信息
+     * @return SbsResult
+     */
+    @GetMapping("/campusDynamicTop")
+    public SbsResult campusDynamicTop(){
+        if (campusDynamicService.campusDynamicTop().size() <= 0){
+            return SbsResult.fail("500","暂无数据");
+        } else {
+            return SbsResult.success(campusDynamicService.campusDynamicTop());
         }
     }
 
@@ -47,7 +60,7 @@ public class CampusDynamicApi {
     @PostMapping("/campusDynamicListByType")
     public SbsResult campusDynamicListByType(@RequestParam("campusDynamicTypeId") Integer campusDynamicTypeId){
         if (campusDynamicService.campusDynamicListByType(campusDynamicTypeId).size() == 0){
-            return SbsResult.fail("300","暂无数据");
+            return SbsResult.fail("500","暂无数据");
         } else {
             return SbsResult.success(campusDynamicService.campusDynamicListByType(campusDynamicTypeId));
         }
