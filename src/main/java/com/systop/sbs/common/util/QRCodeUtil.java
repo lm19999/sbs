@@ -56,7 +56,7 @@ public class QRCodeUtil {
      * @param size     生成的二维码图片尺寸 可以自定义或者默认（250）
      * @param logoPath logo的存放位置
      */
-    public static boolean zxingCodeCreate(String content, String path, Integer size, String logoPath) {
+    public static String zxingCodeCreate(String content, String path, Integer size, String logoPath) {
         try {
             //图片类型
             String imageType = "jpg";
@@ -65,15 +65,15 @@ public class QRCodeUtil {
             //获得随机数
             Random random = new Random();
             //生成二维码存放文件
-            File file = new File(path+random.nextInt(1000)+".jpg");
+            File file = new File(path+content+".jpg");
             if (!file.exists()) {
                 file.mkdirs();
             }
             ImageIO.write(image, imageType, file);
-            return true;
+            return path+content+".jpg";
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return "";
         }
     }
 
