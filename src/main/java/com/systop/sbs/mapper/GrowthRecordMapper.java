@@ -19,9 +19,10 @@ public interface GrowthRecordMapper {
      * 查询所有成长记录信息
      * @return list
      */
-    @Select("select gr.*,par.* from growth_record gr " +
+    @Select("select gr.*,par.*,stu.* from growth_record gr " +
             "INNER JOIN parents par ON gr.growth_record_par_id=par.par_id " +
-            "ORDER BY cd.growth_record_id desc")
+            "INNER JOIN student stu ON par.stu_no=stu.stu_no " +
+            "ORDER BY gr.growth_record_id desc")
     @Results(id = "growthRecordMap",value = {
             @Result(id = true,column = "growth_record_id",property = "growthRecordId"),
             @Result(column = "growth_record_position",property = "growthRecordPosition"),
@@ -32,7 +33,7 @@ public interface GrowthRecordMapper {
             @Result(column = "remark",property = "remark"),
             @Result(property = "parents",column = "growth_record_par_id",
                     one = @One(select = "com.systop.sbs.mapper.ParentsMapper.searchParentsById",
-                            fetchType = FetchType.LAZY)),
+                            fetchType = FetchType.LAZY))
     })
     List<GrowthRecord> searchGrowthRecordList();
 
@@ -43,7 +44,7 @@ public interface GrowthRecordMapper {
     @Select("select gr.*,par.* from growth_record gr " +
             "INNER JOIN parents par ON gr.growth_record_par_id=par.par_id " +
             "WHERE gr.par_id=#{parId} " +
-            "ORDER BY cd.growth_record_id desc")
+            "ORDER BY gr.growth_record_id desc")
     @ResultMap("growthRecordMap")
     List<GrowthRecord> growthRecordListByPar(@Param("parId") Integer parId);
 

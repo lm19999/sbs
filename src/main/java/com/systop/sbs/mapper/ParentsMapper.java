@@ -104,7 +104,10 @@ public interface ParentsMapper {
      * @param parId 家长Id
      * @return
      */
-    @Select("select * from parents where par_id = #{parId}")
+    @Select("select par.*,stu.* from parents par " +
+            "INNER JOIN student stu ON par.stu_no=stu.stu_no " +
+            "where par.par_id = #{parId}")
+    @ResultMap("parentsMap")
     Parents searchParentsById(@Param("parId") Integer parId);
 
     /**

@@ -26,6 +26,11 @@ public class GrowthRecordServiceImpl implements GrowthRecordService {
     }
 
     @Override
+    public List<GrowthRecord> growthRecordListByPar(Integer parId) {
+        return growthRecordMapper.growthRecordListByPar(parId);
+    }
+
+    @Override
     public Integer deleteGrowthRecord(Integer growthRecordId) {
         return growthRecordMapper.deleteGrowthRecord(growthRecordId);
     }

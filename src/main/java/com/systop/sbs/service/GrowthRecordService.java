@@ -19,6 +19,11 @@ public interface GrowthRecordService {
      */
     List<GrowthRecord> searchGrowthRecordList();
 
+    /**
+     * 根据家长查询成长记录
+     * @return list
+     */
+    List<GrowthRecord> growthRecordListByPar(@Param("parId") Integer parId);
 
     /**
      * 删除成长记录信息
@@ -29,7 +34,7 @@ public interface GrowthRecordService {
 
     /**
      * 添加成长记录信息
-     * @param campusDynamic 成长记录
+     * @param growthRecord 成长记录
      * @return
      */
     Integer addGrowthRecord(GrowthRecord growthRecord);
