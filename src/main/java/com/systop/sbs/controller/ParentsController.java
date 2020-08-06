@@ -5,10 +5,7 @@ import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.service.ParentsService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/parents")
+@CrossOrigin(allowCredentials ="true",allowedHeaders = "*")
 public class ParentsController {
 
     @Autowired
@@ -59,7 +57,7 @@ public class ParentsController {
      * @return
      */
     @PostMapping("/searchParentsById")
-    public SbsResult searchParentsById(@Param("parId") Integer parId){
+        public SbsResult searchParentsById(@Param("parId") Integer parId){
         return SbsResult.success(parentsService.searchParentsById(parId));
     }
 
