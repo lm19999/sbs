@@ -30,8 +30,8 @@ import java.util.Map;
  * @Author: ZhangLi
  * @Date: 2020/8/3 11:23
  **/
+@CrossOrigin(allowCredentials ="true",allowedHeaders = "*")
 @RestController
-@CrossOrigin
 @RequestMapping("/parentsApi")
 public class ParentsApi {
 
@@ -129,22 +129,25 @@ public class ParentsApi {
      * 家长登录
      * @param parPhone 电话
      * @param parPwd  密码
-     * @param session
      * @return
      */
     @RequestMapping("/parentsLogin")
-    public SbsResult parentsLogin(@Param("parPhone") String parPhone, @Param("parPwd") String parPwd, HttpSession session){
+    public SbsResult parentsLogin(@Param("parPhone") String parPhone, @Param("parPwd") String parPwd,
+                                  HttpServletRequest request, HttpServletResponse response){
+        HttpSession session = request.getSession();
+
         Parents parents = parentsService.parentsLogin(parPhone, parPwd);
         if (parents != null){
             parents.setParOnlineStatus(0);
             parentsService.updateParents(parents);
             session.setAttribute("parentSession",parents);
-            System.out.println(parents);
+            System.out.println(parents+"+++++++++++++"+session.getId());
             return SbsResult.success(parents);
         }else {
             return SbsResult.fail("500","没有数据");
         }
     }
+
 
     /**
      * 忘记密码
@@ -201,9 +204,10 @@ public class ParentsApi {
      * @return
      */
     @RequestMapping("/showParentById")
-    public SbsResult showParentById( HttpSession session){
+    public SbsResult showParentById(  HttpServletRequest request, HttpServletResponse response){
+        HttpSession session = request.getSession();
         Parents parents =(Parents) session.getAttribute("parentSession");
-        System.out.println("========="+parents);
+        System.out.println(parents+"+++++++++++++"+session.getId());
         if (parents != null){
             return SbsResult.success(parentsService.searchParentsById(parents.getParId()));
         }else {
@@ -211,13 +215,13 @@ public class ParentsApi {
         }
     }
 
+
     /**
      * 修改名称
-     * @param session
      * @param parName 家长名称
      * @return
      */
-    @RequestMapping("/parentsChangeName")
+    /*@RequestMapping("/parentsChangeName")
     public SbsResult parentsChangeName(HttpSession session,@Param("parName") String parName){
         Parents parents =(Parents) session.getAttribute("parentSession");
         Parents parent =parentsService.searchParentsById(parents.getParId());
@@ -227,18 +231,39 @@ public class ParentsApi {
         }else {
             return SbsResult.fail("500","没有数据");
         }
+    }*/
+
+    @RequestMapping("/parentsChangeName")
+    public SbsResult parentsChangeName(@Param("parId") Integer parId,@Param("parName") String parName){
+            Parents parent = parentsService.searchParentsById(parId);
+            if (parent != null){
+                parent.setParName(parName);
+                return SbsResult.success(parentsService.parentsChangeName(parent));
+            }else {
+                return SbsResult.fail("500","没有数据");
+            }
     }
 
     /**
      * 修改电话
-     * @param session
      * @param parPhone 家长电话
      * @return
      */
-    @RequestMapping("/parentsChangePhone")
+    /*@RequestMapping("/parentsChangePhone")
     public SbsResult parentsChangePhone(HttpSession session,@Param("parPhone") String parPhone){
         Parents parents =(Parents) session.getAttribute("parentSession");
         Parents parent =parentsService.searchParentsById(parents.getParId());
+        if (parent != null){
+            parent.setParPhone(parPhone);
+            return SbsResult.success(parentsService.parentsChangeName(parent));
+        }else {
+            return SbsResult.fail("500","没有数据");
+        }
+    }*/
+
+    @RequestMapping("/parentsChangePhone")
+    public SbsResult parentsChangePhone(@Param("parId") Integer parId,@Param("parPhone") String parPhone){
+        Parents parent = parentsService.searchParentsById(parId);
         if (parent != null){
             parent.setParPhone(parPhone);
             return SbsResult.success(parentsService.parentsChangeName(parent));
