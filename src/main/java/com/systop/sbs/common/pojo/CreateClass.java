@@ -10,8 +10,6 @@ import lombok.Data;
  **/
 @Data
 public class CreateClass {
-    //班级id
-    private Integer classId;
     //班级名称
     private String className;
     //班级二维码
