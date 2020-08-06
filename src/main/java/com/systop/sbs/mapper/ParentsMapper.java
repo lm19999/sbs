@@ -34,6 +34,22 @@ public interface ParentsMapper {
     Parents parentsLogin(@Param("parPhone") String parPhone,@Param("parPwd") String parPwd);
 
     /**
+     * 家长登录后，为在线状态
+     * @param parents 家长
+     * @return
+     */
+    @Update("update parents set par_online_status=0 where par_id=#{parId}")
+    Integer parentsLoginStatus(Parents parents);
+
+    /**
+     * 家长退出登录后，为离线状态
+     * @param parents 家长
+     * @return
+     */
+    @Update("update parents set par_online_status=1 where par_id=#{parId}")
+    Integer parentsLogoutStatus(Parents parents);
+
+    /**
      * 忘记密码
      * @param parPwd 密码
      * @param parPhone 电话
@@ -106,7 +122,7 @@ public interface ParentsMapper {
      */
     @Select("select par.*,stu.* from parents par " +
             "INNER JOIN student stu ON par.stu_no=stu.stu_no " +
-            "where par.par_id = #{parId}")
+            "where par.par_id=#{parId}")
     @ResultMap("parentsMap")
     Parents searchParentsById(@Param("parId") Integer parId);
 

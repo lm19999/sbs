@@ -79,4 +79,14 @@ public class ParentsServiceImpl implements ParentsService {
     public Integer parentsChangeTx(Parents parents) {
         return parentsMapper.parentsChangeTx(parents);
     }
+
+    @Override
+    public Integer parentsLoginStatus(Parents parents) {
+        return parentsMapper.parentsLoginStatus(parents);
+    }
+
+    @Override
+    public Integer parentsLogoutStatus(Parents parents) {
+        return parentsMapper.parentsLogoutStatus(parents);
+    }
 }

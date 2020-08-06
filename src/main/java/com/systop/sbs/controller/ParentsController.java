@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2020/7/30 15:54
  **/
 @RestController
-@RequestMapping("/parents")
 @CrossOrigin(allowCredentials ="true",allowedHeaders = "*")
+@RequestMapping("/parents")
 public class ParentsController {
 
     @Autowired
@@ -57,7 +57,7 @@ public class ParentsController {
      * @return
      */
     @PostMapping("/searchParentsById")
-        public SbsResult searchParentsById(@Param("parId") Integer parId){
+    public SbsResult searchParentsById(@Param("parId") Integer parId){
         return SbsResult.success(parentsService.searchParentsById(parId));
     }
 

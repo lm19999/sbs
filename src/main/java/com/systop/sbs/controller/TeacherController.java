@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @Date: 2020/7/30 10:03
  **/
 @RestController
+@CrossOrigin(allowCredentials ="true",allowedHeaders = "*")
 @RequestMapping("/teacher")
 public class TeacherController {
 
