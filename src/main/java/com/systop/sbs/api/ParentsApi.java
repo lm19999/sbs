@@ -3,15 +3,18 @@ package com.systop.sbs.api;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.systop.sbs.common.pojo.Parents;
+import com.systop.sbs.common.pojo.Student;
 import com.systop.sbs.common.util.ComFunctionUtils;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.common.util.UploadImage;
 import com.systop.sbs.common.util.WebClientUtils;
 import com.systop.sbs.service.ParentsService;
+import com.systop.sbs.service.RedisService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,12 +40,15 @@ public class ParentsApi {
 
     @Autowired
     private ParentsService parentsService;
+    @Autowired
+    private RedisService redisService;
+    private String tokenId = "users:";
 
     /**
      * 获取验证码
      */
-    private static String APP_ID = "43367542";
-    private static String APPSecret = "Mg7n0hYP";
+    private static String APP_ID = "42278344";
+    private static String APPSecret = "34QD4VKm";
 
     @RequestMapping("/getCode")
     public void getCode(@RequestParam("parPhone") String parPhone, HttpServletRequest request, HttpServletResponse response){
@@ -52,19 +58,22 @@ public class ParentsApi {
         String code = ComFunctionUtils.createRandom(4);
         System.out.println("验证码："+code);
 
-        HttpSession session = request.getSession();
+        /*HttpSession session = request.getSession();
         json = new JSONObject();
         json.put("parPhone", parPhone);
         json.put("code", code);
         json.put("createTime", System.currentTimeMillis());
         // 将认证码存入SESSION
         session.setAttribute("code", json);
-        session.setAttribute("parPhone",json);
+        session.setAttribute("parPhone",json);*/
 
         MultiValueMap<String, String> params = createParams(parPhone, code);
         Map<String, Object> map = WebClientUtils.wcGet(url, params);
         //返回格式 {"errcode":0,"errmsg":"SUCCESS"}
         System.out.println(new Gson().toJson(map));
+
+        redisService.set(tokenId+parPhone,code);
+        redisService.expire(tokenId+parPhone,900);
     }
 
     private static MultiValueMap<String, String> createParams(String phone, String code) {
@@ -84,11 +93,26 @@ public class ParentsApi {
      * @return
      */
     @RequestMapping("/registerParents")
-    public SbsResult registerParents(Parents parents,@RequestParam("parPhone") String parPhone,
+    public SbsResult registerParents(Parents parents,@RequestParam("parPhone") String parPhone,@RequestParam("stuNo") String stuNo,
                                      HttpServletRequest request, HttpServletResponse response,HttpSession session ){
 
+        Student student = new Student();
+
         String code = request.getParameter("code");
-        JSONObject json = (JSONObject)request.getSession().getAttribute("code");
+
+        String redisCode = redisService.get(tokenId+parPhone);
+        System.out.println("存储在redis中的："+redisCode);
+
+        if (StringUtils.isEmpty(redisCode)){
+            renderData(response,"验证码已失效");
+            return SbsResult.fail("404","验证码已失效");
+        }
+        if (!"".equals(redisCode) && !code.equals(redisCode)){
+            renderData(response,"验证码输入错误");
+            return SbsResult.fail("500","验证码输入错误");
+        }
+
+        /*JSONObject json = (JSONObject)request.getSession().getAttribute("code");
         if (json == null){
             renderData(response, "验证码为空");
             return SbsResult.fail("500","验证码为空");
@@ -104,12 +128,14 @@ public class ParentsApi {
         if((System.currentTimeMillis() - json.getLong("createTime")) > 1000 * 60 * 5){
             renderData(response, "验证码已过期");
             return SbsResult.fail("500","验证码已过期");
-        }
+        }*/
 
+        student.setStuNo(stuNo);
         parents.setParPhone(parPhone);
+        parents.setParName("请设置名称");
         parents.setParPortrait("http://localhost:8080/images/20200803/11/202008031103009978c4986e64c.jpg");
+        parents.setStudent(student);
         parents.setParOnlineStatus(0);
-
         parentsService.registerParents(parents);
         session.setAttribute("parentSession",parents);
 

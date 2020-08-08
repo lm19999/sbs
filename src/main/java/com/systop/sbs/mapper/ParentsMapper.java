@@ -20,8 +20,8 @@ public interface ParentsMapper {
      * @param parents 家长
      * @return
      */
-    @Insert("insert into parents (par_name,par_pwd,par_phone,par_portrait,stu_no,par_online_status,remark) " +
-            "values (#{parName},#{parPwd},#{parPhone},#{parPortrait},#{student.stuNo},#{parOnlineStatus},#{remark})")
+    @Insert("insert into parents (par_phone,stu_no,par_online_status) " +
+            "values (#{parPhone},#{student.stuNo},0)")
     Integer registerParents(Parents parents);
 
     /**
