@@ -25,8 +25,8 @@ public interface InitiationUrlMapper {
     InitiationUrl selectInitiationUrlById(Integer initiationUrlId);
 
 //    添加启蒙链接数据
-    @Insert("insert into initiation_url (initiation_url,initiation_url_name,initiation_url_title,initiation_url_describe,remark)" +
-            " values(#{initiationUrl},#{initiationUrlName},#{initiationUrlTitle},#{initiationUrlDescribe},#{remark})")
+    @Insert("insert into initiation_url (initiation_url,initiation_lrc,initiation_url_name,initiation_url_title,initiation_url_describe,remark)" +
+            " values(#{initiationUrl},#{initiationLrc},#{initiationUrlName},#{initiationUrlTitle},#{initiationUrlDescribe},#{remark})")
     Integer insertInitiationUrl(InitiationUrl initiationUrl);
 
 //    删除启蒙链接

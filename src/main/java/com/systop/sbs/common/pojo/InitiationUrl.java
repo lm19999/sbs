@@ -14,6 +14,8 @@ public class InitiationUrl {
     private Integer initiationUrlId;
     //读物链接
     private String initiationUrl;
+    //儿歌的lrc歌词文件
+    private String initiationLrc;
     //读物名称
     private String initiationUrlName;
     //读物标题
