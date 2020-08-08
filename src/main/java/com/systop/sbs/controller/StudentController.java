@@ -7,6 +7,7 @@ import com.systop.sbs.service.StudentService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,7 @@ import java.util.List;
  * @Date: 2020/7/29 16:23
  **/
 @RestController
+@CrossOrigin(allowCredentials ="true",allowedHeaders = "*")
 @RequestMapping("/student")
 public class StudentController {
 
