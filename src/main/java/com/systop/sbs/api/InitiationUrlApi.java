@@ -23,6 +23,7 @@ public class InitiationUrlApi {
     @Autowired
     InitiationService initiationService;
 
+//    返回lrc文件内容
     @RequestMapping("/readLrc")
     public SbsResult readLrc(@RequestParam("initiationLrc") String initiationLrc){
         if (initiationLrc != null && initiationLrc != "") {

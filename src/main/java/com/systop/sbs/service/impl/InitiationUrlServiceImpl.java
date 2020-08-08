@@ -55,6 +55,7 @@ public class InitiationUrlServiceImpl implements InitiationUrlService {
         return initiationUrlMapper.deleteInitiationUrl(initiationUrlId);
     }
 
+//    批量添加启蒙数据
     @Override
     public Integer batchImport(MultipartFile file) throws Exception {
         int count = 0;
