@@ -35,7 +35,8 @@
 
                 <div class="layui-card-header">
                     <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
-                    <button class="layui-btn" onclick="xadmin.open('添加启蒙类型','./initiationUrl-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+                    <button class="layui-btn" onclick="xadmin.open('导入excel','./initiationUrl-batchImport.html',600,400)"><i class="layui-icon"></i>批量添加</button>
+                    <!--<button class="layui-btn" onclick="xadmin.open('添加启蒙类型','./initiationUrl-add.html',600,400)"><i class="layui-icon"></i>添加</button>-->
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -44,6 +45,7 @@
                             <th>启蒙读物标题</th>
                             <th>启蒙读物名称</th>
                             <th>启蒙读物链接</th>
+                            <th>启蒙儿歌歌词</th>
                             <th>启蒙读物描述</th>
                             <th>备注</th>
                             <th>操作</th>
@@ -104,10 +106,11 @@
                                 <td>${item.initiationUrlTitle}</td>
                                 <td>${item.initiationUrlName}</td>
                                 <td>${item.initiationUrl}</td>
+                                <td>${item.initiationLrc}</td>
                                 <td>${item.initiationUrlDescribe}</td>
                                 <td>${item.remark}</td>
                                 <td class="td-manage">
-                                <a title="删除" onclick="member_del(this,${item.initiationId})" href="javascript:;">
+                                <a title="删除" onclick="member_del(this,${item.initiationUrlId})" href="javascript:;">
                                   <i class="layui-icon">&#xe640;</i>
                                 </a>
                               </td>
@@ -133,32 +136,32 @@
     });
 
     /*banner-删除*/
-    function member_del(obj,id){
-        console.log(id)
-        layer.confirm('确认要删除吗？',function(index){
-            //发异步删除数据
-            $.ajax({
-                type: 'POST',
-                url: '/initiation/deleteInitiation',
-                data: {
-                    initiationId:id
-                },
-                dataType: "json",
-                success: function (data) {
-                    console.log(data)
-                    if (data.code=="200"){
-                        layer.msg('已删除!',{icon:1,time:1000});
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 1000);
-                    }else{
-                        layer.msg('删除失败!',{icon:5,time:1000});
-                    }
-                }
-            })
-
-        });
-    }
+    // function member_del(obj,id){
+    //     console.log(id)
+    //     layer.confirm('确认要删除吗？',function(index){
+    //         //发异步删除数据
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: '/initiationUrl/deleteInitiationUrl',
+    //             data: {
+    //                 initiationUrlId:id
+    //             },
+    //             dataType: "json",
+    //             success: function (data) {
+    //                 console.log(data)
+    //                 if (data.code=="200"){
+    //                     layer.msg('已删除!',{icon:1,time:1000});
+    //                     setTimeout(function () {
+    //                         window.location.reload();
+    //                     }, 1000);
+    //                 }else{
+    //                     layer.msg('删除失败!',{icon:5,time:1000});
+    //                 }
+    //             }
+    //         })
+    //
+    //     });
+    // }
 
 
 

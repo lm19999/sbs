@@ -1,6 +1,7 @@
 package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.InitiationUrl;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface InitiationUrlService {
 
     //    删除启蒙链接
     Integer deleteInitiationUrl(Integer initiationUrlId);
+
+    //    批量导入启蒙数据
+    Integer batchImport(MultipartFile file) throws Exception;
 }

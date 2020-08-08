@@ -58,4 +58,17 @@ public class InitiationUrlController {
     public SbsResult deleteInitiationUrl(@RequestParam("initiationUrlId") Integer initiationUrlId){
         return SbsResult.success(initiationUrlService.deleteInitiationUrl(initiationUrlId));
     }
+
+    /**
+     * 批量导入启蒙文件
+     * @param file 文件
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/batchImport")
+    public SbsResult batchImport(MultipartFile file) throws Exception{
+        int count = initiationUrlService.batchImport(file);
+        System.out.println(count);
+        return SbsResult.success(count);
+    }
 }
