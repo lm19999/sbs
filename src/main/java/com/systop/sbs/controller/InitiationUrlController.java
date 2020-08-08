@@ -60,7 +60,7 @@ public class InitiationUrlController {
     }
 
     /**
-     * 批量导入启蒙文件
+     * 批量导入启蒙数据
      * @param file 文件
      * @return
      * @throws Exception

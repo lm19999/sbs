@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
  **/
 public class ReadFile {
     /**
-     * 从assets目录下读取歌词文件内容
+     * 读取lrc文件
      * @param file 文件
      * @return 文件内容
      */

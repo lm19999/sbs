@@ -47,6 +47,7 @@
                     var formDate = new FormData();
                     formDate.append("file",file);
 
+                    //批量增加启蒙数据
                     $.ajax({
                         type:'post',
                         url:'/initiationUrl/batchImport',
