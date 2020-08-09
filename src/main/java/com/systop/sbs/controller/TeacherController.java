@@ -92,15 +92,14 @@ public class TeacherController {
     public SbsResult updateTeacher(@RequestParam("teaNo") String teaNo, @RequestParam("teaName") String teaName,
                                    @RequestParam("teaPwd") String teaPwd, @RequestParam("teaPortrait") MultipartFile teaPortrait,
                                    @RequestParam("teaType") Integer teaType,@RequestParam("remark") String remark){
-        UploadImage uploadImage = new UploadImage();
         Teacher teacher = new Teacher();
         teacher.setTeaNo(teaNo);
         teacher.setTeaName(teaName);
         teacher.setTeaPwd(teaPwd);
-        teacher.setTeaPortrait(uploadImage.uploadImage(teaPortrait,null,null));
+        teacher.setTeaPortrait(UploadImage.uploadImage(teaPortrait,null,null));
         teacher.setTeaType(teaType);
         teacher.setRemark(remark);
-        System.out.println(uploadImage.uploadImage(teaPortrait,null,null));
+        System.out.println(UploadImage.uploadImage(teaPortrait,null,null));
         return SbsResult.success(teacherService.updateTeacher(teacher));
     }
 }
