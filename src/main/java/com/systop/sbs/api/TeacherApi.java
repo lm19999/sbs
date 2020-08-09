@@ -108,11 +108,10 @@ public class TeacherApi {
     @RequestMapping("/teacherChangeTx")
     public SbsResult teacherChangeTx(@Param("teacherTx") MultipartFile teacherTx,
                                      HttpSession session, HttpServletRequest request)throws IOException {
-        UploadImage uploadImage = new UploadImage();
         Teacher teacher =(Teacher) session.getAttribute("teacherSession");
         Teacher teacher1 = teacherService.searchTeacherByTno(teacher.getTeaNo());
         if (teacher1 != null){
-            teacher1.setTeaPortrait(uploadImage.uploadImage(teacherTx,null,null));
+            teacher1.setTeaPortrait(UploadImage.uploadImage(teacherTx,null,null));
             return SbsResult.success(teacherService.teacherChangeTx(teacher1));
         }else {
             return SbsResult.fail("500","没有数据");

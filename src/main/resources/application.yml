@@ -18,6 +18,14 @@ spring:
     multipart:
       max-file-size: 10Mb
       max-request-size: 10Mb
+  redis:
+    host: 39.105.143.125
+    database: 1
+    port: 7001
+    password: redisTest
+    lettuce:
+      pool:
+        max-wait: 6000
 
 #驼峰命名转换
 mybatis:
