@@ -200,7 +200,20 @@ public class ParentsApi {
     public SbsResult forgetParentsPwd(@Param("parPhone") String parPhone, @Param("parPwd") String parPwd,
                                       HttpServletRequest request, HttpServletResponse response){
         String code = request.getParameter("code");
-        JSONObject json = (JSONObject)request.getSession().getAttribute("code");
+
+        String redisCode = redisService.get(tokenId+parPhone);
+        System.out.println("存储在redis中的："+redisCode);
+
+        if (StringUtils.isEmpty(redisCode)){
+            renderData(response,"验证码已失效");
+            return SbsResult.fail("404","验证码已失效");
+        }
+        if (!"".equals(redisCode) && !code.equals(redisCode)){
+            renderData(response,"验证码输入错误");
+            return SbsResult.fail("500","验证码输入错误");
+        }
+
+        /*JSONObject json = (JSONObject)request.getSession().getAttribute("code");
         if (json == null){
             renderData(response, "验证码为空");
             return SbsResult.fail("500","验证码为空");
@@ -216,9 +229,9 @@ public class ParentsApi {
         if((System.currentTimeMillis() - json.getLong("createTime")) > 1000 * 60 * 5){
             renderData(response, "验证码已过期");
             return SbsResult.fail("500","验证码已过期");
-        }
+        }*/
 
-        return SbsResult.success(parentsService.forgetParentsPwd(parPwd, parPhone));
+        return SbsResult.success(parentsService.forgetParentsPwd(Md5Utils.getMD5Str(parPwd), parPhone));
     }
 
     /**
