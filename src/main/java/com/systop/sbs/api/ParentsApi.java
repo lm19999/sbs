@@ -93,7 +93,8 @@ public class ParentsApi {
      * @return
      */
     @RequestMapping("/registerParents")
-    public SbsResult registerParents(Parents parents,@RequestParam("parPhone") String parPhone,@RequestParam("stuNo") String stuNo,
+    public SbsResult registerParents(Parents parents,@RequestParam("parPhone") String parPhone,
+                                     @RequestParam("stuNo") String stuNo, @Param("parPwd") String parPwd,
                                      HttpServletRequest request, HttpServletResponse response,HttpSession session ){
 
         Student student = new Student();
@@ -133,6 +134,7 @@ public class ParentsApi {
         student.setStuNo(stuNo);
         parents.setParPhone(parPhone);
         parents.setParName("请设置名称");
+        parents.setParPwd(parPwd);
         parents.setParPortrait("http://localhost:8080/images/20200803/11/202008031103009978c4986e64c.jpg");
         parents.setStudent(student);
         parents.setParOnlineStatus(0);
@@ -150,6 +152,7 @@ public class ParentsApi {
             e.printStackTrace();
         }
     }
+
 
     /**
      * 家长登录
