@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -125,11 +126,13 @@ public class TeacherApi {
      * @throws IOException
      */
     @RequestMapping("/teacherChangeTx")
-    public SbsResult teacherChangeTx(@Param("teaNo") String teaNo,@Param("teacherTx") MultipartFile teacherTx)throws IOException {
-        UploadImage uploadImage = new UploadImage();
-        Teacher teacher1 = teacherService.searchTeacherByTno(teaNo);
+
+    public SbsResult teacherChangeTx(@Param("teacherTx") MultipartFile teacherTx,
+                                     HttpSession session, HttpServletRequest request)throws IOException {
+        Teacher teacher =(Teacher) session.getAttribute("teacherSession");
+        Teacher teacher1 = teacherService.searchTeacherByTno(teacher.getTeaNo());
         if (teacher1 != null){
-            teacher1.setTeaPortrait(uploadImage.uploadImage(teacherTx,null,null));
+            teacher1.setTeaPortrait(UploadImage.uploadImage(teacherTx,null,null));
             return SbsResult.success(teacherService.teacherChangeTx(teacher1));
         }else {
             return SbsResult.fail("500","没有数据");

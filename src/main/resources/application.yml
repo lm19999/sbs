@@ -26,7 +26,8 @@ spring:
     timeout: 2000
     lettuce:
       pool:
-        max-wait: 2000
+        max-wait: 6000
+
 #驼峰命名转换
 mybatis:
   configuration:

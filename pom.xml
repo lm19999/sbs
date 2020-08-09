@@ -121,18 +121,26 @@
             <groupId>io.projectreactor.addons</groupId>
             <artifactId>reactor-extra</artifactId>
         </dependency>
+        <!-- json处理工具类-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.68</version>
         </dependency>
-
+        <!-- commons工具-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.2</version>
+        </dependency>
         <!-- redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

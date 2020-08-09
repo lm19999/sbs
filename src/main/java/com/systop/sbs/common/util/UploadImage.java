@@ -2,6 +2,7 @@ package com.systop.sbs.common.util;
 
 
 import net.coobird.thumbnailator.Thumbnails;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -101,6 +102,17 @@ public class UploadImage {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssS");
         Calendar calendar = Calendar.getInstance();
         return df.format(calendar.getTime()) + substring;
+    }
+
+    public static String uploadImages(MultipartFile[] files) {
+        StringBuffer buffer = new StringBuffer();
+        for (MultipartFile file : files) {
+            String imageUrl = uploadImage(file, null, null);
+            if (imageUrl!=null) {
+                buffer.append(imageUrl).append(";");
+            }
+        }
+        return String.valueOf(buffer);
     }
 
 }
