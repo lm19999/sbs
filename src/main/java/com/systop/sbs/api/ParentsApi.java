@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.systop.sbs.common.pojo.Parents;
 import com.systop.sbs.common.pojo.Student;
-import com.systop.sbs.common.util.ComFunctionUtils;
-import com.systop.sbs.common.util.SbsResult;
-import com.systop.sbs.common.util.UploadImage;
-import com.systop.sbs.common.util.WebClientUtils;
+import com.systop.sbs.common.util.*;
 import com.systop.sbs.service.ParentsService;
 import com.systop.sbs.service.RedisService;
 import org.apache.ibatis.annotations.Param;
@@ -134,7 +131,7 @@ public class ParentsApi {
         student.setStuNo(stuNo);
         parents.setParPhone(parPhone);
         parents.setParName("请设置名称");
-        parents.setParPwd(parPwd);
+        parents.setParPwd(Md5Utils.getMD5Str(parPwd));
         parents.setParPortrait("http://localhost:8080/images/20200803/11/202008031103009978c4986e64c.jpg");
         parents.setStudent(student);
         parents.setParOnlineStatus(0);
@@ -178,7 +175,7 @@ public class ParentsApi {
 
     @RequestMapping("/parentsLogin")
     public SbsResult parentsLogin(@Param("parPhone") String parPhone, @Param("parPwd") String parPwd){
-        return SbsResult.success(parentsService.parentsLogin(parPhone, parPwd));
+        return SbsResult.success(parentsService.parentsLogin(parPhone, Md5Utils.getMD5Str(parPwd)));
     }
 
     /**
