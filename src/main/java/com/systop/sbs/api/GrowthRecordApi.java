@@ -1,10 +1,16 @@
 package com.systop.sbs.api;
 
 import com.systop.sbs.common.pojo.GrowthRecord;
+import com.systop.sbs.common.pojo.Parents;
 import com.systop.sbs.common.util.SbsResult;
+import com.systop.sbs.common.util.UploadImage;
 import com.systop.sbs.service.GrowthRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
 
 /**
  * @Program: sbs
@@ -59,5 +65,42 @@ public class GrowthRecordApi {
         } else {
             return SbsResult.fail("300","您没有删除此记录的权限！");
         }
+    }
+
+    /**
+     * 家长添加成长记录
+     * @param parId 家长id
+     * @param growthRecordPosition 位置信息
+     * @param growthRecordUrl   文件
+     * @param growthRecordDescribe  描述
+     * @return
+     * @RequestParam("parId") Integer parId,
+     *                                      @RequestParam("growthRecordPosition") String growthRecordPosition,
+     *                                      @RequestParam("growthRecordUrl") List<MultipartFile> growthRecordUrl,
+     *                                      @RequestParam("growthRecordDescribe") String growthRecordDescribe
+     */
+    @PostMapping(value = "/addGrowthRecord",produces = "application/json;charset=UTF-8")
+    public SbsResult addGrowthRecord(@RequestParam("parId") Integer parId,
+                                     @RequestParam("growthRecordPosition") String growthRecordPosition,
+                                     @RequestParam("growthRecordUrl") List<MultipartFile> growthRecordUrl,
+                                     @RequestParam("growthRecordDescribe") String growthRecordDescribe){
+        GrowthRecord growthRecord = new GrowthRecord();
+        Parents parents = new Parents();
+        UploadImage uploadImage = new UploadImage();
+        parents.setParId(parId);
+        growthRecord.setParents(parents);
+        growthRecord.setGrowthRecordPosition(growthRecordPosition);
+        growthRecord.setGrowthRecordDescribe(growthRecordDescribe);
+        String url = "";
+        if (growthRecordUrl != null && growthRecordUrl.size() > 0) {
+            //循环获取file数组中得文件
+            for (int i = 0; i < growthRecordUrl.size(); i++) {
+                MultipartFile file = growthRecordUrl.get(i);
+                url += uploadImage.uploadImage(file,null,null) + "&";
+            }
+        }
+        System.out.println(url);
+        growthRecord.setGrowthRecordUrl(url);
+        return SbsResult.success(growthRecordService.addGrowthRecord(growthRecord));
     }
 }

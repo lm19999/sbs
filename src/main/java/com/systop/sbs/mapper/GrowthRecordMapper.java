@@ -43,7 +43,7 @@ public interface GrowthRecordMapper {
      */
     @Select("select gr.*,par.* from growth_record gr " +
             "INNER JOIN parents par ON gr.growth_record_par_id=par.par_id " +
-            "WHERE gr.par_id=#{parId} " +
+            "WHERE gr.growth_record_par_id=#{parId} " +
             "ORDER BY gr.growth_record_id desc")
     @ResultMap("growthRecordMap")
     List<GrowthRecord> growthRecordListByPar(@Param("parId") Integer parId);
@@ -65,7 +65,7 @@ public interface GrowthRecordMapper {
     @Insert("insert into growth_record (growth_record_par_id,growth_record_position,growth_record_url," +
             "growth_record_describe,growth_record_collects,growth_record_views,remark) " +
             "values (#{parents.parId},#{growthRecordPosition},#{growthRecordUrl}," +
-            "#{growthRecordDescribe},0,0,#{null})")
+            "#{growthRecordDescribe},0,0,null)")
     Integer addGrowthRecord(GrowthRecord growthRecord);
 
     /**
