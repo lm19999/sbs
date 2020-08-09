@@ -16,12 +16,10 @@ import java.util.concurrent.TimeUnit;
  * 例如：不同学校，不同年级，不同班级  school2：grade3：clazz4
  * 这样Redis图形化工具中会按照冒号，以文件夹分隔开，便于管理
  *
- *
- * @Package: top.yeliusu.ehcache.demo.redis
- * @Description： redisUtils工具类
- * @Author: SongJunWei
- * @Date: 2020/7/30
- * @Modified By:
+ * @Program: sbs
+ * @Description: TODO redisUtils工具类
+ * @Author: 贾小翠
+ * @Date: 2020/8/9 11:28
  */
 @Component
 public class RedisUtils {

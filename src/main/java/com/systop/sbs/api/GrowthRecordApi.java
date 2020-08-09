@@ -3,11 +3,8 @@ package com.systop.sbs.api;
 import com.systop.sbs.common.pojo.GrowthRecord;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.service.GrowthRecordService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @Program: sbs
@@ -45,6 +42,22 @@ public class GrowthRecordApi {
             return SbsResult.fail("300","暂无数据");
         } else {
             return SbsResult.success(growthRecordService.growthRecordListByPar(parId));
+        }
+    }
+
+    /**
+     * 家长删除
+     * @param growthRecordId
+     * @return
+     */
+    @PostMapping("/delGrowthRecord")
+    public SbsResult delGrowthRecord(@RequestParam("growthRecordId") Integer growthRecordId,
+                                     @RequestParam("parId") Integer parId){
+        GrowthRecord growthRecord = growthRecordService.searchGrowthRecordById(growthRecordId);
+        if (parId == growthRecord.getGrowthRecordId()){
+            return SbsResult.success(growthRecordService.deleteGrowthRecord(growthRecordId));
+        } else {
+            return SbsResult.fail("300","您没有删除此记录的权限！");
         }
     }
 }

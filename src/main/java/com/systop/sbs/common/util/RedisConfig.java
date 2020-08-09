@@ -13,15 +13,13 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * @Package: top.yeliusu.ehcache.demo.redis
- * @Description：
- * @Author: SongJunWei
- * @Date: 2020/7/31
- * @Modified By:
- */
+ * @Program: sbs
+ * @Description: TODO
+ * @Author: 贾小翠
+ * @Date: 2020/8/9 10:28
+ **/
 @Configuration
 public class RedisConfig {
-
     @Bean
     public RedisTemplate<String ,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -49,5 +47,4 @@ public class RedisConfig {
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
-
 }
