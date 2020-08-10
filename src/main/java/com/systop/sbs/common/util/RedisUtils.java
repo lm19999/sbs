@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @Description: TODO redisUtils工具类
  * @Author: 贾小翠
  * @Date: 2020/8/9 11:28
+ *
  */
 @Component
 public class RedisUtils {
