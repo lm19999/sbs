@@ -12,10 +12,12 @@ import lombok.Data;
 public class InitiationUrl {
     //读物链接id
     private Integer initiationUrlId;
+    //链接类型
+    private Integer initiationUrlType;
     //读物链接
     private String initiationUrl;
     //儿歌lrc歌词文件
-    private String initiationLrc;
+    private Lrc lrc;
     //读物名称
     private String initiationUrlName;
     //读物标题

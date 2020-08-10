@@ -24,6 +24,4 @@ public interface InitiationUrlService {
     //    删除启蒙链接
     Integer deleteInitiationUrl(Integer initiationUrlId);
 
-    //    批量导入启蒙数据..
-    Integer batchImport(MultipartFile file) throws Exception;
 }

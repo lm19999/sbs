@@ -35,8 +35,8 @@
 
                 <div class="layui-card-header">
                     <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
-                    <button class="layui-btn" onclick="xadmin.open('导入excel','./initiationUrl-batchImport.html',600,400)"><i class="layui-icon"></i>批量添加</button>
-                    <!--<button class="layui-btn" onclick="xadmin.open('添加启蒙类型','./initiationUrl-add.html',600,400)"><i class="layui-icon"></i>添加</button>-->
+                    <!--<button class="layui-btn" onclick="xadmin.open('导入excel','./initiationUrl-batchImport.html',600,400)"><i class="layui-icon"></i>批量添加</button>-->
+                    <button class="layui-btn" onclick="xadmin.open('添加启蒙类型','./initiationUrl-add.html',600,400)"><i class="layui-icon"></i>添加</button>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -101,12 +101,19 @@
                         ,thisData = initiationUrlList.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
                     var html = ""
                     layui.each(thisData, function(index, item){
+                        console.log(item)
+                        var lrc = ""
+                        if(item.lrc == null){
+                            lrc = "没有数据"
+                        }else{
+                            lrc = item.lrc.lrcName
+                        }
                         html+=`
                             <tr>
                                 <td>${item.initiationUrlTitle}</td>
                                 <td>${item.initiationUrlName}</td>
                                 <td>${item.initiationUrl}</td>
-                                <td>${item.initiationLrc}</td>
+                                <td>${lrc}</td>
                                 <td>${item.initiationUrlDescribe}</td>
                                 <td>${item.remark}</td>
                                 <td class="td-manage">

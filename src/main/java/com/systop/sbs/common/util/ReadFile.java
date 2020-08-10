@@ -18,7 +18,11 @@ public class ReadFile {
      */
     public String getFromAssets(String file) {
         try {
-            InputStreamReader inputReader = new InputStreamReader(new FileInputStream(file),"gbk");
+            String path = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
+
+            String name = file.substring(file.lastIndexOf("/")+1);
+            System.out.println(name);
+            InputStreamReader inputReader = new InputStreamReader(new FileInputStream(path+name),"gbk");
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line="";
             String result="";
