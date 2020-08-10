@@ -1,4 +1,4 @@
-package com.systop.sbs.common.util;
+package com.systop.sbs.common.util.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
