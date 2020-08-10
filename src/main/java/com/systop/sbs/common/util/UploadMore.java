@@ -2,23 +2,18 @@ package com.systop.sbs.common.util;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 
 /**
  * @Program: sbs
  * @Description: TODO
- * @Author: liumiao
- * @Date: 2020/7/30 10:52
+ * @Author: 贾小翠
+ * @Date: 2020/8/9 17:39
  **/
-public class Upload {
-    public static String upload(MultipartFile uploadFile, HttpServletRequest request) {
-        /*
-         定义文件的存储路径,如下，是在linux和mac上定义的文件路径
-        /private/var/folders/8x/4zvnbqmj1w33cqmzrpygzbth0000gn/T/tomcat-docbase.5206733816001100271.8080/uploadFile
-         */
+public class UploadMore {
 
+    public static String uploadFile(MultipartFile file) {
         String realPath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
         System.out.println(realPath);
         File dir = new File(realPath);
@@ -27,22 +22,16 @@ public class Upload {
         }
 
         try {
-            String filename = uploadFile.getOriginalFilename();
+            String filename = file.getOriginalFilename();
             //服务端保存的文件对象
             File fileServer = new File(dir, filename);
             System.out.println("file文件真实路径:" + fileServer.getAbsolutePath());
             //2，实现上传
-            uploadFile.transferTo(fileServer);
-            String filePath = request.getScheme() + "://" +
-                    request.getServerName() + ":"
-                    + request.getServerPort()
+            file.transferTo(fileServer);
+            String filePath = "http://localhost:8080" + ":"
                     + "/upload/" + filename;
             //3，返回可供访问的网络路径
             return filePath;
-
-//            暂时返回本地存储的绝对路径
-//            部署之后返回项目的网络路径！！！！！
-//            return fileServer.getAbsolutePath();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,4 +39,14 @@ public class Upload {
         return "上传失败";
     }
 
+    public static String uploadImages(MultipartFile[] files) {
+        String url = "";
+        for (MultipartFile file : files) {
+            String imageUrl = uploadFile(file);
+            if (imageUrl!=null) {
+                url += imageUrl + "&";
+            }
+        }
+        return url;
+    }
 }

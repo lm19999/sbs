@@ -71,7 +71,7 @@ public interface ParentsMapper {
      * @return list
      */
     @Select("select par.*,stu.* from parents par " +
-            "INNER JOIN student stu ON par.stu_no=stu.stu_no " +
+            "LEFT JOIN student stu ON par.stu_no=stu.stu_no " +
             "ORDER BY par.par_id desc")
     @Results(id = "parentsMap",value = {
             @Result(id = true,column = "par_id",property = "parId"),

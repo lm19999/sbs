@@ -4,6 +4,7 @@ import com.systop.sbs.common.pojo.GrowthRecord;
 import com.systop.sbs.common.pojo.Parents;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.common.util.UploadImage;
+import com.systop.sbs.common.util.UploadMore;
 import com.systop.sbs.service.GrowthRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -82,25 +83,25 @@ public class GrowthRecordApi {
     @PostMapping(value = "/addGrowthRecord",produces = "application/json;charset=UTF-8")
     public SbsResult addGrowthRecord(@RequestParam("parId") Integer parId,
                                      @RequestParam("growthRecordPosition") String growthRecordPosition,
-                                     @RequestParam("growthRecordUrl") List<MultipartFile> growthRecordUrl,
+                                     @RequestParam("growthRecordUrl") MultipartFile[] growthRecordUrl,
                                      @RequestParam("growthRecordDescribe") String growthRecordDescribe){
         GrowthRecord growthRecord = new GrowthRecord();
         Parents parents = new Parents();
-        UploadImage uploadImage = new UploadImage();
         parents.setParId(parId);
         growthRecord.setParents(parents);
         growthRecord.setGrowthRecordPosition(growthRecordPosition);
+//        growthRecord.setGrowthRecordUrl(UploadImage.uploadImages(growthRecordUrl));
         growthRecord.setGrowthRecordDescribe(growthRecordDescribe);
         String url = "";
-        if (growthRecordUrl != null && growthRecordUrl.size() > 0) {
+        if (growthRecordUrl != null && growthRecordUrl.length > 0) {
             //循环获取file数组中得文件
-            for (int i = 0; i < growthRecordUrl.size(); i++) {
-                MultipartFile file = growthRecordUrl.get(i);
-                url += uploadImage.uploadImage(file,null,null) + "&";
+            for (int i = 0; i < growthRecordUrl.length; i++) {
+                MultipartFile file = growthRecordUrl[i];
+                url += UploadMore.uploadFile(file)+"&";
             }
         }
-        System.out.println(url);
         growthRecord.setGrowthRecordUrl(url);
+        System.out.println(url);
         return SbsResult.success(growthRecordService.addGrowthRecord(growthRecord));
     }
 }
