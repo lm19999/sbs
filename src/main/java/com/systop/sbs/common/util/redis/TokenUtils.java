@@ -1,8 +1,5 @@
-package com.systop.sbs.common;
+package com.systop.sbs.common.util.redis;
 
-
-
-import com.systop.sbs.common.util.RedisUtils;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package com.systop.sbs.common.util;
+package com.systop.sbs.common.util.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
