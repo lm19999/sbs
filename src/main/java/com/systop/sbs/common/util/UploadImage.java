@@ -11,13 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * @Package: com.example.fileupload.utils
- * @Description：
- * @Author: SongJunWei
- * @Date: 2020/7/29
- * @Modified By:
- */
 public class UploadImage {
 
     /***图片的上传路径*/

@@ -1,6 +1,7 @@
 package com.systop.sbs.controller;
 
 import com.systop.sbs.common.pojo.InitiationUrl;
+import com.systop.sbs.common.pojo.Lrc;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.common.util.Upload;
 import com.systop.sbs.common.util.UploadImage;
@@ -40,16 +41,22 @@ public class InitiationUrlController {
 
     @RequestMapping("/insertInitiationUrl")
     public SbsResult insertAllInitiationUrl(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request,
+            @RequestParam("initiationUrlType") Integer initiationUrlType,
             @RequestParam("initiationUrlName") String initiationUrlName,
             @RequestParam("initiationUrlTitle") String initiationUrlTitle,
             @RequestParam("initiationUrlDescribe") String initiationUrlDescribe,
+            @RequestParam("initiationLrc") Integer initiationLrc,
             @RequestParam("remark") String remark){
         Upload upload = new Upload();
         InitiationUrl initiationUrl = new InitiationUrl();
+        Lrc lrc = new Lrc();
+        lrc.setLrcId(initiationLrc);
         initiationUrl.setInitiationUrl(upload.upload(multipartFile,request));
+        initiationUrl.setInitiationUrlType(initiationUrlType);
         initiationUrl.setInitiationUrlName(initiationUrlName);
         initiationUrl.setInitiationUrlTitle(initiationUrlTitle);
         initiationUrl.setInitiationUrlDescribe(initiationUrlDescribe);
+        initiationUrl.setLrc(lrc);
         initiationUrl.setRemark(remark);
         return SbsResult.success(initiationUrlService.insertInitiationUrl(initiationUrl));
     }
@@ -65,10 +72,10 @@ public class InitiationUrlController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/batchImport")
-    public SbsResult batchImport(MultipartFile file) throws Exception{
-        int count = initiationUrlService.batchImport(file);
-        System.out.println(count);
-        return SbsResult.success(count);
-    }
+//    @RequestMapping("/batchImport")
+//    public SbsResult batchImport(MultipartFile file) throws Exception{
+//        int count = initiationUrlService.batchImport(file);
+//        System.out.println(count);
+//        return SbsResult.success(count);
+//    }
 }
