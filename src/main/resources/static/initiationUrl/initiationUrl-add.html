@@ -48,7 +48,7 @@
                 <label for="upload" class="layui-form-label">
                     <span class="x-red">*</span>启蒙链接</label>
                 <div class="layui-input-inline">
-                    <input type="file" class="input w50" id="upload" accept="video/*" name="file" type="file"/></div>
+                    <input type="file" class="input w50" id="upload" name="file" type="file"/></div>
             </div>
             <div class="layui-form-item" style="display: none" id="lrc">
                 <label for="initiationLrc" class="layui-form-label">
@@ -119,18 +119,59 @@
                         layer.msg("请选择类型")
                         return false;
                     }
-                    else if ($('#initiationUrlType').val() == "2"){
+                    else if ($('#initiationUrlType option:selected').text() != "儿歌"){
                         lrc = 3;
                     }else {
                         lrc = data.field.initiationLrc;
                     }
-                    var fileName = document.getElementById("upload").value;
-                    var file_suffix = fileName.substr(fileName.length-3);
-                    var fileMaxSize = 1024;
 
+                    //判断启蒙标题
+                    if(data.field.initiationUrlTitle == "" || data.field.initiationUrlTitle == null){
+                        layer.msg("请输入启蒙标题")
+                        return false;
+                    }
+                    //判断启蒙名称
+                    if(data.field.initiationUrlName == "" || data.field.initiationUrlName == null){
+                        layer.msg("请输入启蒙名称")
+                        return false;
+                    }
+
+                    //获取文件并添加限制只能上传图片
                     var formdate = new FormData();
                     var img_file=document.getElementById("upload");//文件
-                    console.log(img_file);
+
+                    //判断是否选择了文件
+                    if(img_file.files[0] != null && img_file.files[0] != "" && img_file.files[0] != undefined){
+                        var file_suffix = img_file.files[0].name.substr(img_file.files[0].name.length-3);
+                        var fileMaxSize = 1024;
+                        var size = img_file.files[0].size/(1024*1024);
+                        if(file_suffix != "mp3" && file_suffix != "mp4" && file_suffix != "MP3" && file_suffix != "MP4"){
+                            layer.msg("您上传的文件类型不被允许，请重传，只允许上传MP3、MP4文件")
+                            return false;
+                        }
+
+                        //限制图片大小，只能在1M之内
+                        // if (size > fileMaxSize) {
+                        //     alert("文件大小不能大于1M！");
+                        //     file.value = "";
+                        //     return false;
+                        // }
+                        // if (size <= 0) {
+                        //     alert("文件大小不能为0M！");
+                        //     file.value = "";
+                        //     return false;
+                        // }
+                    }else{
+                        layer.msg("请上传启蒙文件");
+                        return false;
+                    }
+
+                    //判断启蒙描述
+                    if(data.field.initiationUrlDescribe == "" || data.field.initiationUrlDescribe == null){
+                        layer.msg("请输入启蒙描述")
+                        return false;
+                    }
+
 
                     console.log(data.field.initiationUrlType)
                     var fileObj = img_file.files[0];

@@ -143,32 +143,32 @@
     });
 
     /*启蒙链接-删除*/
-    // function member_del(obj,id){
-    //     console.log(id)
-    //     layer.confirm('确认要删除吗？',function(index){
-    //         //发异步删除数据
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: '/initiationUrl/deleteInitiationUrl',
-    //             data: {
-    //                 initiationUrlId:id
-    //             },
-    //             dataType: "json",
-    //             success: function (data) {
-    //                 console.log(data)
-    //                 if (data.code=="200"){
-    //                     layer.msg('已删除!',{icon:1,time:1000});
-    //                     setTimeout(function () {
-    //                         window.location.reload();
-    //                     }, 1000);
-    //                 }else{
-    //                     layer.msg('删除失败!',{icon:5,time:1000});
-    //                 }
-    //             }
-    //         })
-    //
-    //     });
-    // }
+    function member_del(obj,id){
+        console.log(id)
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.ajax({
+                type: 'POST',
+                url: '/initiationUrl/deleteInitiationUrl',
+                data: {
+                    initiationUrlId:id
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    if (data.code=="200"){
+                        layer.msg('已删除!',{icon:1,time:1000});
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
+                    }else{
+                        layer.msg('删除失败!',{icon:5,time:1000});
+                    }
+                }
+            })
+
+        });
+    }
 
 
 

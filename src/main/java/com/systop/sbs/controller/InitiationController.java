@@ -68,4 +68,21 @@ public class InitiationController {
             return SbsResult.success(initiationService.deleteInitiation(initiationId));
         }
     }
+
+
+    /**
+     * 更新发布状态
+     * */
+    @RequestMapping("/updateInitiationByStatus")
+    public SbsResult updateInitiationByStatus(@RequestParam("initiationStatus") Integer initiationStatus,
+                                              @RequestParam("initiationId") Integer initiationId){
+        Integer init = initiationService.updateInitiationByStatus(initiationId,initiationStatus);
+        if (init == 0){
+            return SbsResult.fail("500","没有数据");
+        }else{
+            return SbsResult.success(init);
+        }
+
+    }
+
 }

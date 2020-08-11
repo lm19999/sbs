@@ -46,6 +46,11 @@ public class InitiationUrlServiceImpl implements InitiationUrlService {
     }
 
     @Override
+    public List<InitiationUrl> selectInitiationUrlByType(Integer initiationUrlType) {
+        return initiationUrlMapper.selectInitiationUrlByType(initiationUrlType);
+    }
+
+    @Override
     public Integer insertInitiationUrl(InitiationUrl initiationUrl) {
         return initiationUrlMapper.insertInitiationUrl(initiationUrl);
     }
@@ -53,6 +58,11 @@ public class InitiationUrlServiceImpl implements InitiationUrlService {
     @Override
     public Integer deleteInitiationUrl(Integer initiationUrlId) {
         return initiationUrlMapper.deleteInitiationUrl(initiationUrlId);
+    }
+
+    @Override
+    public Integer deleteInitiationUrlByType(Integer initiationUrlType) {
+        return initiationUrlMapper.deleteInitiationUrlByType(initiationUrlType);
     }
 
 //    批量添加启蒙数据

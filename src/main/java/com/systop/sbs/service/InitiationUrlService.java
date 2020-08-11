@@ -18,10 +18,15 @@ public interface InitiationUrlService {
     //    查询所有启蒙数据链接
     List<InitiationUrl> selectAllInitiationUrl();
 
+//    查询所有的启蒙链接数据，根据启蒙类型
+    List<InitiationUrl> selectInitiationUrlByType(Integer initiationUrlType);
+
     //    添加启蒙链接数据
     Integer insertInitiationUrl(InitiationUrl initiationUrl);
 
     //    删除启蒙链接
     Integer deleteInitiationUrl(Integer initiationUrlId);
 
+//    按类型id删除启蒙连接数据
+    Integer deleteInitiationUrlByType(Integer initiationUrlType);
 }

@@ -21,6 +21,10 @@ public interface InitiationUrlMapper {
 })
     List<InitiationUrl> selectAllInitiationUrl();
 
+//查询所有的启蒙链接数据，按照启蒙类型
+@Select("select * from initiation_url where initiation_url_type = #{initiationUrlType}")
+    List<InitiationUrl> selectInitiationUrlByType(Integer initiationUrlType);
+
 //left join lrc on initiation_url.initiation_lrc=lrc.lrc_id and
 //按id查询启蒙链接数据有儿歌数据
     @Select("select * from initiation_url,lrc where initiation_url.initiation_lrc=lrc.lrc_id and initiation_url_id = #{initiationUrlId}")
@@ -43,4 +47,8 @@ public interface InitiationUrlMapper {
 //    删除启蒙链接
     @Delete("delete from initiation_url where initiation_url_id = #{initiationUrlId}")
     Integer deleteInitiationUrl(Integer initiationUrlId);
+
+//    按照类型id删除启蒙连接数据
+    @Delete("delete from initiation_url where initiation_url_type = #{initiationUrlType}")
+    Integer deleteInitiationUrlByType(Integer initiationUrlType);
 }

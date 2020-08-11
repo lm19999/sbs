@@ -98,11 +98,12 @@
                     layui.each(thisData, function(index, item){
 
                         arr[index] = item
-                        console.log(item)
                         if (item.bannerStatus == 0){
-                            var status = "未发布"
+                            var status = "未发布";
+                            var icon = "&#xe601;";
                         } else{
                             var status = "已发布"
+                            var icon = "&#xe62f;";
                         }
 
                         html+=`
@@ -114,9 +115,9 @@
                                         <td>${item.remark}</td>
                                         <td class="td-manage">
                                         <a onclick="member_stop(this,${item.bannerId})" href="javascript:;" title="${status}">
-                                          <i class="layui-icon">&#xe601;</i>
+                                          <i class="layui-icon">${icon}</i>
                                         </a>
-                                        <a title="编辑"  onclick="xadmin.open('编辑','admin-edit.html')" href="javascript:;">
+                                        <a title="编辑"  onclick="xadmin.open('编辑','banner-update.html?bannerId=${item.bannerId}')" href="javascript:;">
                                           <i class="layui-icon">&#xe642;</i>
                                         </a>
                                         <a title="删除" onclick="member_del(this,${item.bannerId})" href="javascript:;">
@@ -170,13 +171,13 @@
                         console.log(data.code);
                       if (data.code == "200") {
                           $(obj).attr('title','未发布')
-                          $(obj).find('i').html('&#xe62f;');
 
                           // $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('未发布');
                           layer.msg('未发布!',{icon: 5,time:1000});
                           setTimeout(function () {
                               window.location.reload();
                           }, 1000);
+                          // $(obj).find('i').html('&#xe62f;');
                       }
 
                     }
@@ -195,7 +196,7 @@
                         console.log(data.code);
                         if (data.code == "200") {
                             $(obj).attr('title','已发布')
-                            $(obj).find('i').html('&#xe62f;');
+                            // $(obj).find('i').html('&#xe62f;');
 
                             // $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('未发布');
                             layer.msg('已发布!',{icon: 1,time:1000});
