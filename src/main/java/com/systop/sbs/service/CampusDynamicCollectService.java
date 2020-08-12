@@ -1,7 +1,8 @@
 package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.CampusDynamicCollect;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
@@ -12,7 +13,13 @@ import java.util.List;
  * @Date: 2020/8/3 18:01
  **/
 public interface CampusDynamicCollectService {
+    /*============================list===========================*/
 
+    /**
+     * 查询所有点赞
+     * @return
+     */
+    List<CampusDynamicCollect> campusDynamicCollectList();
     /*==========================老师点赞相关=======================*/
 
     /**

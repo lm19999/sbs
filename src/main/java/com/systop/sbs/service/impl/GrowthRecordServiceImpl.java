@@ -49,4 +49,9 @@ public class GrowthRecordServiceImpl implements GrowthRecordService {
     public GrowthRecord searchGrowthRecordById(Integer growthRecordId) {
         return growthRecordMapper.searchGrowthRecordById(growthRecordId);
     }
+
+    @Override
+    public int updateGrowthRecordCollects(int growthRecordId, int growthRecordCollects) {
+        return growthRecordMapper.updateGrowthRecordCollects(growthRecordId,growthRecordCollects);
+    }
 }
