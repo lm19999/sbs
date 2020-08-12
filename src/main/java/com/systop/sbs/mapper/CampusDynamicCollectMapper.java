@@ -2,6 +2,7 @@ package com.systop.sbs.mapper;
 
 import com.systop.sbs.common.pojo.CampusDynamicCollect;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
@@ -13,7 +14,29 @@ import java.util.List;
  **/
 @Mapper
 public interface CampusDynamicCollectMapper {
+    /*============================list===========================*/
 
+    /**
+     * 查询所有点赞
+     * @return
+     */
+    @Select("select * from campus_dynamic_collect")
+    @Results(id = "campusDynamicCollectMap",value = {
+            @Result(id = true, column = "campus_dynamic_collect_id", property = "campusDynamicCollectId"),
+            @Result(column = "collect_state", property = "collectState"),
+            @Result(column = "remark", property = "remark"),
+            @Result(property = "parents", column = "par_id",
+                    one = @One(select = "com.systop.sbs.mapper.ParentsMapper.searchParentsById",
+                            fetchType = FetchType.LAZY)),
+            @Result(property = "teacher", column = "stu_no",
+                    one = @One(select = "com.systop.sbs.mapper.TeacherMapper.searchTeacherByTno",
+                            fetchType = FetchType.LAZY)),
+            @Result(property = "campusDynamic", column = "campus_dynamic_id",
+                    one = @One(select = "com.systop.sbs.mapper.CampusDynamicMapper.searchCampusDynamicById",
+                            fetchType = FetchType.LAZY))
+        }
+    )
+    List<CampusDynamicCollect> campusDynamicCollectList();
     /*==========================老师点赞相关=======================*/
 
     /**
@@ -22,7 +45,7 @@ public interface CampusDynamicCollectMapper {
      * @return
      */
     @Insert("insert into campus_dynamic_collect (par_id,tea_no,campus_dynamic_id,collect_state,remark) " +
-            "values (#{null},#{teacher.teaNo},#{campusDynamic.campusDynamicId},1,#{null})")
+            "values (#{null},#{teacher.teaNo},#{campusDynamic.campusDynamicId},1,null)")
     Integer teaCollect(CampusDynamicCollect campusDynamicCollect);
 
     /**

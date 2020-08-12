@@ -21,6 +21,11 @@ public class CampusDynamicCollectServiceImpl implements CampusDynamicCollectServ
     private CampusDynamicCollectMapper campusDynamicCollectMapper;
 
     @Override
+    public List<CampusDynamicCollect> campusDynamicCollectList() {
+        return campusDynamicCollectMapper.campusDynamicCollectList();
+    }
+
+    @Override
     public Integer teaCollect(CampusDynamicCollect campusDynamicCollect) {
         return campusDynamicCollectMapper.teaCollect(campusDynamicCollect);
     }

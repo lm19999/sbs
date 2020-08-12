@@ -52,4 +52,11 @@ public interface GrowthRecordService {
      * @return
      */
     GrowthRecord searchGrowthRecordById(@Param("growthRecordId") Integer growthRecordId);
+
+    /**
+     * 修改点赞人数
+     * @Param growthRecordId 成长记录id
+     */
+    int updateGrowthRecordCollects(@Param("growthRecordId") int growthRecordId,
+                                   @Param("growthRecordCollects") int growthRecordCollects);
 }

@@ -73,7 +73,7 @@ public interface GrowthRecordMapper {
      * @param growthRecord 成长记录
      * @return
      */
-    @Update("update campus_dynamic set growth_record_par_id=#{parents.parId}," +
+    @Update("update growth_record set growth_record_par_id=#{parents.parId}," +
             "growth_record_position=#{growthRecordPosition},growth_record_url=#{growthRecordUrl}," +
             "growth_record_describe=#{growthRecordDescribe},growth_record_collects=#{growthRecordCollects}," +
             "growth_record_views=#{growthRecordViews},remark=#{remark} " +
@@ -85,7 +85,16 @@ public interface GrowthRecordMapper {
      * @param growthRecordId 成长记录Id
      * @return
      */
-    @Select("select * from campus_dynamic where growth_record_id = #{growthRecordId}")
+    @Select("select * from growth_record where growth_record_id = #{growthRecordId}")
     @ResultMap("growthRecordMap")
     GrowthRecord searchGrowthRecordById(@Param("growthRecordId") Integer growthRecordId);
+
+    /**
+     * 修改点赞人数
+     * @Param growthRecordId 成长记录id
+     */
+    @Update("UPDATE growth_record SET growth_record_collects=#{growthRecordCollects} " +
+            "WHERE growth_record_id =#{growthRecordId}")
+    int updateGrowthRecordCollects(@Param("growthRecordId") int growthRecordId,
+                                   @Param("growthRecordCollects") int growthRecordCollects);
 }
