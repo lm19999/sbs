@@ -5,6 +5,10 @@ spring:
     url: jdbc:mysql://39.105.143.125:3306/sbs?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
     username: root
     password: sjw971770759
+  validationQuery: SELECT 1
+  testWhileIdle: true
+  testOnBorrow: true
+  testOnReturn: false
   servlet:
     multipart:
       max-file-size: 100MB
