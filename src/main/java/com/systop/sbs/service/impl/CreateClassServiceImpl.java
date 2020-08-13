@@ -20,7 +20,7 @@ public class CreateClassServiceImpl implements CreateClassService {
     CreateClassMapper classMapper;
 
     @Override
-    public List<CreateClassMapper> selectCreateTeacherByTeaNo(String teaNo) {
+    public List<CreateClass> selectCreateTeacherByTeaNo(String teaNo) {
         return classMapper.selectCreateTeacherByTeaNo(teaNo);
     }
 

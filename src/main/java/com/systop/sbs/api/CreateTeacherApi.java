@@ -4,6 +4,7 @@ import com.systop.sbs.common.pojo.CreateClass;
 import com.systop.sbs.common.pojo.Teacher;
 import com.systop.sbs.common.util.QRCodeUtil;
 import com.systop.sbs.common.util.SbsResult;
+import com.systop.sbs.common.util.UploadImage;
 import com.systop.sbs.service.CreateClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -53,7 +54,7 @@ public class CreateTeacherApi {
 
     @RequestMapping("/insertCreateClass")
     public SbsResult insertCreateClass(@RequestParam("teaNo") String teaNo,
-            @RequestParam("className") String className, @RequestParam("file") MultipartFile multipartFile){
+            @RequestParam("className") String className, MultipartFile multipartFile){
         CreateClass createClass = new CreateClass();
         int START = 10000; // 定义范围开始数字
         int END = 20000; // 定义范围结束数字
@@ -62,6 +63,12 @@ public class CreateTeacherApi {
         String number =String.valueOf (random.nextInt(END - START + 1) + START);
 //        根据班级号生成二维码
         String code = QRCodeUtil.zxingCodeCreate(number,"D:/picture/",null,null);
+
+        if (multipartFile != null){
+            createClass.setClassImg(UploadImage.uploadImage(multipartFile,null,null));
+        }else{
+            createClass.setClassImg("http://localhost:8080/upload/default.jpg");
+        }
 
         Teacher teacher = new Teacher();
         teacher.setTeaNo(teaNo);
@@ -80,5 +87,4 @@ public class CreateTeacherApi {
             return SbsResult.success(result);
         }
     }
-
 }

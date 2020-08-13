@@ -2,13 +2,20 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://39.105.143.125:3306/sbs?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    url: jdbc:mysql://39.105.143.125:3306/sbs?characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useLegacyDatetimeCode=false
     username: root
     password: sjw971770759
-  validationQuery: SELECT 1
-  testWhileIdle: true
-  testOnBorrow: true
-  testOnReturn: false
+
+    hikari:
+      pool-name: DataApiHikariCP
+      maximum-pool-size: 30
+      minimum-idle: 1
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+      auto-commit: true
+
   servlet:
     multipart:
       max-file-size: 100MB
@@ -41,3 +48,5 @@ mybatis:
 logging:
   level:
     com.systop.sbs: debug
+
+
