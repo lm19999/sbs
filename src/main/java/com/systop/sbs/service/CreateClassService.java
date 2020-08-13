@@ -13,7 +13,7 @@ import java.util.List;
  **/
 public interface CreateClassService {
 //    查询每个老师创建的班级
-    List<CreateClassMapper> selectCreateTeacherByTeaNo(String teaNo);
+    List<CreateClass> selectCreateTeacherByTeaNo(String teaNo);
 
 //    创建群聊
     Integer insertCreateClass(CreateClass createClass);
