@@ -26,6 +26,16 @@ public class GrowthRecordCollectServiceImpl implements GrowthRecordCollectServic
     }
 
     @Override
+    public List<GrowthRecordCollect> growthRecordCollectListByGrowthRecord(Integer growthRecordId) {
+        return growthRecordCollectMapper.growthRecordCollectListByGrowthRecord(growthRecordId);
+    }
+
+    @Override
+    public Integer deleteGrowthRecordCollect(Integer growthRecordId) {
+        return growthRecordCollectMapper.deleteGrowthRecordCollect(growthRecordId);
+    }
+
+    @Override
     public List<GrowthRecordCollect> parGrowthRecordCollectList() {
         return growthRecordCollectMapper.parGrowthRecordCollectList();
     }

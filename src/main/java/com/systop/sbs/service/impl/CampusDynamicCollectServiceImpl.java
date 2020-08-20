@@ -1,6 +1,7 @@
 package com.systop.sbs.service.impl;
 
 import com.systop.sbs.common.pojo.CampusDynamicCollect;
+import com.systop.sbs.common.pojo.GrowthRecordCollect;
 import com.systop.sbs.mapper.CampusDynamicCollectMapper;
 import com.systop.sbs.service.CampusDynamicCollectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,21 @@ public class CampusDynamicCollectServiceImpl implements CampusDynamicCollectServ
     @Override
     public List<CampusDynamicCollect> campusDynamicCollectList() {
         return campusDynamicCollectMapper.campusDynamicCollectList();
+    }
+
+    @Override
+    public List<CampusDynamicCollect> campusDynamicCollectListByCampus(Integer campusDynamicId) {
+        return campusDynamicCollectMapper.campusDynamicCollectListByCampus(campusDynamicId);
+    }
+
+    @Override
+    public List<GrowthRecordCollect> parCampusCollectList() {
+        return campusDynamicCollectMapper.parCampusCollectList();
+    }
+
+    @Override
+    public List<GrowthRecordCollect> teaCampusCollectList() {
+        return campusDynamicCollectMapper.teaCampusCollectList();
     }
 
     @Override

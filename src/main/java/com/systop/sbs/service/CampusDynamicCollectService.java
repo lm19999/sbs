@@ -1,6 +1,7 @@
 package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.CampusDynamicCollect;
+import com.systop.sbs.common.pojo.GrowthRecordCollect;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
@@ -20,6 +21,24 @@ public interface CampusDynamicCollectService {
      * @return
      */
     List<CampusDynamicCollect> campusDynamicCollectList();
+
+    /**
+     * 查询所有点赞
+     * @return
+     */
+    List<CampusDynamicCollect> campusDynamicCollectListByCampus(@Param("campusDynamicId") Integer campusDynamicId);
+
+    /**
+     * 家长点赞list
+     * @return
+     */
+    List<GrowthRecordCollect> parCampusCollectList();
+
+    /**
+     * 教师点赞list
+     * @return
+     */
+    List<GrowthRecordCollect> teaCampusCollectList();
     /*==========================老师点赞相关=======================*/
 
     /**

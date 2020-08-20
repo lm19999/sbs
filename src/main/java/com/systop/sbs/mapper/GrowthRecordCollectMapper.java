@@ -21,7 +21,11 @@ public interface GrowthRecordCollectMapper {
      * 查询所有点赞
      * @return
      */
-    @Select("select * from growth_record_collect")
+    @Select("select gr_collect.*,par.*,tea.*,gr.* " +
+            "from growth_record_collect gr_collect " +
+            "LEFT JOIN parents par ON gr_collect.par_id=par.par_id " +
+            "LEFT JOIN teacher tea ON gr_collect.tea_no=tea.tea_no " +
+            "LEFT JOIN growth_record gr ON gr_collect.growth_record_id=gr.growth_record_id")
     @Results(id = "growthRecordCollectMap",value = {
             @Result(id = true, column = "growth_record_collect_id", property = "growthRecordCollectId"),
             @Result(column = "collect_state", property = "collectState"),
@@ -35,9 +39,30 @@ public interface GrowthRecordCollectMapper {
             @Result(property = "growthRecord", column = "growth_record_id",
                     one = @One(select = "com.systop.sbs.mapper.GrowthRecordMapper.searchGrowthRecordById",
                             fetchType = FetchType.LAZY))
-    }
+        }
     )
     List<GrowthRecordCollect> growthRecordCollectList();
+
+    /**
+     * 根据成长记录查询点赞
+     * @return
+     */
+    @Select("select gr_collect.*,par.*,tea.*,gr.* " +
+            "from growth_record_collect gr_collect " +
+            "LEFT JOIN parents par ON gr_collect.par_id=par.par_id " +
+            "LEFT JOIN teacher tea ON gr_collect.tea_no=tea.tea_no " +
+            "LEFT JOIN growth_record gr ON gr_collect.growth_record_id=gr.growth_record_id " +
+            "WHERE gr_collect.growth_record_id=#{growthRecordId}")
+    @ResultMap("growthRecordCollectMap")
+    List<GrowthRecordCollect> growthRecordCollectListByGrowthRecord(@Param("growthRecordId") Integer growthRecordId);
+
+    /**
+     * 删除成长记录点赞
+     * @param growthRecordId 成长记录Id
+     * @return
+     */
+    @Delete("delete from growth_record_collect where growth_record_id=#{growthRecordId}")
+    Integer deleteGrowthRecordCollect(@Param("growthRecordId") Integer growthRecordId);
 
     /**
      * 家长点赞list
