@@ -1,6 +1,7 @@
 package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.GrowthRecord;
+import com.systop.sbs.common.pojo.GrowthRecordCollect;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

@@ -1,9 +1,6 @@
 package com.systop.sbs.api;
 
-import com.systop.sbs.common.pojo.GrowthRecord;
-import com.systop.sbs.common.pojo.GrowthRecordCollect;
-import com.systop.sbs.common.pojo.Parents;
-import com.systop.sbs.common.pojo.Teacher;
+import com.systop.sbs.common.pojo.*;
 import com.systop.sbs.common.util.SbsResult;
 import com.systop.sbs.common.util.UploadImage;
 import com.systop.sbs.common.util.UploadMore;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +65,7 @@ public class GrowthRecordApi {
         } else {
             map.put("growthRecordList",growthRecordList);
             map.put("growthRecordCollectList",growthRecordCollectList);
+            System.out.println(growthRecordCollectList);
             return SbsResult.success(map);
         }
     }
@@ -79,7 +78,7 @@ public class GrowthRecordApi {
     public SbsResult growthRecordListByPar(@RequestParam("parId") Integer parId){
         Map map = new HashMap();
         List<GrowthRecord> growthRecordList = growthRecordService.growthRecordListByPar(parId);
-        List<GrowthRecordCollect> growthRecordCollectList = growthRecordCollectService.growthRecordCollectList();
+        List<GrowthRecordCollect> growthRecordCollectList = growthRecordCollectService.parGrowthRecordCollectList();
         if (growthRecordList.size() == 0){
             return SbsResult.fail("300","暂无数据");
         } else {
@@ -98,8 +97,30 @@ public class GrowthRecordApi {
     public SbsResult delGrowthRecord(@RequestParam("growthRecordId") Integer growthRecordId,
                                      @RequestParam("parId") Integer parId){
         GrowthRecord growthRecord = growthRecordService.searchGrowthRecordById(growthRecordId);
-        if (parId == growthRecord.getGrowthRecordId()){
-            return SbsResult.success(growthRecordService.deleteGrowthRecord(growthRecordId));
+        System.out.println(parId);
+        System.out.println(growthRecord.getParents().getParId());
+        if (parId == growthRecord.getParents().getParId()){
+            List<GrowthRecordCollect> growthRecordCollects = growthRecordCollectService.growthRecordCollectListByGrowthRecord(growthRecordId);
+            List<Integer> list = new ArrayList();
+            if (growthRecordCollects.size()>0){
+                for (GrowthRecordCollect item: growthRecordCollects) {
+                    list.add(growthRecordCollectService.deleteGrowthRecordCollect(item.getGrowthRecord().getGrowthRecordId()));
+                }
+                int row  = growthRecordService.deleteGrowthRecord(growthRecordId);
+
+                if (list.size()>0 && row >0){
+                    return SbsResult.success();
+                }else{
+                    return SbsResult.fail("500","删除失败");
+                }
+            }else{
+                int row  = growthRecordService.deleteGrowthRecord(growthRecordId);
+                if (row >0){
+                    return SbsResult.success();
+                }else{
+                    return SbsResult.fail("500","删除失败");
+                }
+            }
         } else {
             return SbsResult.fail("300","您没有删除此记录的权限！");
         }
@@ -112,10 +133,6 @@ public class GrowthRecordApi {
      * @param growthRecordUrl   文件
      * @param growthRecordDescribe  描述
      * @return
-     * @RequestParam("parId") Integer parId,
-     *                                      @RequestParam("growthRecordPosition") String growthRecordPosition,
-     *                                      @RequestParam("growthRecordUrl") List<MultipartFile> growthRecordUrl,
-     *                                      @RequestParam("growthRecordDescribe") String growthRecordDescribe
      */
     @PostMapping(value = "/addGrowthRecord",produces = "application/json;charset=UTF-8")
     public SbsResult addGrowthRecord(@RequestParam("parId") Integer parId,
@@ -128,7 +145,7 @@ public class GrowthRecordApi {
         parents.setParId(parId);
         growthRecord.setParents(parents);
         growthRecord.setGrowthRecordPosition(growthRecordPosition);
-//        growthRecord.setGrowthRecordUrl(UploadImage.uploadImages(growthRecordUrl));
+        //growthRecord.setGrowthRecordUrl(UploadImage.uploadImages(growthRecordUrl));
         growthRecord.setGrowthRecordDescribe(growthRecordDescribe);
         String url = "";
         if (growthRecordUrl != null && growthRecordUrl.length > 0) {

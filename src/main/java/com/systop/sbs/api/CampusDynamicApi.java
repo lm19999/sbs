@@ -100,4 +100,5 @@ public class CampusDynamicApi {
         }
         return SbsResult.success();
     }
+    /*=============================点赞=============================*/
 }

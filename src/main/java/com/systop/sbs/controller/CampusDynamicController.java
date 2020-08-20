@@ -100,8 +100,6 @@ public class CampusDynamicController {
         campusDynamicType.setCampusDynamicTypeId(campusDynamicTypeId);
         campusDynamic.setCampusDynamicType(campusDynamicType);
         campusDynamic.setCampusDynamicName(campusDynamicName);
-        /*campusDynamic.setCampusDynamicUrl(campusDynamicUrl);
-        campusDynamic.setCampusDynamicDescribe(campusDynamicDescribe);*/
         campusDynamic.setCampusDynamicStatus(campusDynamicStatus);
         campusDynamic.setRemark(remark);
         return SbsResult.success(campusDynamicService.addCampusDynamic(campusDynamic));
@@ -129,7 +127,8 @@ public class CampusDynamicController {
                                        @RequestParam("campusDynamicDescribe") String campusDynamicDescribe,
                                        @RequestParam("campusDynamicId") Integer campusDynamicId) {
 
-        return SbsResult.success(campusDynamicService.editCampusDynamic(campusDynamicUrl,campusDynamicDescribe,campusDynamicId));
+        return SbsResult.success(campusDynamicService.editCampusDynamic(campusDynamicUrl,
+                                    campusDynamicDescribe,campusDynamicId));
     }
 
     /**

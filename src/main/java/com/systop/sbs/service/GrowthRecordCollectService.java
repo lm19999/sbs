@@ -21,6 +21,20 @@ public interface GrowthRecordCollectService {
      */
     List<GrowthRecordCollect> growthRecordCollectList();
 
+
+    /**
+     * 根据成长记录查询点赞
+     * @return
+     */
+    List<GrowthRecordCollect> growthRecordCollectListByGrowthRecord(@Param("growthRecordId") Integer growthRecordId);
+
+    /**
+     * 删除成长记录点赞
+     * @param growthRecordId 成长记录Id
+     * @return
+     */
+    Integer deleteGrowthRecordCollect(@Param("growthRecordId") Integer growthRecordId);
+
     /**
      * 家长点赞list
      * @return

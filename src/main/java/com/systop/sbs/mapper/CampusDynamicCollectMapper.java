@@ -1,6 +1,7 @@
 package com.systop.sbs.mapper;
 
 import com.systop.sbs.common.pojo.CampusDynamicCollect;
+import com.systop.sbs.common.pojo.GrowthRecordCollect;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
@@ -20,7 +21,10 @@ public interface CampusDynamicCollectMapper {
      * 查询所有点赞
      * @return
      */
-    @Select("select * from campus_dynamic_collect")
+    @Select("select cdc.*,par.*,tea.*,cd.* from campus_dynamic_collect cdc" +
+            "LEFT JOIN parents par ON cdc.par_id=par.par_id " +
+            "LEFT JOIN teacher tea ON cdc.tea_no=tea.tea_no " +
+            "LEFT JOIN campus_dynamic cd ON cdc.campus_dynamic_id=cd.campus_dynamic_id")
     @Results(id = "campusDynamicCollectMap",value = {
             @Result(id = true, column = "campus_dynamic_collect_id", property = "campusDynamicCollectId"),
             @Result(column = "collect_state", property = "collectState"),
@@ -28,7 +32,7 @@ public interface CampusDynamicCollectMapper {
             @Result(property = "parents", column = "par_id",
                     one = @One(select = "com.systop.sbs.mapper.ParentsMapper.searchParentsById",
                             fetchType = FetchType.LAZY)),
-            @Result(property = "teacher", column = "stu_no",
+            @Result(property = "teacher", column = "tea_no",
                     one = @One(select = "com.systop.sbs.mapper.TeacherMapper.searchTeacherByTno",
                             fetchType = FetchType.LAZY)),
             @Result(property = "campusDynamic", column = "campus_dynamic_id",
@@ -37,6 +41,34 @@ public interface CampusDynamicCollectMapper {
         }
     )
     List<CampusDynamicCollect> campusDynamicCollectList();
+
+    /**
+     * 查询所有点赞
+     * @return
+     */
+    @Select("select cdc.*,par.*,tea.*,cd.* from campus_dynamic_collect cdc" +
+            "LEFT JOIN parents par ON cdc.par_id=par.par_id " +
+            "LEFT JOIN teacher tea ON cdc.tea_no=tea.tea_no " +
+            "LEFT JOIN campus_dynamic cd ON cdc.campus_dynamic_id=cd.campus_dynamic_id " +
+            "WHERE cdc.campus_dynamic_id=#{campusDynamicId}")
+    @ResultMap("campusDynamicCollectMap")
+    List<CampusDynamicCollect> campusDynamicCollectListByCampus(@Param("campusDynamicId") Integer campusDynamicId);
+
+    /**
+     * 家长点赞list
+     * @return
+     */
+    @Select("select * from campus_dynamic_collect WHERE par_id is NOT NULL")
+    @ResultMap("campusDynamicCollectMap")
+    List<GrowthRecordCollect> parCampusCollectList();
+
+    /**
+     * 教师点赞list
+     * @return
+     */
+    @Select("select * from campus_dynamic_collect WHERE tea_no is NOT NULL")
+    @ResultMap("campusDynamicCollectMap")
+    List<GrowthRecordCollect> teaCampusCollectList();
     /*==========================老师点赞相关=======================*/
 
     /**
@@ -100,5 +132,4 @@ public interface CampusDynamicCollectMapper {
     @Select("select * from campus_dynamic_collect " +
             "where par_id=#{parId}")
     List<CampusDynamicCollect> parCollectList(@Param("parId") Integer parId);
-
 }
