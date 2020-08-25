@@ -25,6 +25,11 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    public Banner selectBannerById(Integer bannerId) {
+        return bannerMapper.selectBannerById(bannerId);
+    }
+
+    @Override
     public Integer deleteBanner(Integer bannerId) {
         return bannerMapper.deleteBanner(bannerId);
     }
@@ -37,5 +42,10 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public Integer updateBanner(Integer bannerId, Integer bannerStatus) {
         return bannerMapper.updateBanner(bannerId,bannerStatus);
+    }
+
+    @Override
+    public Integer updateBannerOutImg(Banner banner) {
+        return bannerMapper.updateBannerOutImg(banner);
     }
 }

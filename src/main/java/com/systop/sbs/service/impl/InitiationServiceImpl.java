@@ -32,6 +32,16 @@ public class InitiationServiceImpl implements InitiationService {
     }
 
     @Override
+    public List<Initiation> selectInitiationByType(Integer initiationTypeId) {
+        return initiationMapper.selectInitiationByType(initiationTypeId);
+    }
+
+    @Override
+    public Initiation selectInitiationByUrlId(Integer initiationUrlId) {
+        return initiationMapper.selectInitiationByUrlId(initiationUrlId);
+    }
+
+    @Override
     public Integer insertInitiation(Initiation initiation) {
         return initiationMapper.insertInitiation(initiation);
     }
@@ -39,5 +49,20 @@ public class InitiationServiceImpl implements InitiationService {
     @Override
     public Integer deleteInitiation(Integer initiationId) {
         return initiationMapper.deleteInitiation(initiationId);
+    }
+
+    @Override
+    public Integer updateInitiationByStatus(Integer initiationId, Integer initiationStatus) {
+        return initiationMapper.updateInitiationByStatus(initiationId,initiationStatus);
+    }
+
+    @Override
+    public Integer deleteInitiationByType(Integer initiationTypeId) {
+        return initiationMapper.deleteInitiationByType(initiationTypeId);
+    }
+
+    @Override
+    public Integer deleteInitiationByUrlId(Integer initiationUrlId) {
+        return initiationMapper.deleteInitiationByUrlId(initiationUrlId);
     }
 }

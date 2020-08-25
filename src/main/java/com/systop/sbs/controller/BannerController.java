@@ -24,6 +24,17 @@ public class BannerController {
         return SbsResult.success(bannerService.selectAllBanner());
     }
 
+
+    /**
+     * 按id查询相应的banner信息
+     * return SbsResult
+     * */
+    @RequestMapping("/selectBannerById")
+    public SbsResult selectBannerById(@RequestParam("bannerId") Integer bannerId){
+        return SbsResult.success(bannerService.selectBannerById(bannerId));
+    }
+
+
     //    添加banner
     @RequestMapping("/insertBanner")
     public SbsResult insertBanner(@RequestParam("file") MultipartFile multipartFile,
@@ -50,6 +61,26 @@ public class BannerController {
     @RequestMapping("/deleteBanner")
     public SbsResult deleteBanner(@RequestParam("bannerId") Integer bannerId){
         return SbsResult.success(bannerService.deleteBanner(bannerId));
+    }
+
+//    更新banner数据
+    @RequestMapping("/updateBannerOutImg")
+    public SbsResult updateBannerOutImg(@RequestParam("bannerId") Integer bannerId,
+                                        @RequestParam("linkUrl") String linkUrl,
+                                        @RequestParam("bannerStatus") Integer bannerStatus,
+                                        @RequestParam("remark") String remark){
+        Banner banner = new Banner();
+        banner.setBannerId(bannerId);
+        banner.setLinkUrl(linkUrl);
+        banner.setBannerStatus(bannerStatus);
+        banner.setRemark(remark);
+
+        if (bannerService.updateBannerOutImg(banner) == 0){
+            return SbsResult.fail("500","没有数据");
+        }else{
+            return SbsResult.success(bannerService.updateBannerOutImg(banner));
+        }
+
     }
 
 }

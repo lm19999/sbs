@@ -1,13 +1,20 @@
 package com.systop.sbs.controller;
 
+import com.systop.sbs.common.pojo.Initiation;
 import com.systop.sbs.common.pojo.InitiationType;
 import com.systop.sbs.common.util.SbsResult;
+import com.systop.sbs.service.InitiationService;
 import com.systop.sbs.service.InitiationTypeService;
+import com.systop.sbs.service.InitiationUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Program: sbs
@@ -18,10 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 @RequestMapping("/initiationType")
+@Transactional
 public class InitiationTypeController {
 
     @Autowired
     InitiationTypeService initiationTypeService;
+    @Autowired
+    InitiationService initiationService;
+    @Autowired
+    InitiationUrlService initiationUrlService;
 
     @RequestMapping("/selectAllInitiationType")
     public SbsResult selectAll(){
@@ -57,12 +69,37 @@ public class InitiationTypeController {
         return  SbsResult.success(initiationTypeService.updateInitiationType(initiationType));
     }
 
+
+/**
+ * 先查询对应的表有没有相应的数据，有的话，将所有关联着的数据删除
+ * return SbsResult
+ * */
     @RequestMapping("/deleteInitiationType")
     public SbsResult deleteInitiationType(@RequestParam("initiationTypeId") Integer initiationTypeId){
-        if (initiationTypeService.deleteInitiationType(initiationTypeId) != null){
-            return SbsResult.success(initiationTypeService.deleteInitiationType(initiationTypeId));
+//        查询所有的对应的类型的数据
+        List<Initiation> initiations = initiationService.selectInitiationByType(initiationTypeId);
+        List<Integer> list = new ArrayList();
+        if (initiations.size()>0){
+            for (Initiation item: initiations) {
+                list.add(initiationService.deleteInitiation(item.getInitiationId()));
+            }
+           int row  = initiationTypeService.deleteInitiationType(initiationTypeId);
+
+            if (list.size()>0 && row >0){
+                return SbsResult.success();
+            }else{
+                return SbsResult.fail("500","删除失败");
+            }
         }else{
-            return SbsResult.fail("500","删除失败");
+            int row  = initiationTypeService.deleteInitiationType(initiationTypeId);
+            if (row >0){
+                return SbsResult.success();
+            }else{
+                return SbsResult.fail("500","删除失败");
+            }
         }
+
+
+
     }
 }
