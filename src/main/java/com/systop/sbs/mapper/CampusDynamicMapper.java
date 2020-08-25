@@ -167,8 +167,8 @@ public interface CampusDynamicMapper {
      * @param campusDynamicCollects 点赞数
      * @return
      */
-    /*@Update("update campus_dynamic set campus_dynamic_collects=#{campusDynamicCollects} " +
+    @Update("update campus_dynamic set campus_dynamic_collects=#{campusDynamicCollects} " +
             "WHERE campus_dynamic_id=#{campusDynamicId}")
     Integer cutCollects(@Param("campusDynamicId") Integer campusDynamicId,
-                        @Param("campusDynamicCollects") Integer campusDynamicCollects);*/
+                        @Param("campusDynamicCollects") Integer campusDynamicCollects);
 }
