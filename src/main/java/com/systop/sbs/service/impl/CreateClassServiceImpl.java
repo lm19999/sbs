@@ -28,4 +28,9 @@ public class CreateClassServiceImpl implements CreateClassService {
     public Integer insertCreateClass(CreateClass createClass) {
         return classMapper.insertCreateClass(createClass);
     }
+
+    @Override
+    public CreateClass selectClassByClassNum(String classNum) {
+        return classMapper.selectClassByClassNum(classNum);
+    }
 }

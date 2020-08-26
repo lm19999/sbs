@@ -2,6 +2,8 @@ package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.JoinClass;
 
+import java.util.List;
+
 /**
  * @Program: sbs
  * @Description: TODO
@@ -11,4 +13,6 @@ import com.systop.sbs.common.pojo.JoinClass;
 public interface JoinClassService {
 //    加入群聊
     Integer joinClass(JoinClass joinClass);
+//    查询加入的所有群聊（家长的方法）
+    List<JoinClass> selectAllJoinClass(Integer parId);
 }

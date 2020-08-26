@@ -17,4 +17,7 @@ public interface CreateClassService {
 
 //    创建群聊
     Integer insertCreateClass(CreateClass createClass);
+
+//    按班级号查询数据
+    CreateClass selectClassByClassNum(String classNum);
 }

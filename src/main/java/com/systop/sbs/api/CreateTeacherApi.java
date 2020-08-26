@@ -30,6 +30,9 @@ public class CreateTeacherApi {
     @Autowired
     CreateClassService createClassService;
 
+    /**
+     * 查询每次老师创建的所有的班级
+     * */
     @RequestMapping("/selectAllCreateClassService")
     public SbsResult selectAllCreateClassService(@RequestParam("teaNo") String teaNo){
         if (createClassService.selectCreateTeacherByTeaNo(teaNo).size() == 0){
@@ -86,5 +89,13 @@ public class CreateTeacherApi {
         }else {
             return SbsResult.success(result);
         }
+    }
+
+    /**
+     * 按班级号查询所有的班级
+     * */
+    @RequestMapping("/selectClassByClassNum")
+    public SbsResult selectClassByClassNum(@RequestParam("classNum") String classNum){
+        return SbsResult.success(createClassService.selectClassByClassNum(classNum));
     }
 }

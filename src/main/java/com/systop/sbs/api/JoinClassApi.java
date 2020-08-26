@@ -25,6 +25,10 @@ public class JoinClassApi {
     @Autowired
     JoinClassService joinClassService;
 
+    /**
+     *  加入班级方法
+     **/
+    @RequestMapping("/joinClass")
     public SbsResult JoinClass(@RequestParam("classNum") String class_num,
                                @RequestParam("parId") Integer parId,@RequestParam("remark") String remark){
         JoinClass joinClass = new JoinClass();
@@ -41,5 +45,14 @@ public class JoinClassApi {
             return SbsResult.success(joinClassService.joinClass(joinClass));
         }
 
+    }
+
+
+    /**
+     * 查询所有加入的班级（家长的方法）
+     * */
+    @RequestMapping("/selectAllJoinClass")
+    public SbsResult selectAllJoinClass(@RequestParam("parId") Integer parId){
+        return SbsResult.success(joinClassService.selectAllJoinClass(parId));
     }
 }
