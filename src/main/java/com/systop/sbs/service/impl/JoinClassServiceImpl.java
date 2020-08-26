@@ -28,4 +28,9 @@ public class JoinClassServiceImpl implements JoinClassService {
     public List<JoinClass> selectAllJoinClass(Integer parId) {
         return joinClassMapper.selectAllJoinClass(parId);
     }
+
+    @Override
+    public JoinClass selectTrue(String classNum, Integer parId) {
+        return joinClassMapper.selectTrue(classNum,parId);
+    }
 }

@@ -15,4 +15,6 @@ public interface JoinClassService {
     Integer joinClass(JoinClass joinClass);
 //    查询加入的所有群聊（家长的方法）
     List<JoinClass> selectAllJoinClass(Integer parId);
+//    查询此班级此家长是否加入过
+    JoinClass selectTrue(String classNum,Integer parId);
 }
