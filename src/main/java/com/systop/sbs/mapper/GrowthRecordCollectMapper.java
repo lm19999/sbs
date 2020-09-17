@@ -136,7 +136,7 @@ public interface GrowthRecordCollectMapper {
      * @return
      */
     @Select("select * from growth_record_collect " +
-            "where par_id=#{parId} and collect_state=1")
+            "where par_id=#{parId}")
     @ResultMap("growthRecordCollectMap")
     List<GrowthRecordCollect> parGRCollectList(@Param("parId") Integer parId);
 
