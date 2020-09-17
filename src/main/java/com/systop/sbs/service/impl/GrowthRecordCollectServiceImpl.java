@@ -74,4 +74,9 @@ public class GrowthRecordCollectServiceImpl implements GrowthRecordCollectServic
     public List<GrowthRecordCollect> parGRCollectList(Integer parId) {
         return growthRecordCollectMapper.parGRCollectList(parId);
     }
+
+    @Override
+    public GrowthRecordCollect parGRCollectByGR(Integer growthRecordId) {
+        return growthRecordCollectMapper.parGRCollectByGR(growthRecordId);
+    }
 }

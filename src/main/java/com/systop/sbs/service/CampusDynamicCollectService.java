@@ -50,13 +50,10 @@ public interface CampusDynamicCollectService {
 
     /**
      * 修改老师点赞状态
-     * @param teaNo 教师工号
-     * @param campusDynamicId 校园动态id
-     * @param collectState 点赞状态
+     * @param campusDynamicCollect
      * @return
      */
-    Integer updateTeaState(@Param("teaNo") String teaNo, @Param("campusDynamicId") Integer campusDynamicId,
-                           @Param("collectState") Integer collectState);
+    Integer updateTeaState(CampusDynamicCollect campusDynamicCollect);
 
     /**
      * 根据教师工号查找点赞记录
@@ -76,13 +73,10 @@ public interface CampusDynamicCollectService {
 
     /**
      * 修改家长点赞状态
-     * @param parId 家长id
-     * @param campusDynamicId 校园动态id
-     * @param collectState 点赞状态
+     * @param campusDynamicCollect
      * @return
      */
-    Integer updateParState(@Param("parId") Integer parId,@Param("campusDynamicId") Integer campusDynamicId,
-                           @Param("collectState") Integer collectState);
+    Integer updateParState(CampusDynamicCollect campusDynamicCollect);
 
     /**
      * 根据家长id查找点赞记录

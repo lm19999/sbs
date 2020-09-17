@@ -92,4 +92,11 @@ public interface GrowthRecordCollectService {
      * @return
      */
     List<GrowthRecordCollect> parGRCollectList(@Param("parId") Integer parId);
+
+    /**
+     * 根据成长记录id查找点赞记录
+     * @param growthRecordId 成长记录id
+     * @return
+     */
+    GrowthRecordCollect parGRCollectByGR(@Param("growthRecordId") Integer growthRecordId);
 }

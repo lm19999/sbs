@@ -21,7 +21,7 @@ public interface CampusDynamicCollectMapper {
      * 查询所有点赞
      * @return
      */
-    @Select("select cdc.*,par.*,tea.*,cd.* from campus_dynamic_collect cdc" +
+    @Select("select cdc.*,par.*,tea.*,cd.* from campus_dynamic_collect cdc " +
             "LEFT JOIN parents par ON cdc.par_id=par.par_id " +
             "LEFT JOIN teacher tea ON cdc.tea_no=tea.tea_no " +
             "LEFT JOIN campus_dynamic cd ON cdc.campus_dynamic_id=cd.campus_dynamic_id")
@@ -46,7 +46,7 @@ public interface CampusDynamicCollectMapper {
      * 查询所有点赞
      * @return
      */
-    @Select("select cdc.*,par.*,tea.*,cd.* from campus_dynamic_collect cdc" +
+    @Select("select cdc.*,par.*,tea.*,cd.* from campus_dynamic_collect cdc " +
             "LEFT JOIN parents par ON cdc.par_id=par.par_id " +
             "LEFT JOIN teacher tea ON cdc.tea_no=tea.tea_no " +
             "LEFT JOIN campus_dynamic cd ON cdc.campus_dynamic_id=cd.campus_dynamic_id " +
@@ -77,20 +77,17 @@ public interface CampusDynamicCollectMapper {
      * @return
      */
     @Insert("insert into campus_dynamic_collect (par_id,tea_no,campus_dynamic_id,collect_state,remark) " +
-            "values (#{null},#{teacher.teaNo},#{campusDynamic.campusDynamicId},1,null)")
+            "values (null,#{teacher.teaNo},#{campusDynamic.campusDynamicId},1,null)")
     Integer teaCollect(CampusDynamicCollect campusDynamicCollect);
 
     /**
      * 修改老师点赞状态
-     * @param teaNo 教师工号
-     * @param campusDynamicId 校园动态id
-     * @param collectState 点赞状态
+     * @param campusDynamicCollect
      * @return
      */
     @Update("update campus_dynamic_collect set collect_state=#{collectState} " +
             "where tea_no=#{teacher.teaNo} and campus_dynamic_id=#{campusDynamic.campusDynamicId}")
-    Integer updateTeaState(@Param("teaNo") String teaNo,@Param("campusDynamicId") Integer campusDynamicId,
-                        @Param("collectState") Integer collectState);
+    Integer updateTeaState(CampusDynamicCollect campusDynamicCollect);
 
     /**
      * 根据教师工号查找点赞记录
@@ -109,20 +106,17 @@ public interface CampusDynamicCollectMapper {
      * @return
      */
     @Insert("insert into campus_dynamic_collect (par_id,tea_no,campus_dynamic_id,collect_state,remark) " +
-            "values (#{parents.parId},#{null},#{campusDynamic.campusDynamicId},1,#{null})")
+            "values (#{parents.parId},null,#{campusDynamic.campusDynamicId},1,null)")
     Integer parCollect(CampusDynamicCollect campusDynamicCollect);
 
     /**
      * 修改家长点赞状态
-     * @param parId 家长id
-     * @param campusDynamicId 校园动态id
-     * @param collectState 点赞状态
+     * @param campusDynamicCollect
      * @return
      */
     @Update("update campus_dynamic_collect set collect_state=#{collectState} " +
             "where par_id=#{parents.parId} and campus_dynamic_id=#{campusDynamic.campusDynamicId}")
-    Integer updateParState(@Param("parId") Integer parId,@Param("campusDynamicId") Integer campusDynamicId,
-                           @Param("collectState") Integer collectState);
+    Integer updateParState(CampusDynamicCollect campusDynamicCollect);
 
     /**
      * 根据家长id查找点赞记录

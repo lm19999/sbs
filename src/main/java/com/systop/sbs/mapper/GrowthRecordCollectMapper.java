@@ -139,4 +139,13 @@ public interface GrowthRecordCollectMapper {
             "where par_id=#{parId} and collect_state=1")
     @ResultMap("growthRecordCollectMap")
     List<GrowthRecordCollect> parGRCollectList(@Param("parId") Integer parId);
+
+    /**
+     * 根据成长记录id查找点赞记录
+     * @param growthRecordId 成长记录id
+     * @return
+     */
+    @Select("select * from growth_record_collect " +
+            "where growth_record_id=#{growthRecordId}")
+    GrowthRecordCollect parGRCollectByGR(@Param("growthRecordId") Integer growthRecordId);
 }

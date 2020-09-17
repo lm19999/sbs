@@ -47,8 +47,8 @@ public class CampusDynamicCollectServiceImpl implements CampusDynamicCollectServ
     }
 
     @Override
-    public Integer updateTeaState(String teaNo, Integer campusDynamicId, Integer collectState) {
-        return campusDynamicCollectMapper.updateTeaState(teaNo,campusDynamicId,collectState);
+    public Integer updateTeaState(CampusDynamicCollect campusDynamicCollect) {
+        return campusDynamicCollectMapper.updateTeaState(campusDynamicCollect);
     }
 
     @Override
@@ -62,8 +62,8 @@ public class CampusDynamicCollectServiceImpl implements CampusDynamicCollectServ
     }
 
     @Override
-    public Integer updateParState(Integer parId, Integer campusDynamicId, Integer collectState) {
-        return campusDynamicCollectMapper.updateParState(parId, campusDynamicId, collectState);
+    public Integer updateParState(CampusDynamicCollect campusDynamicCollect) {
+        return campusDynamicCollectMapper.updateParState(campusDynamicCollect);
     }
 
     @Override
