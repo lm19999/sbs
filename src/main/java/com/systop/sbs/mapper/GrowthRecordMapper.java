@@ -18,11 +18,12 @@ public interface GrowthRecordMapper {
     /**
      * 查询所有成长记录信息
      * @return list
+     *  " +
+     *             "ORDER BY gr.growth_record_id desc"
      */
     @Select("select gr.*,par.*,stu.* from growth_record gr " +
             "INNER JOIN parents par ON gr.growth_record_par_id=par.par_id " +
-            "INNER JOIN student stu ON par.stu_no=stu.stu_no " +
-            "ORDER BY gr.growth_record_id desc")
+            "INNER JOIN student stu ON par.stu_no=stu.stu_no")
     @Results(id = "growthRecordMap",value = {
             @Result(id = true,column = "growth_record_id",property = "growthRecordId"),
             @Result(column = "growth_record_position",property = "growthRecordPosition"),

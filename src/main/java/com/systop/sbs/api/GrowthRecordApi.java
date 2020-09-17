@@ -7,6 +7,7 @@ import com.systop.sbs.common.util.UploadMore;
 import com.systop.sbs.service.GrowthRecordCollectService;
 import com.systop.sbs.service.GrowthRecordService;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -174,6 +175,16 @@ public class GrowthRecordApi {
     /*======================================教师点赞====================================*/
 
     /**
+     * 根据教师工号查找点赞记录
+     * @param teaNo 教师工号
+     * @return
+     */
+    @PostMapping("/teaGRCollectList")
+    public SbsResult teaGRCollectList(@RequestParam("teaNo") String teaNo){
+        return SbsResult.success(growthRecordCollectService.teaGRCollectList(teaNo));
+    }
+
+    /**
      * 查询所有成长记录家长点赞
      * @return
      */
@@ -234,6 +245,16 @@ public class GrowthRecordApi {
     }
 
     /**
+     * 根据家长id查找点赞记录
+     * @param parId 家长id
+     * @return
+     */
+    @PostMapping("/parGRCollectList")
+    public SbsResult parGRCollectList(@RequestParam("parId") Integer parId){
+        return SbsResult.success(growthRecordCollectService.parGRCollectList(parId));
+    }
+
+    /**
      * 家长点赞信息添加
      * @param parId
      * @param growthRecordId
@@ -290,6 +311,19 @@ public class GrowthRecordApi {
         GrowthRecord growthRecord = growthRecordService.searchGrowthRecordById(growthRecordId);
         Integer num = growthRecord.getGrowthRecordCollects();
         Integer growthRecordCollects = num-1;
+        if (growthRecordCollects <= 0){
+            growthRecordCollects = 0;
+        }
         return SbsResult.success(growthRecordService.updateGrowthRecordCollects(growthRecordId,growthRecordCollects));
+    }
+
+    /**
+     * 根据成长记录id查询成长记录点赞信息
+     * @param growthRecordId 成长记录Id
+     * @return
+     */
+    @PostMapping("/parGRCollectByGR")
+    public SbsResult parGRCollectByGR(@RequestParam("growthRecordId") Integer growthRecordId){
+        return SbsResult.success(growthRecordCollectService.parGRCollectByGR(growthRecordId));
     }
 }

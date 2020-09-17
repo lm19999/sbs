@@ -13,7 +13,7 @@ import lombok.Data;
 @JsonIgnoreProperties(value = {"handler"})
 public class CampusDynamicCollect {
     //校园动态点赞id
-    private Integer campus_dynamic_collect_id;
+    private Integer campusDynamicCollectId;
     //家长id
     private Parents parents;
     //老师id

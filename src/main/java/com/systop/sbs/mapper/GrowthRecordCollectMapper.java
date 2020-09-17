@@ -107,6 +107,7 @@ public interface GrowthRecordCollectMapper {
      */
     @Select("select * from growth_record_collect " +
             "where tea_no=#{teaNo}")
+    @ResultMap("growthRecordCollectMap")
     List<GrowthRecordCollect> teaGRCollectList(@Param("teaNo") String teaNo);
 
     /*==========================家长点赞相关=======================*/
@@ -136,5 +137,15 @@ public interface GrowthRecordCollectMapper {
      */
     @Select("select * from growth_record_collect " +
             "where par_id=#{parId}")
+    @ResultMap("growthRecordCollectMap")
     List<GrowthRecordCollect> parGRCollectList(@Param("parId") Integer parId);
+
+    /**
+     * 根据成长记录id查找点赞记录
+     * @param growthRecordId 成长记录id
+     * @return
+     */
+    @Select("select * from growth_record_collect " +
+            "where growth_record_id=#{growthRecordId}")
+    GrowthRecordCollect parGRCollectByGR(@Param("growthRecordId") Integer growthRecordId);
 }
