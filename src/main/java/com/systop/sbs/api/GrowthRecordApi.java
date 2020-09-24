@@ -175,16 +175,6 @@ public class GrowthRecordApi {
     /*======================================教师点赞====================================*/
 
     /**
-     * 根据教师工号查找点赞记录
-     * @param teaNo 教师工号
-     * @return
-     */
-    @PostMapping("/teaGRCollectList")
-    public SbsResult teaGRCollectList(@RequestParam("teaNo") String teaNo){
-        return SbsResult.success(growthRecordCollectService.teaGRCollectList(teaNo));
-    }
-
-    /**
      * 查询所有成长记录家长点赞
      * @return
      */
@@ -199,7 +189,7 @@ public class GrowthRecordApi {
      * @return
      */
     @RequestMapping("/teaGRCollectList")
-    public SbsResult teaGRCollectList(@Param("teaNo") String teaNo){
+    public SbsResult teaGRCollectList(@RequestParam("teaNo") String teaNo){
         return SbsResult.success(growthRecordCollectService.teaGRCollectList(teaNo));
     }
 
@@ -255,20 +245,13 @@ public class GrowthRecordApi {
     }
 
     /**
-<<<<<<< HEAD
      * 根据家长id查询家长点赞
-=======
      * 根据家长id查找点赞记录
->>>>>>> jxc_dev
      * @param parId 家长id
      * @return
      */
     @PostMapping("/parGRCollectList")
-<<<<<<< HEAD
-    public SbsResult parGRCollectList(@Param("parId") Integer parId){
-=======
     public SbsResult parGRCollectList(@RequestParam("parId") Integer parId){
->>>>>>> jxc_dev
         return SbsResult.success(growthRecordCollectService.parGRCollectList(parId));
     }
 
