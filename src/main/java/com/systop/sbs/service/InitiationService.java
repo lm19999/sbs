@@ -19,6 +19,8 @@ public interface InitiationService {
     List<Initiation> selectInitiationByType(Integer initiationTypeId);
 //    按启蒙链接外键id查询启蒙数据
     Initiation selectInitiationByUrlId(Integer initiationUrlId);
+//    按输入名称和类型查询所有的启蒙数据
+    List<Initiation> selectInitiationByTypeAndName(Integer initiationTypeId,String initiationUrlName);
 //    添加启蒙数据
     Integer insertInitiation(Initiation initiation);
 //    删除启蒙数据
