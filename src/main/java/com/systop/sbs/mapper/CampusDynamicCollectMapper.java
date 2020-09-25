@@ -96,6 +96,7 @@ public interface CampusDynamicCollectMapper {
      */
     @Select("select * from campus_dynamic_collect " +
             "where tea_no=#{teaNo}")
+    @ResultMap("campusDynamicCollectMap")
     List<CampusDynamicCollect> teaCollectList(@Param("teaNo") String teaNo);
 
     /*==========================家长点赞相关=======================*/
@@ -125,5 +126,6 @@ public interface CampusDynamicCollectMapper {
      */
     @Select("select * from campus_dynamic_collect " +
             "where par_id=#{parId}")
+    @ResultMap("campusDynamicCollectMap")
     List<CampusDynamicCollect> parCollectList(@Param("parId") Integer parId);
 }
