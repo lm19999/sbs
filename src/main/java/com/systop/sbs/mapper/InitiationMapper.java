@@ -43,6 +43,16 @@ public interface InitiationMapper {
     })
     List<Initiation> selectInitiationByType(Integer initiationTypeId);
 
+    //按类型和输入的内容查询启蒙数据
+    @Select("select * from initiation,initiation_url where initiation.initiation_url_id =initiation_url.initiation_url_id and initiation_type_id=#{0} and initiation_url.initiation_url_name=#{1}")
+    @Results({
+            @Result(property = "initiationType", column = "initiation_type_id",
+                    one = @One(select = "com.systop.sbs.mapper.InitiationTypeMapper.selectById")),
+            @Result(property = "initiationUrl", column = "initiation_url_id",
+                    one = @One(select = "com.systop.sbs.mapper.InitiationUrlMapper.selectInitiationUrlById"))
+    })
+    List<Initiation> selectInitiationByTypeAndName(Integer initiationTypeId,String initiationUrlName);
+
 //    按外键id查询启蒙数据
     @Select("select * from initiation where initiation_url_id = #{initiationUrlId}")
     Initiation selectInitiationByUrlId(Integer initiationUrlId);

@@ -42,6 +42,11 @@ public class InitiationServiceImpl implements InitiationService {
     }
 
     @Override
+    public List<Initiation> selectInitiationByTypeAndName(Integer initiationTypeId,String initiationUrlName) {
+        return initiationMapper.selectInitiationByTypeAndName(initiationTypeId,initiationUrlName);
+    }
+
+    @Override
     public Integer insertInitiation(Initiation initiation) {
         return initiationMapper.insertInitiation(initiation);
     }
