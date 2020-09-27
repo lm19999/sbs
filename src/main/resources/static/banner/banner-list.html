@@ -105,6 +105,11 @@
                             var status = "已发布"
                             var icon = "&#xe62f;";
                         }
+                        if (item.remark == null){
+                            item.remark = "";
+                        }else{
+                            item.remark = item.remark;
+                        }
 
                         html+=`
                                     <tr>
