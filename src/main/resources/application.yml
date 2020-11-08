@@ -2,9 +2,18 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sbs?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    url: jdbc:mysql://39.105.143.125:3306/sbs?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false&testOnBorrow=true&allowMultiQueries=true
     username: root
-    password: root
+    password: sjw971770759
+    druid:
+      filters: stat
+      max-active: 20
+      initial-size: 1
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 1
   servlet:
     multipart:
       max-file-size: 100MB
