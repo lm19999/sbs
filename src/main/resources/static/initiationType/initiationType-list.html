@@ -94,6 +94,11 @@
                     var html = ""
                     layui.each(thisData, function(index, item){
                         arr[index] = item
+                        if (item.remark == null){
+                            item.remark = "";
+                        }else{
+                            item.remark = item.remark;
+                        }
                         html+=`
                                     <tr>
                                         <td>${item.initiationTypeName}</td>
@@ -111,11 +116,7 @@
 
 
                     });
-                    console.log(html)
                     $('.tableList').append(html)
-                    console.log(arr)
-
-
                 }
 
             });
@@ -136,6 +137,7 @@
     /*banner-删除*/
     function member_del(obj,id){
         console.log(id)
+        //如果删除将删除所有的相关的数据，启蒙，启蒙链接的对应类型的数据都应删除
         layer.confirm('确认要删除吗？',function(index){
             //发异步删除数据
             $.ajax({

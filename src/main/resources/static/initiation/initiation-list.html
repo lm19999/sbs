@@ -101,10 +101,17 @@
                         ,thisData = initiationList.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
                     var html = ""
                     layui.each(thisData, function(index, item){
-                        if (item.initiationStatus == 0) {
-                            status="未发布"
+                        if (item.initiationStatus == 0){
+                            var status = "未发布";
+                            var icon = "&#xe601;";
+                        } else {
+                            var status = "已发布"
+                            var icon = "&#xe62f;";
+                        }
+                        if (item.remark == null){
+                            item.remark = "";
                         }else{
-                            status="已发布"
+                            item.remark = item.remark;
                         }
                         html+=`
                             <tr>
@@ -116,6 +123,9 @@
                                 <td>${status}</td>
                                 <td>${item.remark}</td>
                                 <td class="td-manage">
+                                <a onclick="member_stop(this,${item.initiationId})" href="javascript:;" title="${status}">
+                                  <i class="layui-icon">${icon}</i>
+                                </a>
                                 <a title="删除" onclick="member_del(this,${item.initiationId})" href="javascript:;">
                                   <i class="layui-icon">&#xe640;</i>
                                 </a>
@@ -141,7 +151,67 @@
         });
     });
 
-    /*banner-删除*/
+    /*启蒙发布，未发布*/
+    function member_stop(obj,id){
+        layer.confirm('确认改变发布状态吗？',function(index){
+
+            if($(obj).attr('title')=='已发布'){
+
+                //发异步把发布状态进行更改
+                $.ajax({
+                    type: 'POST',
+                    url: '/initiation/updateInitiationByStatus',
+                    data: {
+                        initiationId:id,
+                        initiationStatus:0
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data.code);
+                        if (data.code == "200") {
+                            $(obj).attr('title','未发布')
+
+                            // $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('未发布');
+                            layer.msg('未发布!',{icon: 5,time:1000});
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+                            // $(obj).find('i').html('&#xe62f;');
+                        }
+
+                    }
+                })
+            }else{
+                //发异步把用户状态进行更改
+                $.ajax({
+                    type: 'POST',
+                    url: '/initiation/updateInitiationByStatus',
+                    data: {
+                        initiationId:id,
+                        initiationStatus:1
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data.code);
+                        if (data.code == "200") {
+                            $(obj).attr('title','已发布')
+                            // $(obj).find('i').html('&#xe62f;');
+
+                            // $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('未发布');
+                            layer.msg('已发布!',{icon: 1,time:1000});
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000);
+                        }
+
+                    }
+                })
+            }
+
+        });
+    }
+
+    /*启蒙-删除*/
     function member_del(obj,id){
         console.log(id)
         layer.confirm('确认要删除吗？',function(index){

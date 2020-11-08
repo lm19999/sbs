@@ -1,6 +1,7 @@
 package com.systop.sbs.service.impl;
 
 import com.systop.sbs.common.pojo.CampusDynamicCollect;
+import com.systop.sbs.common.pojo.GrowthRecordCollect;
 import com.systop.sbs.mapper.CampusDynamicCollectMapper;
 import com.systop.sbs.service.CampusDynamicCollectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,33 @@ public class CampusDynamicCollectServiceImpl implements CampusDynamicCollectServ
     private CampusDynamicCollectMapper campusDynamicCollectMapper;
 
     @Override
+    public List<CampusDynamicCollect> campusDynamicCollectList() {
+        return campusDynamicCollectMapper.campusDynamicCollectList();
+    }
+
+    @Override
+    public List<CampusDynamicCollect> campusDynamicCollectListByCampus(Integer campusDynamicId) {
+        return campusDynamicCollectMapper.campusDynamicCollectListByCampus(campusDynamicId);
+    }
+
+    @Override
+    public List<GrowthRecordCollect> parCampusCollectList() {
+        return campusDynamicCollectMapper.parCampusCollectList();
+    }
+
+    @Override
+    public List<GrowthRecordCollect> teaCampusCollectList() {
+        return campusDynamicCollectMapper.teaCampusCollectList();
+    }
+
+    @Override
     public Integer teaCollect(CampusDynamicCollect campusDynamicCollect) {
         return campusDynamicCollectMapper.teaCollect(campusDynamicCollect);
     }
 
     @Override
-    public Integer updateTeaState(String teaNo, Integer campusDynamicId, Integer collectState) {
-        return campusDynamicCollectMapper.updateTeaState(teaNo,campusDynamicId,collectState);
+    public Integer updateTeaState(CampusDynamicCollect campusDynamicCollect) {
+        return campusDynamicCollectMapper.updateTeaState(campusDynamicCollect);
     }
 
     @Override
@@ -41,8 +62,8 @@ public class CampusDynamicCollectServiceImpl implements CampusDynamicCollectServ
     }
 
     @Override
-    public Integer updateParState(Integer parId, Integer campusDynamicId, Integer collectState) {
-        return campusDynamicCollectMapper.updateParState(parId, campusDynamicId, collectState);
+    public Integer updateParState(CampusDynamicCollect campusDynamicCollect) {
+        return campusDynamicCollectMapper.updateParState(campusDynamicCollect);
     }
 
     @Override

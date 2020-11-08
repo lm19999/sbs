@@ -13,7 +13,7 @@ import java.io.IOException;
  * @Date: 2020/7/30 10:52
  **/
 public class Upload {
-    public String upload(MultipartFile uploadFile, HttpServletRequest request) {
+    public static String upload(MultipartFile uploadFile, HttpServletRequest request) {
         /*
          定义文件的存储路径,如下，是在linux和mac上定义的文件路径
         /private/var/folders/8x/4zvnbqmj1w33cqmzrpygzbth0000gn/T/tomcat-docbase.5206733816001100271.8080/uploadFile

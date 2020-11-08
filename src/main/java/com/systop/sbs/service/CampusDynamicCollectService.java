@@ -1,7 +1,9 @@
 package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.CampusDynamicCollect;
-import org.apache.ibatis.annotations.Param;
+import com.systop.sbs.common.pojo.GrowthRecordCollect;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
@@ -12,7 +14,31 @@ import java.util.List;
  * @Date: 2020/8/3 18:01
  **/
 public interface CampusDynamicCollectService {
+    /*============================list===========================*/
 
+    /**
+     * 查询所有点赞
+     * @return
+     */
+    List<CampusDynamicCollect> campusDynamicCollectList();
+
+    /**
+     * 查询所有点赞
+     * @return
+     */
+    List<CampusDynamicCollect> campusDynamicCollectListByCampus(@Param("campusDynamicId") Integer campusDynamicId);
+
+    /**
+     * 家长点赞list
+     * @return
+     */
+    List<GrowthRecordCollect> parCampusCollectList();
+
+    /**
+     * 教师点赞list
+     * @return
+     */
+    List<GrowthRecordCollect> teaCampusCollectList();
     /*==========================老师点赞相关=======================*/
 
     /**
@@ -24,13 +50,10 @@ public interface CampusDynamicCollectService {
 
     /**
      * 修改老师点赞状态
-     * @param teaNo 教师工号
-     * @param campusDynamicId 校园动态id
-     * @param collectState 点赞状态
+     * @param campusDynamicCollect
      * @return
      */
-    Integer updateTeaState(@Param("teaNo") String teaNo, @Param("campusDynamicId") Integer campusDynamicId,
-                           @Param("collectState") Integer collectState);
+    Integer updateTeaState(CampusDynamicCollect campusDynamicCollect);
 
     /**
      * 根据教师工号查找点赞记录
@@ -50,13 +73,10 @@ public interface CampusDynamicCollectService {
 
     /**
      * 修改家长点赞状态
-     * @param parId 家长id
-     * @param campusDynamicId 校园动态id
-     * @param collectState 点赞状态
+     * @param campusDynamicCollect
      * @return
      */
-    Integer updateParState(@Param("parId") Integer parId,@Param("campusDynamicId") Integer campusDynamicId,
-                           @Param("collectState") Integer collectState);
+    Integer updateParState(CampusDynamicCollect campusDynamicCollect);
 
     /**
      * 根据家长id查找点赞记录

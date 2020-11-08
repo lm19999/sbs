@@ -99,6 +99,11 @@
                         }else{
                             status="已发布"
                         }
+                        if (item.remark == null){
+                            item.remark = "";
+                        }else{
+                            item.remark = item.remark;
+                        }
                         html+=`
                             <tr>
                                 <td>${item.campusDynamicType.campusDynamicTypeName}</td>

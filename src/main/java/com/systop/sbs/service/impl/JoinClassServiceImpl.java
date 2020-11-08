@@ -6,6 +6,8 @@ import com.systop.sbs.service.JoinClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Program: sbs
  * @Description: TODO
@@ -20,5 +22,15 @@ public class JoinClassServiceImpl implements JoinClassService {
     @Override
     public Integer joinClass(JoinClass joinClass) {
         return joinClassMapper.joinClass(joinClass);
+    }
+
+    @Override
+    public List<JoinClass> selectAllJoinClass(Integer parId) {
+        return joinClassMapper.selectAllJoinClass(parId);
+    }
+
+    @Override
+    public JoinClass selectTrue(String classNum, Integer parId) {
+        return joinClassMapper.selectTrue(classNum,parId);
     }
 }

@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.systop.sbs.common.pojo.Parents;
 import com.systop.sbs.common.pojo.Student;
-import com.systop.sbs.common.util.ComFunctionUtils;
-import com.systop.sbs.common.util.SbsResult;
-import com.systop.sbs.common.util.UploadImage;
-import com.systop.sbs.common.util.WebClientUtils;
+import com.systop.sbs.common.util.*;
 import com.systop.sbs.service.ParentsService;
 import com.systop.sbs.service.RedisService;
 import org.apache.ibatis.annotations.Param;
@@ -93,7 +90,8 @@ public class ParentsApi {
      * @return
      */
     @RequestMapping("/registerParents")
-    public SbsResult registerParents(Parents parents,@RequestParam("parPhone") String parPhone,@RequestParam("stuNo") String stuNo,
+    public SbsResult registerParents(Parents parents,@RequestParam("parPhone") String parPhone,
+                                     @RequestParam("stuNo") String stuNo, @Param("parPwd") String parPwd,
                                      HttpServletRequest request, HttpServletResponse response,HttpSession session ){
 
         Student student = new Student();
@@ -133,6 +131,7 @@ public class ParentsApi {
         student.setStuNo(stuNo);
         parents.setParPhone(parPhone);
         parents.setParName("请设置名称");
+        parents.setParPwd(Md5Utils.getMD5Str(parPwd));
         parents.setParPortrait("http://localhost:8080/images/20200803/11/202008031103009978c4986e64c.jpg");
         parents.setStudent(student);
         parents.setParOnlineStatus(0);
@@ -150,6 +149,7 @@ public class ParentsApi {
             e.printStackTrace();
         }
     }
+
 
     /**
      * 家长登录
@@ -175,7 +175,7 @@ public class ParentsApi {
 
     @RequestMapping("/parentsLogin")
     public SbsResult parentsLogin(@Param("parPhone") String parPhone, @Param("parPwd") String parPwd){
-        return SbsResult.success(parentsService.parentsLogin(parPhone, parPwd));
+        return SbsResult.success(parentsService.parentsLogin(parPhone, Md5Utils.getMD5Str(parPwd)));
     }
 
     /**
@@ -200,7 +200,20 @@ public class ParentsApi {
     public SbsResult forgetParentsPwd(@Param("parPhone") String parPhone, @Param("parPwd") String parPwd,
                                       HttpServletRequest request, HttpServletResponse response){
         String code = request.getParameter("code");
-        JSONObject json = (JSONObject)request.getSession().getAttribute("code");
+
+        String redisCode = redisService.get(tokenId+parPhone);
+        System.out.println("存储在redis中的："+redisCode);
+
+        if (StringUtils.isEmpty(redisCode)){
+            renderData(response,"验证码已失效");
+            return SbsResult.fail("404","验证码已失效");
+        }
+        if (!"".equals(redisCode) && !code.equals(redisCode)){
+            renderData(response,"验证码输入错误");
+            return SbsResult.fail("500","验证码输入错误");
+        }
+
+        /*JSONObject json = (JSONObject)request.getSession().getAttribute("code");
         if (json == null){
             renderData(response, "验证码为空");
             return SbsResult.fail("500","验证码为空");
@@ -216,9 +229,9 @@ public class ParentsApi {
         if((System.currentTimeMillis() - json.getLong("createTime")) > 1000 * 60 * 5){
             renderData(response, "验证码已过期");
             return SbsResult.fail("500","验证码已过期");
-        }
+        }*/
 
-        return SbsResult.success(parentsService.forgetParentsPwd(parPwd, parPhone));
+        return SbsResult.success(parentsService.forgetParentsPwd(Md5Utils.getMD5Str(parPwd), parPhone));
     }
 
     /**

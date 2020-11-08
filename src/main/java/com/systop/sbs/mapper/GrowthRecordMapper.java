@@ -18,11 +18,12 @@ public interface GrowthRecordMapper {
     /**
      * 查询所有成长记录信息
      * @return list
+     *  " +
+     *             "ORDER BY gr.growth_record_id desc"
      */
     @Select("select gr.*,par.*,stu.* from growth_record gr " +
             "INNER JOIN parents par ON gr.growth_record_par_id=par.par_id " +
-            "INNER JOIN student stu ON par.stu_no=stu.stu_no " +
-            "ORDER BY gr.growth_record_id desc")
+            "INNER JOIN student stu ON par.stu_no=stu.stu_no")
     @Results(id = "growthRecordMap",value = {
             @Result(id = true,column = "growth_record_id",property = "growthRecordId"),
             @Result(column = "growth_record_position",property = "growthRecordPosition"),
@@ -73,7 +74,7 @@ public interface GrowthRecordMapper {
      * @param growthRecord 成长记录
      * @return
      */
-    @Update("update campus_dynamic set growth_record_par_id=#{parents.parId}," +
+    @Update("update growth_record set growth_record_par_id=#{parents.parId}," +
             "growth_record_position=#{growthRecordPosition},growth_record_url=#{growthRecordUrl}," +
             "growth_record_describe=#{growthRecordDescribe},growth_record_collects=#{growthRecordCollects}," +
             "growth_record_views=#{growthRecordViews},remark=#{remark} " +
@@ -85,7 +86,16 @@ public interface GrowthRecordMapper {
      * @param growthRecordId 成长记录Id
      * @return
      */
-    @Select("select * from campus_dynamic where growth_record_id = #{growthRecordId}")
+    @Select("select * from growth_record where growth_record_id = #{growthRecordId}")
     @ResultMap("growthRecordMap")
     GrowthRecord searchGrowthRecordById(@Param("growthRecordId") Integer growthRecordId);
+
+    /**
+     * 修改点赞人数
+     * @Param growthRecordId 成长记录id
+     */
+    @Update("UPDATE growth_record SET growth_record_collects=#{growthRecordCollects} " +
+            "WHERE growth_record_id =#{growthRecordId}")
+    int updateGrowthRecordCollects(@Param("growthRecordId") int growthRecordId,
+                                   @Param("growthRecordCollects") int growthRecordCollects);
 }

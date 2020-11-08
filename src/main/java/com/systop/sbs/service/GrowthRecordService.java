@@ -1,6 +1,7 @@
 package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.GrowthRecord;
+import com.systop.sbs.common.pojo.GrowthRecordCollect;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -52,4 +53,11 @@ public interface GrowthRecordService {
      * @return
      */
     GrowthRecord searchGrowthRecordById(@Param("growthRecordId") Integer growthRecordId);
+
+    /**
+     * 修改点赞人数
+     * @Param growthRecordId 成长记录id
+     */
+    int updateGrowthRecordCollects(@Param("growthRecordId") int growthRecordId,
+                                   @Param("growthRecordCollects") int growthRecordCollects);
 }

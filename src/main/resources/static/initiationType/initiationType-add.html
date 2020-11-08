@@ -49,51 +49,76 @@
             //监听提交
             form.on('submit(add)',
                 function(data) {
-                    console.log(data)
+                    //判断是否填写启蒙类型，如果没添加，提示添加
                     if(data.field.initiationTypeName == null || data.field.initiationTypeName == ""){
                        layer.msg("请填写启蒙类型");
                        return false;
                     }
 
-
+                    //查询所有的类型信息
                     $.ajax({
-                        type:'post',
-                        url:'/initiationType/insertInitiationType',
-                        data:{
-                            initiationTypeName:data.field.initiationTypeName,
-                            remark:data.field.remark
+                        type: 'post',
+                        url: '/initiationType/selectAllInitiationType',
+                        data: {
                         },
-                        dataType:'json',
-                        success:function (data) {
-                            console.log(data);
-                            if (data.data != 0){
-                                layer.alert("增加成功", {
-                                        icon: 6
+                        async:false,
+                        dataType: 'json',
+                        success: function (res) {
+                            //当前输入的类型名称
+                            var name = $("#initiationTypeName").val()
+                            var flag = true;
+                            layui.each(res.data, function(index, item){
+                                //如果填写的数据和数据库中已有的数据相同
+                                if (item.initiationTypeName == name){
+                                    flag = false;
+                                    return;
+                                }
+                            })
+                            //如果标记为false则可以添加数据
+                            if (flag) {
+                                $.ajax({
+                                    type:'post',
+                                    url:'/initiationType/insertInitiationType',
+                                    data:{
+                                        initiationTypeName:data.field.initiationTypeName,
+                                        remark:data.field.remark
                                     },
-                                    function() {
-                                        //关闭当前frame
-                                        xadmin.close();
+                                    dataType:'json',
+                                    success:function (data) {
+                                        console.log(data);
+                                        if (data.data != 0){
+                                            layer.alert("增加成功", {
+                                                    icon: 6
+                                                },
+                                                function() {
+                                                    //关闭当前frame
+                                                    xadmin.close();
 
-                                        // 可以对父窗口进行刷新
-                                        xadmin.father_reload();
-                                    });
-                            } else {
-                                alert("添加失败")
-                                layer.alert("增加失败", {
-                                        icon: 5
+                                                    // 可以对父窗口进行刷新
+                                                    xadmin.father_reload();
+                                                });
+                                        } else {
+                                            alert("添加失败")
+                                            layer.alert("增加失败", {
+                                                    icon: 5
+                                                },
+                                                function() {
+                                                    //关闭当前frame
+                                                    xadmin.close();
+
+                                                    // 可以对父窗口进行刷新
+                                                    xadmin.father_reload();
+                                                });
+                                        }
+
                                     },
-                                    function() {
-                                        //关闭当前frame
-                                        xadmin.close();
-
-                                        // 可以对父窗口进行刷新
-                                        xadmin.father_reload();
-                                    });
+                                    error:function (res) {
+                                        alert(res.responseText)
+                                    }
+                                })
+                            }else{
+                                layer.msg("该类型已经存在")
                             }
-
-                        },
-                        error:function (res) {
-                            alert(res.responseText)
                         }
                     })
                     return false;

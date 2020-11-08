@@ -20,8 +20,8 @@ public interface ParentsMapper {
      * @param parents 家长
      * @return
      */
-    @Insert("insert into parents (par_phone,stu_no,par_online_status) " +
-            "values (#{parPhone},#{student.stuNo},0)")
+    @Insert("insert into parents (par_phone,stu_no,par_online_status,par_pwd) " +
+            "values (#{parPhone},#{student.stuNo},0,#{parPwd})")
     Integer registerParents(Parents parents);
 
     /**
@@ -71,7 +71,7 @@ public interface ParentsMapper {
      * @return list
      */
     @Select("select par.*,stu.* from parents par " +
-            "INNER JOIN student stu ON par.stu_no=stu.stu_no " +
+            "LEFT JOIN student stu ON par.stu_no=stu.stu_no " +
             "ORDER BY par.par_id desc")
     @Results(id = "parentsMap",value = {
             @Result(id = true,column = "par_id",property = "parId"),

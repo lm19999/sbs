@@ -108,7 +108,12 @@
                         } else{
                             item.teaType = teaType[1];
                         }
-                        html =
+                        if (item.remark == null){
+                            item.remark = "";
+                        }else{
+                            item.remark = item.remark;
+                        }
+                        html +=
                             `<tr>
                                 <td>${item.teaNo}</td>
                                 <td>${item.teaName}</td>

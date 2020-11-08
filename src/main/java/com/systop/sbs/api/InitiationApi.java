@@ -28,6 +28,15 @@ public class InitiationApi {
         }
     }
 
+    /**
+     * 前台搜索启蒙数据方法
+     * */
+    @RequestMapping("/selectAllInitiationByTypeAndName")
+    public SbsResult selectAllInitiationByTypeAndName(@RequestParam("initiationTypeId") Integer initiationTypeId,
+                                                      @RequestParam("initiationUrlName") String initiationUrlName){
+        return SbsResult.success(initiationService.selectInitiationByTypeAndName(initiationTypeId,initiationUrlName));
+    }
+
 
 //    生成二维码测试
 //    @GetMapping("/Qrcode")

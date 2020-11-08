@@ -30,6 +30,7 @@ public interface CampusDynamicMapper {
                 @Result(column = "campus_dynamic_describe", property = "campusDynamicDescribe"),
                 @Result(column = "campus_dynamic_collects", property = "campusDynamicCollects"),
                 @Result(column = "campus_dynamic_views", property = "campusDynamicViews"),
+                @Result(column = "campus_dynamic_collects", property = "campusDynamicCollects"),
                 @Result(column = "campus_dynamic_status", property = "campusDynamicStatus"),
                 @Result(column = "remark", property = "remark"),
                 @Result(property = "campusDynamicType", column = "campus_dynamic_type_id",
@@ -97,9 +98,9 @@ public interface CampusDynamicMapper {
      * @return
      */
     @Insert("insert into campus_dynamic (campus_dynamic_type_id,campus_dynamic_name,campus_dynamic_url," +
-            "campus_dynamic_describe,campus_dynamic_collects,campus_dynamic_views,campus_dynamic_status,remark) " +
+            "campus_dynamic_describe,campus_dynamic_collects,campus_dynamic_views,campus_dynamic_collects,campus_dynamic_status,remark) " +
             "values (#{campusDynamicType.campusDynamicTypeId},#{campusDynamicName},null,null," +
-            "0,0,#{campusDynamicStatus},#{remark})")
+            "0,0,0,#{campusDynamicStatus},#{remark})")
     Integer addCampusDynamic(CampusDynamic campusDynamic);
 
     /**
@@ -124,7 +125,8 @@ public interface CampusDynamicMapper {
     @Update("update campus_dynamic set campus_dynamic_type_id=#{campusDynamicType.campusDynamicTypeId}," +
             "campus_dynamic_name=#{campusDynamicName},campus_dynamic_url=#{campusDynamicUrl}," +
             "campus_dynamic_describe=#{campusDynamicDescribe},campus_dynamic_views=#{campusDynamicViews}," +
-            "campus_dynamic_status=#{campusDynamicStatus},remark=#{remark} " +
+            "campus_dynamic_collects=#{campusDynamicCollects},campus_dynamic_status=#{campusDynamicStatus}," +
+            "remark=#{remark} " +
             "WHERE campus_dynamic_id=#{campusDynamicId}")
     Integer updateCampusDynamic(CampusDynamic campusDynamic);
 
@@ -154,10 +156,10 @@ public interface CampusDynamicMapper {
      * @param campusDynamicCollects 点赞数
      * @return
      */
-    @Update("update campus_dynamic set campus_dynamic_collects=#{campusDynamicCollects+1} " +
+    @Update("update campus_dynamic set campus_dynamic_collects=#{campusDynamicCollects} " +
             "WHERE campus_dynamic_id=#{campusDynamicId}")
     Integer addCollects(@Param("campusDynamicId") Integer campusDynamicId,
-                           @Param("campusDynamicCollects") Integer campusDynamicCollects);
+                        @Param("campusDynamicCollects") Integer campusDynamicCollects);
 
     /**
      * 减少点赞数
@@ -165,7 +167,7 @@ public interface CampusDynamicMapper {
      * @param campusDynamicCollects 点赞数
      * @return
      */
-    @Update("update campus_dynamic set campus_dynamic_collects=#{campusDynamicCollects+1} " +
+    @Update("update campus_dynamic set campus_dynamic_collects=#{campusDynamicCollects} " +
             "WHERE campus_dynamic_id=#{campusDynamicId}")
     Integer cutCollects(@Param("campusDynamicId") Integer campusDynamicId,
                         @Param("campusDynamicCollects") Integer campusDynamicCollects);

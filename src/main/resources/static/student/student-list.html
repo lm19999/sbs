@@ -101,6 +101,12 @@
                         arr[index] = item
                         // console.log(item)
 
+                        if (item.remark == null){
+                            item.remark = "";
+                        }else{
+                            item.remark = item.remark;
+                        }
+
                         html+=`
                                     <tr>
                                         <td>${item.stuNo}</td>

@@ -21,13 +21,38 @@ public class GrowthRecordCollectServiceImpl implements GrowthRecordCollectServic
     private GrowthRecordCollectMapper growthRecordCollectMapper;
 
     @Override
+    public List<GrowthRecordCollect> growthRecordCollectList() {
+        return growthRecordCollectMapper.growthRecordCollectList();
+    }
+
+    @Override
+    public List<GrowthRecordCollect> growthRecordCollectListByGrowthRecord(Integer growthRecordId) {
+        return growthRecordCollectMapper.growthRecordCollectListByGrowthRecord(growthRecordId);
+    }
+
+    @Override
+    public Integer deleteGrowthRecordCollect(Integer growthRecordId) {
+        return growthRecordCollectMapper.deleteGrowthRecordCollect(growthRecordId);
+    }
+
+    @Override
+    public List<GrowthRecordCollect> parGrowthRecordCollectList() {
+        return growthRecordCollectMapper.parGrowthRecordCollectList();
+    }
+
+    @Override
+    public List<GrowthRecordCollect> teaGrowthRecordCollectList() {
+        return growthRecordCollectMapper.teaGrowthRecordCollectList();
+    }
+
+    @Override
     public Integer teaGRCollect(GrowthRecordCollect growthRecordCollect) {
         return growthRecordCollectMapper.teaGRCollect(growthRecordCollect);
     }
 
     @Override
-    public Integer updateTeaGRState(String teaNo, Integer growthRecordId, Integer collectState) {
-        return growthRecordCollectMapper.updateTeaGRState(teaNo, growthRecordId, collectState);
+    public Integer updateTeaGRState(GrowthRecordCollect growthRecordCollect) {
+        return growthRecordCollectMapper.updateTeaGRState(growthRecordCollect);
     }
 
     @Override
@@ -41,12 +66,17 @@ public class GrowthRecordCollectServiceImpl implements GrowthRecordCollectServic
     }
 
     @Override
-    public Integer updateParGRState(Integer parId, Integer growthRecordId, Integer collectState) {
-        return growthRecordCollectMapper.updateParGRState(parId, growthRecordId, collectState);
+    public Integer updateParGRState(GrowthRecordCollect growthRecordCollect) {
+        return growthRecordCollectMapper.updateParGRState(growthRecordCollect);
     }
 
     @Override
     public List<GrowthRecordCollect> parGRCollectList(Integer parId) {
         return growthRecordCollectMapper.parGRCollectList(parId);
+    }
+
+    @Override
+    public GrowthRecordCollect parGRCollectByGR(Integer growthRecordId) {
+        return growthRecordCollectMapper.parGRCollectByGR(growthRecordId);
     }
 }

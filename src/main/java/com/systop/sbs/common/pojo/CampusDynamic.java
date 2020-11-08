@@ -26,6 +26,8 @@ public class CampusDynamic {
     private Integer campusDynamicCollects;
     //浏览量
     private Integer campusDynamicViews;
+    //评论量
+    private Integer campusDynamicComments;
     //发布状态：0未发布 1已发布
     private Integer campusDynamicStatus;
     //备注

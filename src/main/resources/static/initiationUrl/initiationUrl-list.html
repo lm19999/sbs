@@ -35,8 +35,8 @@
 
                 <div class="layui-card-header">
                     <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
-                    <button class="layui-btn" onclick="xadmin.open('导入excel','./initiationUrl-batchImport.html',600,400)"><i class="layui-icon"></i>批量添加</button>
-                    <!--<button class="layui-btn" onclick="xadmin.open('添加启蒙类型','./initiationUrl-add.html',600,400)"><i class="layui-icon"></i>添加</button>-->
+                    <!--<button class="layui-btn" onclick="xadmin.open('导入excel','./initiationUrl-batchImport.html',600,400)"><i class="layui-icon"></i>批量添加</button>-->
+                    <button class="layui-btn" onclick="xadmin.open('添加启蒙类型','./initiationUrl-add.html',600,400)"><i class="layui-icon"></i>添加</button>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -101,12 +101,24 @@
                         ,thisData = initiationUrlList.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
                     var html = ""
                     layui.each(thisData, function(index, item){
+                        console.log(item)
+                        var lrc = ""
+                        if(item.lrc == null){
+                            lrc = "没有数据"
+                        }else{
+                            lrc = item.lrc.lrcName
+                        }
+                        if (item.remark == null){
+                            item.remark = "";
+                        }else{
+                            item.remark = item.remark;
+                        }
                         html+=`
                             <tr>
                                 <td>${item.initiationUrlTitle}</td>
                                 <td>${item.initiationUrlName}</td>
                                 <td>${item.initiationUrl}</td>
-                                <td>${item.initiationLrc}</td>
+                                <td>${lrc}</td>
                                 <td>${item.initiationUrlDescribe}</td>
                                 <td>${item.remark}</td>
                                 <td class="td-manage">
@@ -136,32 +148,32 @@
     });
 
     /*启蒙链接-删除*/
-    // function member_del(obj,id){
-    //     console.log(id)
-    //     layer.confirm('确认要删除吗？',function(index){
-    //         //发异步删除数据
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: '/initiationUrl/deleteInitiationUrl',
-    //             data: {
-    //                 initiationUrlId:id
-    //             },
-    //             dataType: "json",
-    //             success: function (data) {
-    //                 console.log(data)
-    //                 if (data.code=="200"){
-    //                     layer.msg('已删除!',{icon:1,time:1000});
-    //                     setTimeout(function () {
-    //                         window.location.reload();
-    //                     }, 1000);
-    //                 }else{
-    //                     layer.msg('删除失败!',{icon:5,time:1000});
-    //                 }
-    //             }
-    //         })
-    //
-    //     });
-    // }
+    function member_del(obj,id){
+        console.log(id)
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.ajax({
+                type: 'POST',
+                url: '/initiationUrl/deleteInitiationUrl',
+                data: {
+                    initiationUrlId:id
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    if (data.code=="200"){
+                        layer.msg('已删除!',{icon:1,time:1000});
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
+                    }else{
+                        layer.msg('删除失败!',{icon:5,time:1000});
+                    }
+                }
+            })
+
+        });
+    }
 
 
 

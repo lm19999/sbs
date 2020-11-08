@@ -22,10 +22,15 @@
     <div class="layui-row">
         <form class="layui-form">
             <div class="layui-form-item">
-                <label for="upload" class="layui-form-label">
-                    <span class="x-red">*</span>启蒙链接</label>
+                <label for="initiationUrlType" class="layui-form-label">
+                    <span class="x-red">*</span>启蒙类型</label>
                 <div class="layui-input-inline">
-                    <input type="file" class="input w50" id="upload" accept="video/*" name="file" type="file"/></div>
+                    <select id="initiationUrlType" name="initiationUrlType" lay-filter="initiationUrlType">
+                        <option value="-1">请选择链接类型</option>
+                        <option value="1">儿歌</option>
+                        <option value="2">视频</option>
+                    </select>
+                </div>
             </div>
             <div class="layui-form-item">
                 <label for="initiationUrlTitle" class="layui-form-label">
@@ -38,6 +43,21 @@
                     <span class="x-red">*</span>启蒙名称</label>
                 <div class="layui-input-inline">
                     <input type="text" id="initiationUrlName" name="initiationUrlName" autocomplete="off" class="layui-input"></div>
+            </div>
+            <div class="layui-form-item">
+                <label for="upload" class="layui-form-label">
+                    <span class="x-red">*</span>启蒙链接</label>
+                <div class="layui-input-inline">
+                    <input type="file" class="input w50" id="upload" name="file" type="file"/></div>
+            </div>
+            <div class="layui-form-item" style="display: none" id="lrc">
+                <label for="initiationLrc" class="layui-form-label">
+                    <span class="x-red">*</span>歌词文件</label>
+                <div class="layui-input-inline">
+                    <select id="initiationLrc" name="initiationLrc" lay-filter="initiationLrc">
+                        <option value="-1">请选择歌词文件</option>
+                    </select>
+                </div>
             </div>
             <div class="layui-form-item">
                 <label for="initiationUrlDescribe" class="layui-form-label">
@@ -63,24 +83,107 @@
             var form = layui.form,
                 layer = layui.layer;
 
+            form.on('select(initiationUrlType)', function (data) {
+                if ($('#initiationUrlType').val() == "1"){
+                    $("#lrc").css("display","block")
+                }else{
+                    $("#lrc").css("display","none")
+                }
+            })
+
+            //查询所有的歌词文件
+            $.ajax({
+                type: 'post',
+                url: '/lrc/selectAllLrc',
+                data: {},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    var html='<option value="-1">请选择歌词文件</option>';
+                    layui.each(data.data, function(index, item){
+                        html+=`
+                            <option value="${item.lrcId}">${item.lrcName}</option>
+                        `
+                    })
+                    $('#initiationLrc').append(html);
+                    form.render();
+                }
+            })
+
             //监听提交
             form.on('submit(add)',
                 function(data) {
+                var lrc = 3;
 
-                    var fileName = document.getElementById("upload").value;
-                    var file_suffix = fileName.substr(fileName.length-3);
-                    var fileMaxSize = 1024;
+                    if ($('#initiationUrlType').val() == "-1"){
+                        layer.msg("请选择类型")
+                        return false;
+                    }
+                    else if ($('#initiationUrlType option:selected').text() != "儿歌"){
+                        lrc = 3;
+                    }else {
+                        lrc = data.field.initiationLrc;
+                    }
 
+                    //判断启蒙标题
+                    if(data.field.initiationUrlTitle == "" || data.field.initiationUrlTitle == null){
+                        layer.msg("请输入启蒙标题")
+                        return false;
+                    }
+                    //判断启蒙名称
+                    if(data.field.initiationUrlName == "" || data.field.initiationUrlName == null){
+                        layer.msg("请输入启蒙名称")
+                        return false;
+                    }
+
+                    //获取文件并添加限制只能上传图片
                     var formdate = new FormData();
                     var img_file=document.getElementById("upload");//文件
-                    console.log(img_file);
 
+                    //判断是否选择了文件
+                    if(img_file.files[0] != null && img_file.files[0] != "" && img_file.files[0] != undefined){
+                        var file_suffix = img_file.files[0].name.substr(img_file.files[0].name.length-3);
+                        var fileMaxSize = 1024;
+                        var size = img_file.files[0].size/(1024*1024);
+                        if(file_suffix != "mp3" && file_suffix != "mp4" && file_suffix != "MP3" && file_suffix != "MP4"){
+                            layer.msg("您上传的文件类型不被允许，请重传，只允许上传MP3、MP4文件")
+                            return false;
+                        }
+
+                        //限制图片大小，只能在1M之内
+                        // if (size > fileMaxSize) {
+                        //     alert("文件大小不能大于1M！");
+                        //     file.value = "";
+                        //     return false;
+                        // }
+                        // if (size <= 0) {
+                        //     alert("文件大小不能为0M！");
+                        //     file.value = "";
+                        //     return false;
+                        // }
+                    }else{
+                        layer.msg("请上传启蒙文件");
+                        return false;
+                    }
+
+                    //判断启蒙描述
+                    if(data.field.initiationUrlDescribe == "" || data.field.initiationUrlDescribe == null){
+                        layer.msg("请输入启蒙描述")
+                        return false;
+                    }
+
+
+                    console.log(data.field.initiationUrlType)
                     var fileObj = img_file.files[0];
+
                     formdate.append("file",fileObj);
+                    formdate.append("initiationUrlType",data.field.initiationUrlType);
                     formdate.append("initiationUrlTitle",data.field.initiationUrlTitle);
                     formdate.append("initiationUrlName",data.field.initiationUrlName);
                     formdate.append("initiationUrlDescribe",data.field.initiationUrlDescribe);
+                    formdate.append("initiationLrc",lrc);
                     formdate.append("remark",data.field.remark);
+
 
                     $.ajax({
                         type:'post',

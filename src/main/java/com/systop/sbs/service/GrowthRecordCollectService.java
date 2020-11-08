@@ -1,7 +1,9 @@
 package com.systop.sbs.service;
 
 import com.systop.sbs.common.pojo.GrowthRecordCollect;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,39 @@ import java.util.List;
  * @Date: 2020/8/4 9:57
  **/
 public interface GrowthRecordCollectService {
+    /*============================list===========================*/
+
+    /**
+     * 查询所有点赞
+     * @return
+     */
+    List<GrowthRecordCollect> growthRecordCollectList();
+
+
+    /**
+     * 根据成长记录查询点赞
+     * @return
+     */
+    List<GrowthRecordCollect> growthRecordCollectListByGrowthRecord(@Param("growthRecordId") Integer growthRecordId);
+
+    /**
+     * 删除成长记录点赞
+     * @param growthRecordId 成长记录Id
+     * @return
+     */
+    Integer deleteGrowthRecordCollect(@Param("growthRecordId") Integer growthRecordId);
+
+    /**
+     * 家长点赞list
+     * @return
+     */
+    List<GrowthRecordCollect> parGrowthRecordCollectList();
+
+    /**
+     * 教师点赞list
+     * @return
+     */
+    List<GrowthRecordCollect> teaGrowthRecordCollectList();
 
     /*==========================老师点赞相关=======================*/
 
@@ -23,13 +58,10 @@ public interface GrowthRecordCollectService {
 
     /**
      * 修改老师点赞状态
-     * @param teaNo 教师工号
-     * @param growthRecordId 成长记录id
-     * @param collectState 点赞状态
+     * @param growthRecordCollect
      * @return
      */
-    Integer updateTeaGRState(@Param("teaNo") String teaNo, @Param("growthRecordId") Integer growthRecordId,
-                             @Param("collectState") Integer collectState);
+    Integer updateTeaGRState(GrowthRecordCollect growthRecordCollect);
 
     /**
      * 根据教师工号查找点赞记录
@@ -49,13 +81,10 @@ public interface GrowthRecordCollectService {
 
     /**
      * 修改家长点赞状态
-     * @param parId 家长id
-     * @param growthRecordId 成长记录id
-     * @param collectState 点赞状态
+     * @param growthRecordCollect
      * @return
      */
-    Integer updateParGRState(@Param("parId") Integer parId,@Param("growthRecordId") Integer growthRecordId,
-                             @Param("collectState") Integer collectState);
+    Integer updateParGRState(GrowthRecordCollect growthRecordCollect);
 
     /**
      * 根据家长id查找点赞记录
@@ -63,4 +92,11 @@ public interface GrowthRecordCollectService {
      * @return
      */
     List<GrowthRecordCollect> parGRCollectList(@Param("parId") Integer parId);
+
+    /**
+     * 根据成长记录id查找点赞记录
+     * @param growthRecordId 成长记录id
+     * @return
+     */
+    GrowthRecordCollect parGRCollectByGR(@Param("growthRecordId") Integer growthRecordId);
 }

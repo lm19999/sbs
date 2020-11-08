@@ -13,12 +13,11 @@ import java.util.Map;
 
 /**
  * 说明：默认接口返回的均是json数据
- *
- * @Package: top.yeliusu.ehcache.demo.utils
- * @Description： webClient工具类
- * @Author: SongJunWei
- * @Date: 2020/5/9
- */
+ * @Program: com.systop.sbs.common.util
+ * @Description: TODO
+ * @Author: ZhangLi
+ * @Date: 2020/8/3 14:21
+ **/
 public class WebClientUtils {
 
 
