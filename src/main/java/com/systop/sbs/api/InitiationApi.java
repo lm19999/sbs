@@ -37,6 +37,14 @@ public class InitiationApi {
         return SbsResult.success(initiationService.selectInitiationByTypeAndName(initiationTypeId,initiationUrlName));
     }
 
+    /**
+     * 前台浏览数量增加方法
+     * */
+    @RequestMapping("/updateInitiationByBrowse")
+    public int updateInitiationByBrowse(@RequestParam("initiationUrlId") Integer initiationUrlId){
+        return initiationService.updateInitiationByBrowse(initiationUrlId);
+    }
+
 
 //    生成二维码测试
 //    @GetMapping("/Qrcode")

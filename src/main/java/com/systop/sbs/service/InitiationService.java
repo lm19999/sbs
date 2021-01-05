@@ -27,6 +27,8 @@ public interface InitiationService {
     Integer deleteInitiation(Integer initiationId);
 //    更新启蒙数据状态，实现一键发布取消发布
     Integer updateInitiationByStatus(Integer initiationId,Integer initiationStatus);
+//    更新浏览数量
+    Integer updateInitiationByBrowse(Integer initiationUrlId);
 //    根据启蒙类型，删除启蒙数据
     Integer deleteInitiationByType(Integer initiationTypeId);
 //    根据启蒙外键id，删除启蒙数据
