@@ -62,6 +62,11 @@ public class InitiationServiceImpl implements InitiationService {
     }
 
     @Override
+    public Integer updateInitiationByBrowse(Integer initiationUrlId) {
+        return initiationMapper.updateInitiationByBrowse(initiationUrlId);
+    }
+
+    @Override
     public Integer deleteInitiationByType(Integer initiationTypeId) {
         return initiationMapper.deleteInitiationByType(initiationTypeId);
     }

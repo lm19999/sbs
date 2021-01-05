@@ -70,6 +70,10 @@ public interface InitiationMapper {
     @Update("update initiation set initiation_status = #{1} where initiation_id = #{0}")
     Integer updateInitiationByStatus(Integer initiationId,Integer initiationStatus);
 
+//    更新浏览数量
+    @Update("update initiation set browse = browse +1 where initiation_url_id = #{initiationUrlId}")
+    Integer updateInitiationByBrowse(Integer initiationUrlId);
+
 //    根据启蒙类型，删除启蒙数据
     @Delete("delete from initiation where initiation_type_id = #{initiationTypeId}")
     Integer deleteInitiationByType(Integer initiationTypeId);

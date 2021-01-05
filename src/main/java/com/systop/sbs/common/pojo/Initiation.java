@@ -20,6 +20,8 @@ public class Initiation {
     private InitiationUrl initiationUrl;
     //发布状态：0未发布,1已发布
     private Integer initiationStatus;
+    //浏览量
+    private Integer browse;
     //备注
     private String remark;
 }
